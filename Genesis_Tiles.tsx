@@ -1,119 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="Genesis_grassland_tiles" tilewidth="25" tileheight="25" tilecount="38" columns="0">
+<tileset name="Genesis_Sprites" tilewidth="25" tileheight="25" tilecount="38" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
- <tile id="15">
+ <tile id="0">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_bottom_bottom.png"/>
-  <objectgroup draworder="index"/>
  </tile>
- <tile id="16">
+ <tile id="1">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_bottom_corner_bottomleft.png"/>
  </tile>
- <tile id="17">
+ <tile id="2">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_bottom_corner_bottomright.png"/>
  </tile>
- <tile id="18">
+ <tile id="3">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_bottom_corner_topleft.png"/>
  </tile>
- <tile id="19">
+ <tile id="4">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_bottom_corner_topright.png"/>
  </tile>
- <tile id="20">
+ <tile id="5">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_bottom_left.png"/>
  </tile>
- <tile id="21">
+ <tile id="6">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_bottom_right.png"/>
  </tile>
- <tile id="22">
+ <tile id="7">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_bottom_top.png"/>
  </tile>
- <tile id="23">
+ <tile id="8">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_corner_bottomleft.png"/>
  </tile>
- <tile id="24">
+ <tile id="9">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_corner_bottomright.png"/>
  </tile>
- <tile id="25">
+ <tile id="10">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_corner_topleft.png"/>
  </tile>
- <tile id="26">
+ <tile id="11">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_corner_topright.png"/>
  </tile>
- <tile id="27">
+ <tile id="12">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_top.png"/>
  </tile>
- <tile id="28">
+ <tile id="13">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_top_corner_bottomleft.png"/>
  </tile>
- <tile id="29">
+ <tile id="14">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_top_corner_bottomright.png"/>
  </tile>
- <tile id="30">
+ <tile id="15">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_top_corner_topleft.png"/>
  </tile>
- <tile id="31">
+ <tile id="16">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_top_corner_topright.png"/>
  </tile>
- <tile id="32">
+ <tile id="17">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_top_edge_bottom.png"/>
  </tile>
- <tile id="33">
+ <tile id="18">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_top_edge_left.png"/>
  </tile>
- <tile id="34">
+ <tile id="19">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_top_edge_right.png"/>
  </tile>
- <tile id="35">
+ <tile id="20">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_top_edge_top.png"/>
  </tile>
- <tile id="36">
-  <image width="25" height="25" source="Genesis_Sprites/Cliff_wall - Copy - Copy - Copy.png"/>
+ <tile id="21">
+  <image width="25" height="25" source="Genesis_Sprites/Cliff_wall.png"/>
  </tile>
- <tile id="40">
+ <tile id="22">
   <image width="25" height="25" source="Genesis_Sprites/Clocktower_door.png"/>
  </tile>
- <tile id="41">
+ <tile id="23">
   <image width="25" height="25" source="Genesis_Sprites/Clocktower_door_open.png"/>
  </tile>
- <tile id="42">
+ <tile id="24">
   <image width="25" height="25" source="Genesis_Sprites/Grass_cut.png"/>
  </tile>
- <tile id="43">
+ <tile id="25">
   <image width="25" height="25" source="Genesis_Sprites/Grass_uncut.png"/>
  </tile>
- <tile id="44">
+ <tile id="26">
   <image width="25" height="25" source="Genesis_Sprites/Ground_grass.png"/>
  </tile>
- <tile id="45">
+ <tile id="27">
   <image width="25" height="25" source="Genesis_Sprites/Rock_exploded.png"/>
  </tile>
- <tile id="46">
+ <tile id="28">
   <image width="25" height="25" source="Genesis_Sprites/Rock_turtle.png"/>
  </tile>
- <tile id="47">
+ <tile id="29">
   <image width="25" height="25" source="Genesis_Sprites/Rock_unexploded.png"/>
  </tile>
- <tile id="48">
+ <tile id="30">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_bottom_corner_inset_bottomleft.png"/>
  </tile>
- <tile id="49">
+ <tile id="31">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_bottom_corner_inset_bottomright.png"/>
  </tile>
- <tile id="50">
+ <tile id="32">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_bottom_corner_inset_topleft.png"/>
  </tile>
- <tile id="51">
+ <tile id="33">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_bottom_corner_inset_topright.png"/>
  </tile>
- <tile id="52">
+ <tile id="34">
   <image width="25" height="25" source="Genesis_Sprites/Signpost.png"/>
  </tile>
- <tile id="53">
+ <tile id="35">
   <image width="25" height="25" source="Genesis_Sprites/gray_ground_path.png"/>
  </tile>
- <tile id="54">
+ <tile id="36">
   <image width="25" height="25" source="Genesis_Sprites/Rock_unexploded_path.png"/>
  </tile>
- <tile id="55">
+ <tile id="37">
   <image width="25" height="25" source="Genesis_Sprites/Signpost_path.png"/>
  </tile>
 </tileset>
