@@ -2,13 +2,30 @@
 Create the main game for "Genesis"
  
 Author: Bradley Lamitie
-Date: 10/27/2017
-Version Number: 1.5
- 
+Date: 11/04/2017
+Version Number: 1.6
+
+What the Code Does: 
+The code so far creates the world using the tiles provided by rendering one room at a time
+and zooming in on it to make it more visible. 
+Then, the player is put into the world and can use the directional 
+keys( UpArrow, RightArrow, LeftArrow, and DownArrow ) to move around the world
+The code runs through the events and moves the sprite. 
+So far, the game doesnt have any real way to lose or win. 
+
+How to Play: 
+The player can use the directional keys( UpArrow, RightArrow, LeftArrow, and DownArrow )
+ to move around the world
+
 GitHub Repository: https://github.com/BradleyLamitie/Genesis
 
-TODOs for Final Project: 
-- Finish building the world.
+Changes in this version: 
+- Zoom in onto one individual room at a time as in The Legend of Zelda
+  Note how the screen translates to different rooms in the example below:
+  Example: https://youtu.be/hhb3LqLtTBM?t=1m9s
+
+TODOs for Demo/Final Project: 
+- Finish building the world's second level. 
 - Make it so that the WORLD_DATA is imported from a .tmx file. 
 - If possible import a tileset from a Tiled file. 
 - Learn to Use a sprite Sheet to load in sprites. 
@@ -24,6 +41,11 @@ TODOs for Final Project:
 - Add Sounds.
 - Add cheat codes for quick demonstrations.
 - Add story.
+- Add Splash Screen
+- Add Screen animations
+- Add Collision detection for enemies
+- Add Game Over Screen
+- 
 """
 import pygame
  
@@ -34,23 +56,33 @@ WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
  
-# The width and height of the viewport
-SCREEN_WIDTH = 2000
-SCREEN_HEIGHT = 825
+# The width and height of the room (16 tiles * 11 tiles)
+ROOM_WIDTH = 400
+ROOM_HEIGHT = 275
 
 # The width and height of the world
 WORLD_WIDTH = 2000
 WORLD_HEIGHT = 825
 
+# The rate at which we magnify the pixels
+WINDOW_MAGNIFICATION = 3
+
 # For every frame the player sprite will be moved by the WALKRATE variable
 WALKRATE = 3
 
+# The width and height of the magnified window
+WINDOW_WIDTH = ROOM_WIDTH * WINDOW_MAGNIFICATION
+WINDOW_HEIGHT = ROOM_HEIGHT * WINDOW_MAGNIFICATION
+
+# The Camera starts at the second room from the right, second room down.
+CAMERA_LEFT = ROOM_WIDTH * 2
+CAMERA_TOP = ROOM_HEIGHT * 2 
+
 # Set the screen as a global variable
 # (This is necessary in order to load in the sprites)
-size = [SCREEN_WIDTH, SCREEN_HEIGHT]
+size = (WINDOW_WIDTH, WINDOW_HEIGHT)
 screen = pygame.display.set_mode(size)
- 
- 
+
 # Load in each of the sprite images  
 Cliff_bottom_bottom = pygame.image.load("Genesis_Sprites/Cliff_bottom_bottom.png").convert()
 Cliff_bottom_corner_bottomleft = pygame.image.load("Genesis_Sprites/Cliff_bottom_corner_bottomleft.png").convert()
@@ -92,7 +124,7 @@ Rock_unexploded = pygame.image.load("Genesis_Sprites/Rock_unexploded.png").conve
 Rock_unexploded_path = pygame.image.load("Genesis_Sprites/Rock_unexploded_path.png").convert()
 Signpost = pygame.image.load("Genesis_Sprites/Signpost.png").convert()
 Signpost_path = pygame.image.load("Genesis_Sprites/Signpost_path.png").convert()
-Angel = pygame.image.load("Genesis_Sprites/Signpost.png").convert()
+Angel = pygame.image.load("Genesis_Sprites/Angel_steel_front_Attacking1.png").convert()
 Map_Image = pygame.image.load("Genesis_Sprites/Genesis_Map.png").convert()
 
 # WORLD_DATA is a large string that includes all the tile data copied from Tiled file.
@@ -158,11 +190,22 @@ class Player(pygame.sprite.Sprite):
     """ This class represents the player. """
     def __init__(self):
         super().__init__()
-        self.image = pygame.Surface([25, 25])
-        self.rect = self.image.get_rect()
-        self.x = 988 # WORLD_WIDTH // 2
-        self.y = 687 # ((5 * WORLD_HEIGHT) // 6)
         
+        # This sets the image to be the Angel surface defined above.
+        self.image = Angel
+        self.rect = self.image.get_rect()
+        
+        # Set the players starting position to center screen
+        # NOTE: The player's x position is not centered at WINDOW_HEIGHT//2
+        self.x = WINDOW_WIDTH // 2 - 36
+        self.y = WINDOW_HEIGHT // 2
+        
+        # Scale the image 3 times as large as normal. 
+        self.image = pygame.transform.scale(self.image, (75, 75))
+        
+        # Copy the player to the screen
+        screen.blit(self.image,[self.x, self.y] )
+
     def update(self):
         """ Update the player location. """
         pos = [self.x,self.y]
@@ -171,6 +214,7 @@ class Player(pygame.sprite.Sprite):
         
     def draw(self):
         """ Draw the Player sprite onto the back buffer. """
+        Angel = pygame.transform.scale(self.image, (75, 75))
         screen.blit(Angel,[self.rect.x, self.rect.y] )
         
         
@@ -189,16 +233,6 @@ class Game(object):
         self.all_Tiles_Group = pygame.sprite.Group()
         self.all_sprites_Group = pygame.sprite.Group()
  
-        # Parse through the tiles and draw each one only once. 
-        # These tiles sit behind the tile image to be used in Collision detection later. 
-        for i in range(0,len(tile_Data)):
-            for j in range(0,len(tile_Data[i])):
-                y = i * 25
-                x = j * 25
-                tile_Number = tile_Data[i][j]
-                tile_surface = getTile(tile_Number)
-                screen.blit(tile_surface,[x,y] )
-        
         # Create the player
         self.player = Player()
         
@@ -305,7 +339,27 @@ class Game(object):
             # TODO: Add collision detection between the Player and the boundary tiles
             # TODO: Add collision detection between the Player and the enemies  
              
- 
+    def getRoomSurface(self, leftPixel, topPixel, tileData):
+        """
+        This method is used to fetch all tiles in a single room and expand them for easier viewing. It is a great space optimization. 
+        """
+        # Get the leftmost and topmost tile numbers
+        leftmostTile = leftPixel // 25
+        topmostTile = topPixel // 25
+        
+        # Get the initial room surface
+        roomSurf = pygame.Surface((ROOM_WIDTH, ROOM_HEIGHT))
+        
+        # For each tile in the tile_Data we draw it at the room's coordinates. 
+        for tiley in range(topmostTile, topmostTile + 11):
+            for tilex in range(leftmostTile, leftmostTile + 16):
+                tileType = getTile(tileData[tiley][tilex])
+                roomSurf.blit(tileType, ((tilex - leftmostTile) * 25, (tiley - topmostTile) * 25))
+                
+        # Zoom in on the room to make it more viewable and return the room
+        roomSurf = pygame.transform.scale(roomSurf, (ROOM_WIDTH * WINDOW_MAGNIFICATION, ROOM_HEIGHT * WINDOW_MAGNIFICATION))
+        return roomSurf
+
     def display_frame(self, screen):
         """ Display everything to the screen for the game. """
         # TODO: Add a feedback display 
@@ -313,12 +367,15 @@ class Game(object):
         # Clear the screen to White
         screen.fill(WHITE)
         
+        # Create a new surface for the current room
+        roomSurface = self.getRoomSurface(CAMERA_LEFT, CAMERA_TOP, tile_Data)
+        
         # Copy the background image to the viewport.
-        screen.blit(Map_Image, [0,0])
+        screen.blit(roomSurface, (0,0))
         
         # Draw each of the sprites in the all_sprites_Group
         self.all_sprites_Group.draw(screen)
-        
+
         # Copy back buffer onto the front buffer
         pygame.display.flip()
         
@@ -408,6 +465,7 @@ def getTile(tileNumber):
     else:
         return Signpost_path
     
+
 def main():
     """ Main program function. """
     
