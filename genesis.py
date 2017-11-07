@@ -2,8 +2,8 @@
 Create the main game for "Genesis"
  
 Author: Bradley Lamitie
-Date: 11/04/2017
-Version Number: 1.6
+Date: 11/05/2017
+Version Number: 1.65
 
 What the Code Does: 
 The code so far creates the world using the tiles provided by rendering one room at a time
@@ -65,7 +65,7 @@ WORLD_WIDTH = 2000
 WORLD_HEIGHT = 825
 
 # The rate at which we magnify the pixels
-WINDOW_MAGNIFICATION = 3
+WINDOW_MAGNIFICATION = 2
 
 # For every frame the player sprite will be moved by the WALKRATE variable
 WALKRATE = 3
@@ -76,7 +76,7 @@ WINDOW_HEIGHT = ROOM_HEIGHT * WINDOW_MAGNIFICATION
 
 # The Camera starts at the second room from the right, second room down.
 CAMERA_LEFT = ROOM_WIDTH * 2
-CAMERA_TOP = ROOM_HEIGHT * 2 
+CAMERA_TOP = ROOM_HEIGHT * 2
 
 # Set the screen as a global variable
 # (This is necessary in order to load in the sprites)
@@ -126,7 +126,6 @@ Signpost = pygame.image.load("Genesis_Sprites/Signpost.png").convert()
 Signpost_path = pygame.image.load("Genesis_Sprites/Signpost_path.png").convert()
 Angel = pygame.image.load("Genesis_Sprites/Angel_steel_front_Attacking1.png").convert()
 Map_Image = pygame.image.load("Genesis_Sprites/Genesis_Map.png").convert()
-
 # WORLD_DATA is a large string that includes all the tile data copied from Tiled file.
 # TODO: import this data from the .tmx file directly.
 WORLD_DATA = """50,16,16,16,16,16,16,16,16,16,16,16,16,16,16,49,50,16,16,16,16,16,16,16,16,16,16,16,16,16,16,49,22,41,41,41,41,41,41,41,41,41,41,41,41,41,41,21,50,16,16,16,16,16,16,16,16,16,16,16,16,16,16,49,50,16,16,16,16,16,16,16,16,16,16,16,16,16,16,49
@@ -168,6 +167,8 @@ tile_Data = WORLD_DATA
 tile_Data = tile_Data.split('\n')
 tile_Data = [line.split(',') for line in tile_Data]
 
+boundary_tiles = [15,16,17,18,19,20,21,22,23,24,25,26,28,29,30,31,32,33,34,35,36,37,40,46,47,48,49,50,51,52,53,55,56]
+
 # --- Classes ---
  
 class Tile(pygame.sprite.Sprite):
@@ -200,17 +201,23 @@ class Player(pygame.sprite.Sprite):
         self.x = WINDOW_WIDTH // 2 - 36
         self.y = WINDOW_HEIGHT // 2
         
+        # Set the players position in the world
+        self.worldx = WORLD_WIDTH // 2
+        self.worldy = (WORLD_HEIGHT * 5) // 6
+        
         # Scale the image 3 times as large as normal. 
-        self.image = pygame.transform.scale(self.image, (75, 75))
+        self.image = pygame.transform.scale(self.image, (25 * WINDOW_MAGNIFICATION, 25 * WINDOW_MAGNIFICATION))
         
         # Copy the player to the screen
         screen.blit(self.image,[self.x, self.y] )
 
     def update(self):
         """ Update the player location. """
+        
         pos = [self.x,self.y]
         self.rect.x = pos[0]
         self.rect.y = pos[1]  
+        
         
     def draw(self):
         """ Draw the Player sprite onto the back buffer. """
@@ -230,7 +237,7 @@ class Game(object):
         self.game_over = False
  
         # Create sprite lists
-        self.all_Tiles_Group = pygame.sprite.Group()
+        self.all_Boundaries_Group = pygame.sprite.Group()
         self.all_sprites_Group = pygame.sprite.Group()
  
         # Create the player
@@ -249,7 +256,7 @@ class Game(object):
     def process_events(self):
         """ Process all of the events. Return a "True" if we need
             to close the window. """
-        
+        global CAMERA_LEFT, CAMERA_TOP
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return True
@@ -273,8 +280,7 @@ class Game(object):
                 elif event.key == pygame.K_LEFT:
                     self.rightKeyPressed = False
                     self.leftKeyPressed = True
-                    self.DIRECTION = "LEFT"
-                    
+                    self.DIRECTION = "LEFT"  
             # Detect when a key is released
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_UP:
@@ -305,26 +311,47 @@ class Game(object):
         if self.upKeyPressed or self.downKeyPressed or self.leftKeyPressed or self.rightKeyPressed:
             
             # Actually move the position of the player
+            print(self.player.y)
             if self.DIRECTION == "UP":
                 self.player.y -= WALKRATE
+                self.player.worldy -= WALKRATE
+                if self.player.worldy < 0:
+                    self.player.worldy = 0
+                    self.player.worldy += WALKRATE
+                elif self.player.y < 0:
+                    self.player.y = WINDOW_WIDTH - 300
+                    CAMERA_TOP -= ROOM_HEIGHT
+                
+
             if self.DIRECTION == "DOWN":
                 self.player.y += WALKRATE
+                self.player.worldy += WALKRATE
+                if self.player.worldy > WORLD_HEIGHT:
+                    self.player.worldy = WORLD_HEIGHT - 25 * WINDOW_MAGNIFICATION
+                elif self.player.y  > WINDOW_HEIGHT:
+                    self.player.y = 0
+                    CAMERA_TOP += ROOM_HEIGHT
+                    
             if self.DIRECTION == "LEFT":
                 self.player.x -= WALKRATE
+                self.player.worldx -= WALKRATE
+                if self.player.x < 0:
+                    self.player.x = WINDOW_WIDTH - 25 * WINDOW_MAGNIFICATION
+                    CAMERA_LEFT -= ROOM_WIDTH
+                if self.player.worldx < 0:
+                    self.player.worldx = 0
+                    self.player.worldx -= WALKRATE
+                    
             if self.DIRECTION == "RIGHT":
                 self.player.x += WALKRATE
+                self.player.worldx += WALKRATE
+                if self.player.x  > WINDOW_WIDTH :
+                    self.player.x = 0 + 25 * WINDOW_MAGNIFICATION
+                    CAMERA_LEFT += ROOM_WIDTH
+                if self.player.worldx + 25 > WORLD_WIDTH:
+                    self.player.worldx = WORLD_WIDTH - 25
+                    self.player.worldx -= WALKRATE
 
-            # Check the players coordinates. If they are about to move off the world
-            # This will snap the player back into the world
-            if self.player.y < 0:
-                self.player.y = 0
-            if self.player.y + 25 > WORLD_HEIGHT:
-                self.player.y = WORLD_HEIGHT - 25
-            if self.player.x < 0:
-                self.player.x = 0
-            if self.player.x + 25 > WORLD_WIDTH:
-                self.player.x = WORLD_WIDTH - 25
-            print(self.player.x)
         return False
  
     def run_logic(self):
@@ -336,7 +363,7 @@ class Game(object):
             # Move all the sprites
             self.all_sprites_Group.update()
             
-            # TODO: Add collision detection between the Player and the boundary tiles
+            # TODO: Add collision detection between the Player  and the boundary tiles
             # TODO: Add collision detection between the Player and the enemies  
              
     def getRoomSurface(self, leftPixel, topPixel, tileData):
@@ -358,8 +385,8 @@ class Game(object):
                 
         # Zoom in on the room to make it more viewable and return the room
         roomSurf = pygame.transform.scale(roomSurf, (ROOM_WIDTH * WINDOW_MAGNIFICATION, ROOM_HEIGHT * WINDOW_MAGNIFICATION))
-        return roomSurf
-
+        return roomSurf        
+        
     def display_frame(self, screen):
         """ Display everything to the screen for the game. """
         # TODO: Add a feedback display 
@@ -378,7 +405,7 @@ class Game(object):
 
         # Copy back buffer onto the front buffer
         pygame.display.flip()
-        
+
 def getTile(tileNumber):
     """ This function is used to retrieve the sprite surfaces using the tile Number provided. """
     
@@ -471,7 +498,7 @@ def main():
     
     # Initialize Pygame and set up the window
     pygame.init()
- 
+
     # Set the window title.
     pygame.display.set_caption("My Game")
     
@@ -484,7 +511,8 @@ def main():
  
     # Create an instance of the Game class
     game = Game()
- 
+    
+    
     # Main game loop
     while not done:
  
@@ -493,7 +521,7 @@ def main():
  
         # Update object positions, check for collisions
         game.run_logic()
- 
+
         # Draw the current frame
         game.display_frame(screen)
 
