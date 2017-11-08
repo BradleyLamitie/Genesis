@@ -2,8 +2,8 @@
 Create the main game for "Genesis"
  
 Author: Bradley Lamitie
-Date: 11/05/2017
-Version Number: 1.65
+Date: 11/08/2017
+Version Number: 1.70
 
 What the Code Does: 
 The code so far creates the world using the tiles provided by rendering one room at a time
@@ -20,11 +20,10 @@ The player can use the directional keys( UpArrow, RightArrow, LeftArrow, and Dow
 GitHub Repository: https://github.com/BradleyLamitie/Genesis
 
 Changes in this version: 
-- Zoom in onto one individual room at a time as in The Legend of Zelda
-  Note how the screen translates to different rooms in the example below:
-  Example: https://youtu.be/hhb3LqLtTBM?t=1m9s
+- Added Collision detection for boundary tiles.
+  
 
-TODOs for Demo/Final Project: 
+TODOs for  Demo/Final Project: 
 - Finish building the world's second level. 
 - Make it so that the WORLD_DATA is imported from a .tmx file. 
 - If possible import a tileset from a Tiled file. 
@@ -34,7 +33,6 @@ TODOs for Demo/Final Project:
 - Replace all clocktower_door sprites with new sprites. 
 - Add a feedback system. 
 - Add the ability to use magic, attack, and use potions. 
-- Add Collision detection for boundary tiles.
 - Add ability to interact with things like chests, NPCs, and signposts. 
 - Add Save states or a pause function.
 - Add a menu.
@@ -48,6 +46,7 @@ TODOs for Demo/Final Project:
 - 
 """
 import pygame
+from pygame.sprite import spritecollide
  
 # --- Global constants ---
 # Colors: 
@@ -167,25 +166,116 @@ tile_Data = WORLD_DATA
 tile_Data = tile_Data.split('\n')
 tile_Data = [line.split(',') for line in tile_Data]
 
-boundary_tiles = [15,16,17,18,19,20,21,22,23,24,25,26,28,29,30,31,32,33,34,35,36,37,40,46,47,48,49,50,51,52,53,55,56]
+# This list represents the tile numbers of tiles th eplayer shouldn't be able to walk through.
+boundary_tiles = [15,16,17,18,19,20,21,22,23,24,25,26,28,29,30,31,32,33,34,35,36,37,40,41,4246,47,48,49,50,51,52,53,55,56]
 
 # --- Classes ---
  
 class Tile(pygame.sprite.Sprite):
     """ This class represents a simple block the player collects. """
  
-    def __init__(self, x, y, tile_Number):
+    def __init__(self, x, y, leftmostTile, topmostTile):
         """ Constructor, create the image of the block. """
         super().__init__()
-        self.image = pygame.Surface([25, 25])
+        
+        # Initialize the tiles size and locations
+        self.image = pygame.Surface([25 * WINDOW_MAGNIFICATION, 25 * WINDOW_MAGNIFICATION])
         self.rect = self.image.get_rect()
-        self.tileNumber = tile_Number
-        self.x = x
-        self.y = y
-    def draw(self):  
-        """ Draw the surface onto the back buffer. """  
-        tile_surface = getTile(self.tile_Number)
-        screen.blit(tile_surface,[self.x,self.y] )
+        self.x = (x - leftmostTile) * 25 * WINDOW_MAGNIFICATION
+        self.y = (y - topmostTile) * 25 * WINDOW_MAGNIFICATION
+        self.rect.x = self.x
+        self.rect.y = self.y
+        
+    def getTileNumber(self, x, y):
+        """ This function is used to fetch a tileNumber from the tile_Data """
+        tileNumber = tile_Data[y][x]
+        return tileNumber
+    def getTile(self, tileNumber):
+        """ This function is used to retrieve the sprite surfaces using the tile Number provided. """
+        
+        # Just in case, ensure tileNumber is an integer.
+        tileNumber = int(tileNumber)
+        
+        # Run through each of the cases.
+        if(tileNumber == 16):
+            return Cliff_bottom_bottom
+        elif(tileNumber == 17):
+            return Cliff_bottom_corner_bottomleft
+        elif(tileNumber == 18):
+            return Cliff_bottom_corner_bottomright
+        elif(tileNumber == 19):
+            return Cliff_bottom_corner_topleft
+        elif(tileNumber == 20):
+            return Cliff_bottom_corner_topright
+        elif(tileNumber == 21):
+            return Cliff_bottom_left
+        elif(tileNumber == 22):
+            return Cliff_bottom_right
+        elif(tileNumber == 23):
+            return Cliff_bottom_top
+        elif(tileNumber == 24):
+            return Cliff_corner_bottomleft
+        elif(tileNumber == 25):
+            return Cliff_corner_bottomright
+        elif(tileNumber == 26):
+            return Cliff_corner_topleft
+        elif(tileNumber == 27):
+            return Cliff_corner_topright
+        elif(tileNumber == 28):
+            return Cliff_top
+        elif(tileNumber == 29):
+            return Cliff_top_corner_bottomleft
+        elif(tileNumber == 30):
+            return Cliff_top_corner_bottomright
+        elif(tileNumber == 31):
+            return Cliff_top_corner_topleft
+        elif(tileNumber == 32):
+            return Cliff_top_corner_topright
+        elif(tileNumber == 33):
+            return Cliff_top_edge_bottom
+        elif(tileNumber == 34):
+            return Cliff_top_edge_left
+        elif(tileNumber == 35):
+            return Cliff_top_edge_right
+        elif(tileNumber == 36):
+            return Cliff_top_edge_top
+        elif(tileNumber == 37):
+            return Cliff_wall
+        elif(tileNumber == 41):
+            return Clocktower_door
+        elif(tileNumber == 42):
+            return Clocktower_door_open
+        elif(tileNumber == 43):
+            return Grass_cut
+        elif(tileNumber == 44):
+            return Grass_uncut
+        elif(tileNumber == 45):
+            return Ground_grass
+        elif(tileNumber == 46):
+            return Rock_exploded
+        elif(tileNumber == 47):
+            return Rock_turtle
+        elif(tileNumber == 48):
+            return Rock_unexploded
+        elif(tileNumber == 49):
+            return Cliff_bottom_corner_inset_bottomleft
+        elif(tileNumber == 50):
+            return Cliff_bottom_corner_inset_bottomright
+        elif(tileNumber == 51):
+            return Cliff_bottom_corner_inset_topleft
+        elif(tileNumber == 52):
+            return Cliff_bottom_corner_inset_topright
+        elif(tileNumber == 53):
+            return Signpost
+        elif(tileNumber == 54):
+            return gray_ground_path
+        elif(tileNumber == 55):
+            return Rock_unexploded_path
+        elif(tileNumber == 56):
+            return Signpost_path
+        else:
+            return Signpost_path
+        
 
 class Player(pygame.sprite.Sprite):
     """ This class represents the player. """
@@ -193,19 +283,23 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
         
         # This sets the image to be the Angel surface defined above.
-        self.image = Angel
+        self.image = pygame.Surface([25 * WINDOW_MAGNIFICATION, 25 * WINDOW_MAGNIFICATION])
         self.rect = self.image.get_rect()
+        self.image = Angel
+#         self.rect = self.image.get_rect()
         
         # Set the players starting position to center screen
         # NOTE: The player's x position is not centered at WINDOW_HEIGHT//2
         self.x = WINDOW_WIDTH // 2 - 36
         self.y = WINDOW_HEIGHT // 2
+        self.rect.x = self.x
+        self.rect.y = self.y
         
         # Set the players position in the world
         self.worldx = WORLD_WIDTH // 2
         self.worldy = (WORLD_HEIGHT * 5) // 6
         
-        # Scale the image 3 times as large as normal. 
+        # Scale the image by the window magnification
         self.image = pygame.transform.scale(self.image, (25 * WINDOW_MAGNIFICATION, 25 * WINDOW_MAGNIFICATION))
         
         # Copy the player to the screen
@@ -214,14 +308,13 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         """ Update the player location. """
         
-        pos = [self.x,self.y]
-        self.rect.x = pos[0]
-        self.rect.y = pos[1]  
-        
+        self.rect.x = self.x
+        self.rect.y = self.y  
         
     def draw(self):
         """ Draw the Player sprite onto the back buffer. """
-        Angel = pygame.transform.scale(self.image, (75, 75))
+        scale = 25 * WINDOW_MAGNIFICATION
+        Angel = pygame.transform.scale(self.image, (scale, scale))
         screen.blit(Angel,[self.rect.x, self.rect.y] )
         
         
@@ -237,7 +330,7 @@ class Game(object):
         self.game_over = False
  
         # Create sprite lists
-        self.all_Boundaries_Group = pygame.sprite.Group()
+        self.all_boundaries_Group = pygame.sprite.Group()
         self.all_sprites_Group = pygame.sprite.Group()
  
         # Create the player
@@ -311,7 +404,7 @@ class Game(object):
         if self.upKeyPressed or self.downKeyPressed or self.leftKeyPressed or self.rightKeyPressed:
             
             # Actually move the position of the player
-            print(self.player.y)
+            # If the player exits the room we move to the next one. 
             if self.DIRECTION == "UP":
                 self.player.y -= WALKRATE
                 self.player.worldy -= WALKRATE
@@ -346,7 +439,7 @@ class Game(object):
                 self.player.x += WALKRATE
                 self.player.worldx += WALKRATE
                 if self.player.x  > WINDOW_WIDTH :
-                    self.player.x = 0 + 25 * WINDOW_MAGNIFICATION
+                    self.player.x = 0 
                     CAMERA_LEFT += ROOM_WIDTH
                 if self.player.worldx + 25 > WORLD_WIDTH:
                     self.player.worldx = WORLD_WIDTH - 25
@@ -354,17 +447,7 @@ class Game(object):
 
         return False
  
-    def run_logic(self):
-        """
-        This method is run each time through the frame. It
-        updates positions and checks for collisions.
-        """
-        if not self.game_over:
-            # Move all the sprites
-            self.all_sprites_Group.update()
-            
-            # TODO: Add collision detection between the Player  and the boundary tiles
-            # TODO: Add collision detection between the Player and the enemies  
+    
              
     def getRoomSurface(self, leftPixel, topPixel, tileData):
         """
@@ -373,6 +456,7 @@ class Game(object):
         # Get the leftmost and topmost tile numbers
         leftmostTile = leftPixel // 25
         topmostTile = topPixel // 25
+        self.all_boundaries_Group.empty()
         
         # Get the initial room surface
         roomSurf = pygame.Surface((ROOM_WIDTH, ROOM_HEIGHT))
@@ -380,13 +464,60 @@ class Game(object):
         # For each tile in the tile_Data we draw it at the room's coordinates. 
         for tiley in range(topmostTile, topmostTile + 11):
             for tilex in range(leftmostTile, leftmostTile + 16):
-                tileType = getTile(tileData[tiley][tilex])
-                roomSurf.blit(tileType, ((tilex - leftmostTile) * 25, (tiley - topmostTile) * 25))
+                tile = Tile(tilex, tiley, leftmostTile, topmostTile)
+                tile_number = tile.getTileNumber(tilex, tiley)
                 
+                # Just in case, ensure tile_number is an integer.
+                tile_number = int(tile_number)
+                
+                roomSurf.blit(tile.getTile(tile_number), ((tilex - leftmostTile) * 25, (tiley - topmostTile) * 25))
+               
+                # Check if the tile at tilex and tiley is a boundary
+                if tile_number in boundary_tiles:
+                    self.all_boundaries_Group.add(tile)
+   
         # Zoom in on the room to make it more viewable and return the room
         roomSurf = pygame.transform.scale(roomSurf, (ROOM_WIDTH * WINDOW_MAGNIFICATION, ROOM_HEIGHT * WINDOW_MAGNIFICATION))
-        return roomSurf        
-        
+        return roomSurf
+    
+    def run_logic(self):
+        """
+        This method is run each time through the frame. It
+        updates positions and checks for collisions.
+        """
+        if not self.game_over:
+            player = self.player
+            
+            # Move all the sprites and update positions
+            self.all_sprites_Group.update()
+            self.all_boundaries_Group.update()
+            
+            # check if there are any collisions between th eplayer and a boundary tile.
+            bump_list = spritecollide(self.player, self.all_boundaries_Group, False)
+            
+            # If there is than we have to move the player back to where they were
+            if(len(bump_list) >= 1):
+                
+                # Based on the direction we last moved the sprite in, move the sprite back.
+                if(self.DIRECTION == "UP"):
+                    self.player.y += WALKRATE
+                    self.player.worldy += WALKRATE
+                elif (self.DIRECTION == "DOWN"):
+                    self.player.y -= WALKRATE
+                    self.player.worldy -= WALKRATE
+                elif (self.DIRECTION == "RIGHT"):
+                    self.player.x -= WALKRATE 
+                    self.player.worldx  -= WALKRATE
+                elif (self.DIRECTION == "LEFT"):
+                    self.player.x += WALKRATE
+                    self.player.worldx += WALKRATE
+            else: 
+                # Set the new position of the player. 
+                self.player = player
+                
+                
+# TODO: Add collision detection between the Player and the enemies     
+
     def display_frame(self, screen):
         """ Display everything to the screen for the game. """
         # TODO: Add a feedback display 
@@ -394,6 +525,8 @@ class Game(object):
         # Clear the screen to White
         screen.fill(WHITE)
         
+        # TODO: Potential for optimization here: render new Room surface only once. 
+        # Only render again when room is exited then reentered. 
         # Create a new surface for the current room
         roomSurface = self.getRoomSurface(CAMERA_LEFT, CAMERA_TOP, tile_Data)
         
@@ -406,92 +539,6 @@ class Game(object):
         # Copy back buffer onto the front buffer
         pygame.display.flip()
 
-def getTile(tileNumber):
-    """ This function is used to retrieve the sprite surfaces using the tile Number provided. """
-    
-    # Just in case, ensure tileNumber is an integer.
-    tileNumber = int(tileNumber)
-    
-    # Run through each of the cases.
-    if(tileNumber == 16):
-        return Cliff_bottom_bottom
-    elif(tileNumber == 17):
-        return Cliff_bottom_corner_bottomleft
-    elif(tileNumber == 18):
-        return Cliff_bottom_corner_bottomright
-    elif(tileNumber == 19):
-        return Cliff_bottom_corner_topleft
-    elif(tileNumber == 20):
-        return Cliff_bottom_corner_topright
-    elif(tileNumber == 21):
-        return Cliff_bottom_left
-    elif(tileNumber == 22):
-        return Cliff_bottom_right
-    elif(tileNumber == 23):
-        return Cliff_bottom_top
-    elif(tileNumber == 24):
-        return Cliff_corner_bottomleft
-    elif(tileNumber == 25):
-        return Cliff_corner_bottomright
-    elif(tileNumber == 26):
-        return Cliff_corner_topleft
-    elif(tileNumber == 27):
-        return Cliff_corner_topright
-    elif(tileNumber == 28):
-        return Cliff_top
-    elif(tileNumber == 29):
-        return Cliff_top_corner_bottomleft
-    elif(tileNumber == 30):
-        return Cliff_top_corner_bottomright
-    elif(tileNumber == 31):
-        return Cliff_top_corner_topleft
-    elif(tileNumber == 32):
-        return Cliff_top_corner_topright
-    elif(tileNumber == 33):
-        return Cliff_top_edge_bottom
-    elif(tileNumber == 34):
-        return Cliff_top_edge_left
-    elif(tileNumber == 35):
-        return Cliff_top_edge_right
-    elif(tileNumber == 36):
-        return Cliff_top_edge_top
-    elif(tileNumber == 37):
-        return Cliff_wall
-    elif(tileNumber == 41):
-        return Clocktower_door
-    elif(tileNumber == 42):
-        return Clocktower_door_open
-    elif(tileNumber == 43):
-        return Grass_cut
-    elif(tileNumber == 44):
-        return Grass_uncut
-    elif(tileNumber == 45):
-        return Ground_grass
-    elif(tileNumber == 46):
-        return Rock_exploded
-    elif(tileNumber == 47):
-        return Rock_turtle
-    elif(tileNumber == 48):
-        return Rock_unexploded
-    elif(tileNumber == 49):
-        return Cliff_bottom_corner_inset_bottomleft
-    elif(tileNumber == 50):
-        return Cliff_bottom_corner_inset_bottomright
-    elif(tileNumber == 51):
-        return Cliff_bottom_corner_inset_topleft
-    elif(tileNumber == 52):
-        return Cliff_bottom_corner_inset_topright
-    elif(tileNumber == 53):
-        return Signpost
-    elif(tileNumber == 54):
-        return gray_ground_path
-    elif(tileNumber == 55):
-        return Rock_unexploded_path
-    elif(tileNumber == 56):
-        return Signpost_path
-    else:
-        return Signpost_path
-    
 
 def main():
     """ Main program function. """
