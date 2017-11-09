@@ -2,8 +2,8 @@
 Create the main game for "Genesis"
  
 Author: Bradley Lamitie
-Date: 11/08/2017
-Version Number: 1.70
+Date: 11/09/2017
+Version Number: 1.72
 
 What the Code Does: 
 The code so far creates the world using the tiles provided by rendering one room at a time
@@ -20,8 +20,7 @@ The player can use the directional keys( UpArrow, RightArrow, LeftArrow, and Dow
 GitHub Repository: https://github.com/BradleyLamitie/Genesis
 
 Changes in this version: 
-- Added Collision detection for boundary tiles.
-  
+- Added more player sprites  
 
 TODOs for  Demo/Final Project: 
 - Finish building the world's second level. 
@@ -54,7 +53,10 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
- 
+
+# Set the color key to hot pink to make the background translucent
+COLORKEY = (255,0,255)
+
 # The width and height of the room (16 tiles * 11 tiles)
 ROOM_WIDTH = 400
 ROOM_HEIGHT = 275
@@ -68,6 +70,9 @@ WINDOW_MAGNIFICATION = 2
 
 # For every frame the player sprite will be moved by the WALKRATE variable
 WALKRATE = 3
+
+# How many seconds an animation frame should last. 
+ANIMRATE = 0.15
 
 # The width and height of the magnified window
 WINDOW_WIDTH = ROOM_WIDTH * WINDOW_MAGNIFICATION
@@ -123,8 +128,204 @@ Rock_unexploded = pygame.image.load("Genesis_Sprites/Rock_unexploded.png").conve
 Rock_unexploded_path = pygame.image.load("Genesis_Sprites/Rock_unexploded_path.png").convert()
 Signpost = pygame.image.load("Genesis_Sprites/Signpost.png").convert()
 Signpost_path = pygame.image.load("Genesis_Sprites/Signpost_path.png").convert()
-Angel = pygame.image.load("Genesis_Sprites/Angel_steel_front_Attacking1.png").convert()
 Map_Image = pygame.image.load("Genesis_Sprites/Genesis_Map.png").convert()
+
+# Add the images for Angel sprites in each armor
+# Add the images for Angel with wooden Armor and Sword
+Angel_wood_Back_Idle = pygame.image.load("Genesis_Sprites/Angel_wood_back_idle.png").convert()
+Angel_wood_Back_Walking1 = pygame.image.load("Genesis_Sprites/Angel_wood_back_walking1.png").convert()
+Angel_wood_Back_Walking2 = Angel_wood_Back_Idle
+Angel_wood_Back_Walking3 = pygame.transform.flip(Angel_wood_Back_Walking1, True, False)
+Angel_wood_Back_Walking4 = Angel_wood_Back_Idle 
+Angel_wood_Back_Attacking1 = Angel_wood_Back_Idle
+Angel_wood_Back_Attacking2 = pygame.image.load("Genesis_Sprites/Angel_wood_back_Attacking2.png").convert()
+Angel_wood_Back_Attacking3 = pygame.image.load("Genesis_Sprites/Angel_wood_back_Attacking3.png").convert()
+Angel_wood_Back_Attacking4 = pygame.image.load("Genesis_Sprites/Angel_wood_back_Attacking4.png").convert()
+Angel_wood_Back_Attacking5 = Angel_wood_Back_Idle
+Angel_wood_Back_Attacking2_Swordtip = pygame.image.load("Genesis_Sprites/Angel_wood_back_Attacking2_swordtip.png").convert()
+Angel_wood_Back_Attacking3_Swordtip = pygame.image.load("Genesis_Sprites/Angel_wood_back_Attacking3_swordtip.png").convert()
+Angel_wood_Back_Attacking4_Swordtip = pygame.image.load("Genesis_Sprites/Angel_wood_back_Attacking4_swordtip.png").convert()
+
+Angel_wood_Front_Idle = pygame.image.load("Genesis_Sprites/Angel_wood_front_idle.png").convert()
+Angel_wood_Front_Walking1 = pygame.image.load("Genesis_Sprites/Angel_wood_front_walking1.png").convert()
+Angel_wood_Front_Walking2 = pygame.image.load("Genesis_Sprites/Angel_wood_front_walking2.png").convert()
+Angel_wood_Front_Walking3 = pygame.image.load("Genesis_Sprites/Angel_wood_front_walking3.png").convert()
+Angel_wood_Front_Walking4 = pygame.image.load("Genesis_Sprites/Angel_wood_front_walking4.png").convert()
+Angel_wood_Front_Attacking1 = Angel_wood_Front_Idle
+Angel_wood_Front_Attacking2 = pygame.image.load("Genesis_Sprites/Angel_wood_front_Attacking2.png").convert()
+Angel_wood_Front_Attacking3 = pygame.image.load("Genesis_Sprites/Angel_wood_front_Attacking3.png").convert()
+Angel_wood_Front_Attacking4 = pygame.image.load("Genesis_Sprites/Angel_wood_front_Attacking4.png").convert()
+Angel_wood_Front_Attacking5 = Angel_wood_Front_Idle
+Angel_wood_Front_Attacking2_Swordtip = pygame.image.load("Genesis_Sprites/Angel_wood_front_Attacking2_swordtip.png").convert()
+Angel_wood_Front_Attacking3_Swordtip = pygame.image.load("Genesis_Sprites/Angel_wood_front_Attacking3_swordtip.png").convert()
+Angel_wood_Front_Attacking4_Swordtip = pygame.image.load("Genesis_Sprites/Angel_wood_front_Attacking4_swordtip.png").convert()
+
+Angel_wood_Left_Idle = pygame.image.load("Genesis_Sprites/Angel_wood_left_idle.png").convert()
+Angel_wood_Left_Walking1 = pygame.image.load("Genesis_Sprites/Angel_wood_left_walking1.png").convert()
+Angel_wood_Left_Walking2 = pygame.image.load("Genesis_Sprites/Angel_wood_left_walking2.png").convert()
+Angel_wood_Left_Walking3 = pygame.image.load("Genesis_Sprites/Angel_wood_left_walking3.png").convert()
+Angel_wood_Left_Walking4 = pygame.image.load("Genesis_Sprites/Angel_wood_left_walking4.png").convert()
+Angel_wood_Left_Attacking1 = Angel_wood_Left_Idle
+Angel_wood_Left_Attacking2 = pygame.image.load("Genesis_Sprites/Angel_wood_left_Attacking2.png").convert()
+Angel_wood_Left_Attacking3 = pygame.image.load("Genesis_Sprites/Angel_wood_left_Attacking3.png").convert()
+Angel_wood_Left_Attacking4 = pygame.image.load("Genesis_Sprites/Angel_wood_left_Attacking4.png").convert()
+Angel_wood_Left_Attacking5 = Angel_wood_Left_Idle
+Angel_wood_Left_Attacking1_Swordtip = pygame.image.load("Genesis_Sprites/Angel_wood_left_Attacking1_Swordtip.png").convert()
+Angel_wood_Left_Attacking2_Swordtip = pygame.image.load("Genesis_Sprites/Angel_wood_left_Attacking2_Swordtip.png").convert()
+Angel_wood_Left_Attacking3_Swordtip = pygame.image.load("Genesis_Sprites/Angel_wood_left_Attacking3_Swordtip.png").convert()
+Angel_wood_Left_Attacking4_Swordtip = pygame.image.load("Genesis_Sprites/Angel_wood_left_Attacking4_Swordtip.png").convert()
+Angel_wood_Left_Attacking5_Swordtip = pygame.image.load("Genesis_Sprites/Angel_wood_left_Attacking5_Swordtip.png").convert()
+
+Angel_wood_Right_Idle = pygame.transform.flip(Angel_wood_Left_Idle, True, False)
+Angel_wood_Right_Walking1 = pygame.transform.flip(Angel_wood_Left_Walking1, True, False)
+Angel_wood_Right_Walking2 = pygame.transform.flip(Angel_wood_Left_Walking2, True, False)
+Angel_wood_Right_Walking3 = pygame.transform.flip(Angel_wood_Left_Walking3, True, False)
+Angel_wood_Right_Walking4 = pygame.transform.flip(Angel_wood_Left_Walking4, True, False)
+Angel_wood_Right_Attacking1 = pygame.transform.flip(Angel_wood_Left_Attacking1, True, False)
+Angel_wood_Right_Attacking2 = pygame.transform.flip(Angel_wood_Left_Attacking2, True, False)
+Angel_wood_Right_Attacking3 = pygame.transform.flip(Angel_wood_Left_Attacking3, True, False)
+Angel_wood_Right_Attacking4 = pygame.transform.flip(Angel_wood_Left_Attacking4, True, False)
+Angel_wood_Right_Attacking5 = pygame.transform.flip(Angel_wood_Left_Attacking5, True, False)
+Angel_wood_Right_Attacking1_Swordtip = pygame.transform.flip(Angel_wood_Left_Attacking1_Swordtip, True, False)
+Angel_wood_Right_Attacking2_Swordtip = pygame.transform.flip(Angel_wood_Left_Attacking2_Swordtip, True, False)
+Angel_wood_Right_Attacking3_Swordtip = pygame.transform.flip(Angel_wood_Left_Attacking3_Swordtip, True, False)
+Angel_wood_Right_Attacking4_Swordtip = pygame.transform.flip(Angel_wood_Left_Attacking4_Swordtip, True, False)
+Angel_wood_Right_Attacking5_Swordtip = pygame.transform.flip(Angel_wood_Left_Attacking5_Swordtip, True, False)
+
+Angel_wood_Get_Item = pygame.image.load("Genesis_Sprites/Angel_wood_get_item.png").convert()
+
+
+# Steel Armor and sword
+Angel_Steel_Back_Idle = pygame.image.load("Genesis_Sprites/Angel_steel_back_idle.png").convert()
+Angel_Steel_Back_Walking1 = pygame.image.load("Genesis_Sprites/Angel_steel_back_walking1.png").convert()
+Angel_Steel_Back_Walking2 = Angel_Steel_Back_Idle
+Angel_Steel_Back_Walking3 = pygame.transform.flip(Angel_Steel_Back_Walking1, True, False)
+Angel_Steel_Back_Walking4 = Angel_Steel_Back_Idle 
+Angel_Steel_Back_Attacking1 = Angel_Steel_Back_Idle
+Angel_Steel_Back_Attacking2 = pygame.image.load("Genesis_Sprites/Angel_steel_back_Attacking2.png").convert()
+Angel_Steel_Back_Attacking3 = pygame.image.load("Genesis_Sprites/Angel_steel_back_Attacking3.png").convert()
+Angel_Steel_Back_Attacking4 = pygame.image.load("Genesis_Sprites/Angel_steel_back_Attacking4.png").convert()
+Angel_Steel_Back_Attacking5 = Angel_Steel_Back_Idle
+Angel_Steel_Back_Attacking2_Swordtip = pygame.image.load("Genesis_Sprites/Angel_steel_back_Attacking2_swordtip.png").convert()
+Angel_Steel_Back_Attacking3_Swordtip = pygame.image.load("Genesis_Sprites/Angel_steel_back_Attacking3_swordtip.png").convert()
+Angel_Steel_Back_Attacking4_Swordtip = pygame.image.load("Genesis_Sprites/Angel_steel_back_Attacking4_swordtip.png").convert()
+
+Angel_Steel_Front_Idle = pygame.image.load("Genesis_Sprites/Angel_steel_front_idle.png").convert()
+Angel_Steel_Front_Walking1 = pygame.image.load("Genesis_Sprites/Angel_steel_front_walking1.png").convert()
+Angel_Steel_Front_Walking2 = pygame.image.load("Genesis_Sprites/Angel_steel_front_walking2.png").convert()
+Angel_Steel_Front_Walking3 = pygame.image.load("Genesis_Sprites/Angel_steel_front_walking3.png").convert()
+Angel_Steel_Front_Walking4 = pygame.image.load("Genesis_Sprites/Angel_steel_front_walking4.png").convert()
+Angel_Steel_Front_Attacking1 = Angel_Steel_Front_Idle
+Angel_Steel_Front_Attacking2 = pygame.image.load("Genesis_Sprites/Angel_steel_front_Attacking2.png").convert()
+Angel_Steel_Front_Attacking3 = pygame.image.load("Genesis_Sprites/Angel_steel_front_Attacking3.png").convert()
+Angel_Steel_Front_Attacking4 = pygame.image.load("Genesis_Sprites/Angel_steel_front_Attacking4.png").convert()
+Angel_Steel_Front_Attacking5 = Angel_Steel_Front_Idle
+Angel_Steel_Front_Attacking2_Swordtip = pygame.image.load("Genesis_Sprites/Angel_steel_front_Attacking2_swordtip.png").convert()
+Angel_Steel_Front_Attacking3_Swordtip = pygame.image.load("Genesis_Sprites/Angel_steel_front_Attacking3_swordtip.png").convert()
+Angel_Steel_Front_Attacking4_Swordtip = pygame.image.load("Genesis_Sprites/Angel_steel_front_Attacking4_swordtip.png").convert()
+
+Angel_Steel_Left_Idle = pygame.image.load("Genesis_Sprites/Angel_steel_left_idle.png").convert()
+Angel_Steel_Left_Walking1 = pygame.image.load("Genesis_Sprites/Angel_steel_left_walking1.png").convert()
+Angel_Steel_Left_Walking2 = pygame.image.load("Genesis_Sprites/Angel_steel_left_walking2.png").convert()
+Angel_Steel_Left_Walking3 = pygame.image.load("Genesis_Sprites/Angel_steel_left_walking3.png").convert()
+Angel_Steel_Left_Walking4 = pygame.image.load("Genesis_Sprites/Angel_steel_left_walking4.png").convert()
+Angel_Steel_Left_Attacking1 = Angel_Steel_Left_Idle
+Angel_Steel_Left_Attacking2 = pygame.image.load("Genesis_Sprites/Angel_steel_left_Attacking2.png").convert()
+Angel_Steel_Left_Attacking3 = pygame.image.load("Genesis_Sprites/Angel_steel_left_Attacking3.png").convert()
+Angel_Steel_Left_Attacking4 = pygame.image.load("Genesis_Sprites/Angel_steel_left_Attacking4.png").convert()
+Angel_Steel_Left_Attacking5 = Angel_Steel_Left_Idle
+Angel_Steel_Left_Attacking1_Swordtip = pygame.image.load("Genesis_Sprites/Angel_steel_left_Attacking1_Swordtip.png").convert()
+Angel_Steel_Left_Attacking2_Swordtip = pygame.image.load("Genesis_Sprites/Angel_steel_left_Attacking2_Swordtip.png").convert()
+Angel_Steel_Left_Attacking3_Swordtip = pygame.image.load("Genesis_Sprites/Angel_steel_left_Attacking3_Swordtip.png").convert()
+Angel_Steel_Left_Attacking4_Swordtip = pygame.image.load("Genesis_Sprites/Angel_steel_left_Attacking4_Swordtip.png").convert()
+Angel_Steel_Left_Attacking5_Swordtip = pygame.image.load("Genesis_Sprites/Angel_steel_left_Attacking5_Swordtip.png").convert()
+
+Angel_Steel_Right_Idle = pygame.transform.flip(Angel_Steel_Left_Idle, True, False)
+Angel_Steel_Right_Walking1 = pygame.transform.flip(Angel_Steel_Left_Walking1, True, False)
+Angel_Steel_Right_Walking2 = pygame.transform.flip(Angel_Steel_Left_Walking2, True, False)
+Angel_Steel_Right_Walking3 = pygame.transform.flip(Angel_Steel_Left_Walking3, True, False)
+Angel_Steel_Right_Walking4 = pygame.transform.flip(Angel_Steel_Left_Walking4, True, False)
+Angel_Steel_Right_Attacking1 = pygame.transform.flip(Angel_Steel_Left_Attacking1, True, False)
+Angel_Steel_Right_Attacking2 = pygame.transform.flip(Angel_Steel_Left_Attacking2, True, False)
+Angel_Steel_Right_Attacking3 = pygame.transform.flip(Angel_Steel_Left_Attacking3, True, False)
+Angel_Steel_Right_Attacking4 = pygame.transform.flip(Angel_Steel_Left_Attacking4, True, False)
+Angel_Steel_Right_Attacking5 = pygame.transform.flip(Angel_Steel_Left_Attacking5, True, False)
+Angel_Steel_Right_Attacking1_Swordtip = pygame.transform.flip(Angel_Steel_Left_Attacking1_Swordtip, True, False)
+Angel_Steel_Right_Attacking2_Swordtip = pygame.transform.flip(Angel_Steel_Left_Attacking2_Swordtip, True, False)
+Angel_Steel_Right_Attacking3_Swordtip = pygame.transform.flip(Angel_Steel_Left_Attacking3_Swordtip, True, False)
+Angel_Steel_Right_Attacking4_Swordtip = pygame.transform.flip(Angel_Steel_Left_Attacking4_Swordtip, True, False)
+Angel_Steel_Right_Attacking5_Swordtip = pygame.transform.flip(Angel_Steel_Left_Attacking5_Swordtip, True, False)
+
+Angel_Steel_Get_Item = pygame.image.load("Genesis_Sprites/Angel_Steel_get_item.png").convert()
+
+# Golden Armor and sword
+Angel_Gold_Back_Idle = pygame.image.load("Genesis_Sprites/Angel_Gold_back_idle.png").convert()
+Angel_Gold_Back_Walking1 = pygame.image.load("Genesis_Sprites/Angel_Gold_back_walking1.png").convert()
+Angel_Gold_Back_Walking2 = Angel_Gold_Back_Idle
+Angel_Gold_Back_Walking3 = pygame.transform.flip(Angel_Gold_Back_Walking1, True, False)
+Angel_Gold_Back_Walking4 = Angel_Gold_Back_Idle 
+Angel_Gold_Back_Attacking1 = Angel_Gold_Back_Idle
+Angel_Gold_Back_Attacking2 = pygame.image.load("Genesis_Sprites/Angel_Gold_back_Attacking2.png").convert()
+Angel_Gold_Back_Attacking3 = pygame.image.load("Genesis_Sprites/Angel_Gold_back_Attacking3.png").convert()
+Angel_Gold_Back_Attacking4 = pygame.image.load("Genesis_Sprites/Angel_Gold_back_Attacking4.png").convert()
+Angel_Gold_Back_Attacking5 = Angel_Gold_Back_Idle
+Angel_Gold_Back_Attacking2_Swordtip = pygame.image.load("Genesis_Sprites/Angel_Gold_back_Attacking2_swordtip.png").convert()
+Angel_Gold_Back_Attacking3_Swordtip = pygame.image.load("Genesis_Sprites/Angel_Gold_back_Attacking3_swordtip.png").convert()
+Angel_Gold_Back_Attacking4_Swordtip = pygame.image.load("Genesis_Sprites/Angel_Gold_back_Attacking4_swordtip.png").convert()
+
+Angel_Gold_Front_Idle = pygame.image.load("Genesis_Sprites/Angel_Gold_front_idle.png").convert()
+Angel_Gold_Front_Walking1 = pygame.image.load("Genesis_Sprites/Angel_Gold_front_walking1.png").convert()
+Angel_Gold_Front_Walking2 = pygame.image.load("Genesis_Sprites/Angel_Gold_front_walking2.png").convert()
+Angel_Gold_Front_Walking3 = pygame.image.load("Genesis_Sprites/Angel_Gold_front_walking3.png").convert()
+Angel_Gold_Front_Walking4 = pygame.image.load("Genesis_Sprites/Angel_Gold_front_walking4.png").convert()
+Angel_Gold_Front_Attacking1 = Angel_Gold_Front_Idle
+Angel_Gold_Front_Attacking2 = pygame.image.load("Genesis_Sprites/Angel_Gold_front_Attacking2.png").convert()
+Angel_Gold_Front_Attacking3 = pygame.image.load("Genesis_Sprites/Angel_Gold_front_Attacking3.png").convert()
+Angel_Gold_Front_Attacking4 = pygame.image.load("Genesis_Sprites/Angel_Gold_front_Attacking4.png").convert()
+Angel_Gold_Front_Attacking5 = Angel_Gold_Front_Idle
+Angel_Gold_Front_Attacking2_Swordtip = pygame.image.load("Genesis_Sprites/Angel_Gold_front_Attacking2_swordtip.png").convert()
+Angel_Gold_Front_Attacking3_Swordtip = pygame.image.load("Genesis_Sprites/Angel_Gold_front_Attacking3_swordtip.png").convert()
+Angel_Gold_Front_Attacking4_Swordtip = pygame.image.load("Genesis_Sprites/Angel_Gold_front_Attacking4_swordtip.png").convert()
+
+Angel_Gold_Left_Idle = pygame.image.load("Genesis_Sprites/Angel_Gold_left_idle.png").convert()
+Angel_Gold_Left_Walking1 = pygame.image.load("Genesis_Sprites/Angel_Gold_left_walking1.png").convert()
+Angel_Gold_Left_Walking2 = pygame.image.load("Genesis_Sprites/Angel_Gold_left_walking2.png").convert()
+Angel_Gold_Left_Walking3 = pygame.image.load("Genesis_Sprites/Angel_Gold_left_walking3.png").convert()
+Angel_Gold_Left_Walking4 = pygame.image.load("Genesis_Sprites/Angel_Gold_left_walking4.png").convert()
+Angel_Gold_Left_Attacking1 = Angel_Gold_Left_Idle
+Angel_Gold_Left_Attacking2 = pygame.image.load("Genesis_Sprites/Angel_Gold_left_Attacking2.png").convert()
+Angel_Gold_Left_Attacking3 = pygame.image.load("Genesis_Sprites/Angel_Gold_left_Attacking3.png").convert()
+Angel_Gold_Left_Attacking4 = pygame.image.load("Genesis_Sprites/Angel_Gold_left_Attacking4.png").convert()
+Angel_Gold_Left_Attacking5 = Angel_Gold_Left_Idle
+Angel_Gold_Left_Attacking1_Swordtip = pygame.image.load("Genesis_Sprites/Angel_Gold_left_Attacking1_Swordtip.png").convert()
+Angel_Gold_Left_Attacking2_Swordtip = pygame.image.load("Genesis_Sprites/Angel_Gold_left_Attacking2_Swordtip.png").convert()
+Angel_Gold_Left_Attacking3_Swordtip = pygame.image.load("Genesis_Sprites/Angel_Gold_left_Attacking3_Swordtip.png").convert()
+Angel_Gold_Left_Attacking4_Swordtip = pygame.image.load("Genesis_Sprites/Angel_Gold_left_Attacking4_Swordtip.png").convert()
+Angel_Gold_Left_Attacking5_Swordtip = pygame.image.load("Genesis_Sprites/Angel_Gold_left_Attacking5_Swordtip.png").convert()
+
+Angel_Gold_Right_Idle = pygame.transform.flip(Angel_Gold_Left_Idle, True, False)
+Angel_Gold_Right_Walking1 = pygame.transform.flip(Angel_Gold_Left_Walking1, True, False)
+Angel_Gold_Right_Walking2 = pygame.transform.flip(Angel_Gold_Left_Walking2, True, False)
+Angel_Gold_Right_Walking3 = pygame.transform.flip(Angel_Gold_Left_Walking3, True, False)
+Angel_Gold_Right_Walking4 = pygame.transform.flip(Angel_Gold_Left_Walking4, True, False)
+Angel_Gold_Right_Attacking1 = pygame.transform.flip(Angel_Gold_Left_Attacking1, True, False)
+Angel_Gold_Right_Attacking2 = pygame.transform.flip(Angel_Gold_Left_Attacking2, True, False)
+Angel_Gold_Right_Attacking3 = pygame.transform.flip(Angel_Gold_Left_Attacking3, True, False)
+Angel_Gold_Right_Attacking4 = pygame.transform.flip(Angel_Gold_Left_Attacking4, True, False)
+Angel_Gold_Right_Attacking5 = pygame.transform.flip(Angel_Gold_Left_Attacking5, True, False)
+Angel_Gold_Right_Attacking1_Swordtip = pygame.transform.flip(Angel_Gold_Left_Attacking1_Swordtip, True, False)
+Angel_Gold_Right_Attacking2_Swordtip = pygame.transform.flip(Angel_Gold_Left_Attacking2_Swordtip, True, False)
+Angel_Gold_Right_Attacking3_Swordtip = pygame.transform.flip(Angel_Gold_Left_Attacking3_Swordtip, True, False)
+Angel_Gold_Right_Attacking4_Swordtip = pygame.transform.flip(Angel_Gold_Left_Attacking4_Swordtip, True, False)
+Angel_Gold_Right_Attacking5_Swordtip = pygame.transform.flip(Angel_Gold_Left_Attacking5_Swordtip, True, False)
+
+Angel_Gold_Get_Item = pygame.image.load("Genesis_Sprites/Angel_Gold_get_item.png").convert()
+
+RIGHT = "RIGHT"
+DOWN = "DOWN"
+LEFT = "LEFT"
+UP = "UP"
+
 # WORLD_DATA is a large string that includes all the tile data copied from Tiled file.
 # TODO: import this data from the .tmx file directly.
 WORLD_DATA = """50,16,16,16,16,16,16,16,16,16,16,16,16,16,16,49,50,16,16,16,16,16,16,16,16,16,16,16,16,16,16,49,22,41,41,41,41,41,41,41,41,41,41,41,41,41,41,21,50,16,16,16,16,16,16,16,16,16,16,16,16,16,16,49,50,16,16,16,16,16,16,16,16,16,16,16,16,16,16,49
@@ -282,12 +483,12 @@ class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         
-        # This sets the image to be the Angel surface defined above.
-        self.image = pygame.Surface([25 * WINDOW_MAGNIFICATION, 25 * WINDOW_MAGNIFICATION])
+        # This sets th e image to be the Angel surface defined above.
+        self.image = pygame.Surface([16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION])
         self.rect = self.image.get_rect()
-        self.image = Angel
+        self.image = Angel_wood_Right_Idle
 #         self.rect = self.image.get_rect()
-        
+        self.image.set_colorkey(COLORKEY)
         # Set the players starting position to center screen
         # NOTE: The player's x position is not centered at WINDOW_HEIGHT//2
         self.x = WINDOW_WIDTH // 2 - 36
@@ -300,7 +501,7 @@ class Player(pygame.sprite.Sprite):
         self.worldy = (WORLD_HEIGHT * 5) // 6
         
         # Scale the image by the window magnification
-        self.image = pygame.transform.scale(self.image, (25 * WINDOW_MAGNIFICATION, 25 * WINDOW_MAGNIFICATION))
+        self.image = pygame.transform.scale(self.image, (16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION))
         
         # Copy the player to the screen
         screen.blit(self.image,[self.x, self.y] )
@@ -535,7 +736,7 @@ class Game(object):
         
         # Draw each of the sprites in the all_sprites_Group
         self.all_sprites_Group.draw(screen)
-
+ 
         # Copy back buffer onto the front buffer
         pygame.display.flip()
 
