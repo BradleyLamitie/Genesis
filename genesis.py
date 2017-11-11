@@ -2,8 +2,8 @@
 Create the main game for "Genesis"
  
 Author: Bradley Lamitie
-Date: 11/09/2017
-Version Number: 1.72
+Date: 11/11/2017
+Version Number: 1.75
 
 What the Code Does: 
 The code so far creates the world using the tiles provided by rendering one room at a time
@@ -1425,7 +1425,6 @@ def main():
     
     # Create an instance of the Game class
     game = Game()
-    
     
     # Main game loop
     while not done:
