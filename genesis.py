@@ -3,13 +3,15 @@ Create the main game for "Genesis"
  
 Author: Bradley Lamitie
 Date: 11/11/2017
-Version Number: 1.75
+Version Number: 1.78
 
 What the Code Does: 
 The code so far creates the world using the tiles provided by rendering one room at a time
 and zooming in on it to make it more visible. 
 Then, the player is put into the world and can use the directional 
 keys( UpArrow, RightArrow, LeftArrow, and DownArrow ) to move around the world
+The player can also now use potions and spells using the E and Q key respectively
+The player can switch between potions using A and D and switch between spells with W and S
 The code runs through the events and moves the sprite. 
 So far, the game doesnt have any real way to lose or win. 
 
@@ -22,15 +24,10 @@ GitHub Repository: https://github.com/BradleyLamitie/Genesis
 Credits: 
 Silk Wonderland font by jelloween Found on https://jelloween.deviantart.com/art/Font-SILKY-WONDERLAND-free-45103645
 "The White" By RoleMusic found on http://freemusicarchive.org/genre/Chiptune/
+All Sprites are made by me using Pixilart.com
 
 Changes in this version: 
-- Added more sprites  
-- Added Overworld Music
-- Added a feedback system
-- Added the ability to use and switch between potions
-- Added a Splash Screen
-- Added a Game Over Screen
-- Added ability to switch between Spells
+- Added the ability to use magic
 
 TODOs for  Demo/Final Project: 
 - Finish building the world's second level. 
@@ -40,7 +37,6 @@ TODOs for  Demo/Final Project:
 - Animate the characters as they move throughout the world. 
 - Add enemies with basic AI to fight.
 - Replace all clocktower_door sprites with new sprites. 
-- Add the ability to use magic and  
 - Add ability to interact with things like chests, NPCs, and signposts. 
 - Add Save states or a pause function.
 - Add a menu.
@@ -52,6 +48,7 @@ TODOs for  Demo/Final Project:
 """
 import pygame
 from pygame.sprite import spritecollide
+from pygame.examples.mask import Sprite
  
 # --- Global constants ---
 # Colors: 
@@ -405,9 +402,12 @@ tile_Data = WORLD_DATA
 tile_Data = tile_Data.split('\n')
 tile_Data = [line.split(',') for line in tile_Data]
 
-# This list represents the tile numbers of tiles th eplayer shouldn't be able to walk through.
+# This list represents the tile numbers of tiles the player shouldn't be able to walk through.
 boundary_tiles = [15,16,17,18,19,20,21,22,23,24,25,26,28,29,30,31,32,33,34,35,36,37,40,41,4246,47,48,49,50,51,52,53,55,56,57]
 
+# These lists represent tiles that are able to be burned and tiles that can be exploded using spells
+explodable_tiles = [44,47,48,55]
+burnable_tiles = [44]
 # --- Classes ---
  
 class Tile(pygame.sprite.Sprite):
@@ -420,10 +420,12 @@ class Tile(pygame.sprite.Sprite):
         # Initialize the tiles size and locations
         self.image = pygame.Surface([25 * WINDOW_MAGNIFICATION, 25 * WINDOW_MAGNIFICATION])
         self.rect = self.image.get_rect()
-        self.x = (x - leftmostTile) * 25 * WINDOW_MAGNIFICATION
-        self.y = (y - topmostTile) * 25 * WINDOW_MAGNIFICATION
-        self.rect.x = self.x
-        self.rect.y = self.y
+        self.y = y
+        self.x = x
+        self.tilex = (x - leftmostTile) * 25 * WINDOW_MAGNIFICATION
+        self.tiley = (y - topmostTile) * 25 * WINDOW_MAGNIFICATION
+        self.rect.x = self.tilex
+        self.rect.y = self.tiley
         
     def getTileNumber(self, x, y):
         """ This function is used to fetch a tileNumber from the tile_Data """
@@ -437,7 +439,13 @@ class Tile(pygame.sprite.Sprite):
         tileNumber = int(tileNumber)
         
         # Run through each of the cases.
-        if(tileNumber == 16):
+        if(tileNumber == 1):
+            return Grass_cut
+        elif(tileNumber == 2):
+            return Rock_exploded
+        elif(tileNumber == 3):
+            return Rock_exploded_path
+        elif(tileNumber == 16):
             return Cliff_bottom_bottom
         elif(tileNumber == 17):
             return Cliff_bottom_corner_bottomleft
@@ -529,6 +537,21 @@ class Player(pygame.sprite.Sprite):
         self.currentPotion = 0
         self.currentSpell = 0
         
+        # Initialize the Spell Sprites location
+        self.spellx = 5000
+        self.spelly = 5000
+        
+        # Initialize the spell sprite
+        self.currentSpellSprite = pygame.sprite.Sprite()
+        self.currentSpellSprite.image = pygame.Surface([11 * WINDOW_MAGNIFICATION, 19 * WINDOW_MAGNIFICATION])
+        self.currentSpellSprite.image = Blank
+        self.currentSpellSprite.image.set_colorkey(COLORKEY)
+        self.currentSpellSpritex = WINDOW_WIDTH - 23 * WINDOW_MAGNIFICATION
+        self.currentSpellSpritey =  10 * WINDOW_MAGNIFICATION
+        self.currentSpellSprite = pygame.transform.scale(self.currentSpellSprite.image, (11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
+        screen.blit(self.currentSpellSprite, (self.currentSpellSpritex, self.currentSpellSpritey))
+       
+       
         # This sets the image to be the Angel surface defined above.
         self.image = pygame.Surface([16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION])
         self.rect = self.image.get_rect()
@@ -540,7 +563,10 @@ class Player(pygame.sprite.Sprite):
         self.x = WINDOW_WIDTH // 2 - 36
         self.y = WINDOW_HEIGHT // 2
         self.rect.x = self.x
-        self.rect.y = self.y
+        self.rect.y = self.y - 10 * WINDOW_MAGNIFICATION
+        
+        # Set the direction the player is facing
+        self.direction = "DOWN"
         
         # Set the player's max Health and Mana
         self.max_Health = 100
@@ -548,7 +574,7 @@ class Player(pygame.sprite.Sprite):
         
         # Set the player's health and mana
         self.health = 25
-        self.mana = 0
+        self.mana =  0
         
         # Set the player's current money
         self.money = 0
@@ -560,7 +586,7 @@ class Player(pygame.sprite.Sprite):
         self.armor = "Wood"
         
         # Set the player's inventory
-        self.inventory = [["Wood Armor", 1], ["Steel Armor", 0], ["Gold Armor", 0], ["Fireball Spell", 0], ["Explosion Spell",0], ["Boss Key",0], ["Health Potion",1], ["Lesser Health Potion",1], ["Mana Potion",5], ["Lesser Mana Potion",1]]
+        self.inventory = [["Wood Armor", 1], ["Steel Armor", 0], ["Gold Armor", 0], ["Fireball Spell", 1], ["Explosion Spell",1], ["Boss Key",0], ["Health Potion",1], ["Lesser Health Potion",1], ["Mana Potion",5], ["Lesser Mana Potion",1]]
         
         
         # Set the players position in the world
@@ -570,23 +596,40 @@ class Player(pygame.sprite.Sprite):
         # Scale the image by the window magnification
         self.image = pygame.transform.scale(self.image, (16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION))
         
-        # Copy the player to the screen
-        screen.blit(self.image,[self.x, self.y] )
-
+        # Create a timer to keep track of spell longevity
+        self.timer = 0
+        
+        # Initialize the elapsed variable
+        self.elapsed = 0
     def update(self):
         """ Update the player location. """
+        # Update a rect to be used in spell collision detection
         
         self.rect.x = self.x
         self.rect.y = self.y  
         
     def draw(self):
         """ Draw the Player sprite onto the back buffer. """
-        scale = 25 * WINDOW_MAGNIFICATION
-        Angel = pygame.transform.scale(self.image, (scale, scale))
-        screen.blit(Angel,[self.rect.x, self.rect.y] )
-    
+        Angel = pygame.transform.scale(self.image, (16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION))
+        screen.blit(Angel,[self.x, self.y] )
+        
+        # Allow the spell sprite to exist for a few seconds
+        previousElapsed = self.elapsed
+        self.elapsed = pygame.time.get_ticks()
+        self.timer += ((self.elapsed - previousElapsed)/100)
+        if(self.timer < 3):
+            self.currentSpellSprite = pygame.transform.scale(self.currentSpellSprite, (16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION))
+            screen.blit(self.currentSpellSprite, (self.spellx, self.spelly))
+        else:
+            # Once time is up, move the sprite far away where it can't collide anymore
+            self.spellx = 5000
+            self.spelly = 5000
     def changePlayerDirection(self, direction):
         """ Change the player's sprite based on what direction the player last moved and what armor they have. """
+        
+        # Set the player's direction to the direction passed in.
+        self.direction = direction
+        
         if direction == "UP":
             if self.armor == "Wood":
                 self.image = Angel_wood_Back_Idle
@@ -615,21 +658,58 @@ class Player(pygame.sprite.Sprite):
                 self.image = Angel_Steel_Right_Idle
             elif self.armor == "Gold":
                 self.image = Angel_Gold_Right_Idle    
+                
         # Rescale the image and set the background to be translucent   
         self.image = pygame.transform.scale(self.image, (16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION))
         self.image.set_colorkey(COLORKEY)
+        
 
     def attack(self):
         # TODO: add ability to attack
         print("HIYA")
         
     def useSpell(self):
-        # TODO: add ability to use spells
-        print("abracadabra")
+        """ Function used to allow player to use spells"""
+        # Grab the spell inventory
         spellInventory = [self.inventory[3][1], self.inventory[4][1]]
         for i in range(len(spellInventory)):
+            
+            # Check to see if the player has any spells 
             if(spellInventory[i] >= 1):
                 hasSpells = True
+        # Initialize the spellSprite's location to be far off screen
+        spell = self.currentSpell
+        self.spellx = 5000
+        self.spelly = 5000
+        playerx = self.x
+        playery = self.y
+        if(hasSpells):
+            # Set the x and y coordinates of the spell sprite
+            if(self.direction == "LEFT"):
+                self.spellx = playerx - 30
+                self.spelly = playery + 5
+            elif(self.direction == "RIGHT"):
+                self.spellx = playerx + 30
+                self.spelly = playery + 5
+            elif(self.direction == "DOWN"):
+                self.spellx = playerx - 5
+                self.spelly = playery + 45
+            elif(self.direction == "UP"):
+                self.spellx = playerx - 5
+                self.spelly = playery - 45
+        
+        # Set the sprite image and consume Mana 
+        if self.inventory[spell + 3][0] == "Fireball Spell":
+                self.currentSpellSprite = Fireball_Regular
+                self.mana -= 10
+        elif self.inventory[spell + 3][0] == "Explosion Spell":
+                self.currentSpellSprite = Explosion_Blast
+                self.mana -= 25
+        
+        # Rescale and set the image's background to clear
+        self.currentSpellSprite = pygame.transform.scale(self.currentSpellSprite, (11 * WINDOW_MAGNIFICATION + 1, 15 * WINDOW_MAGNIFICATION + 1))
+        self.currentSpellSprite.set_colorkey(COLORKEY)
+        self.timer = 0
         
     def usePotion(self):
         """ This function allows the player to consume a potion and have it heal them or restore mana. """
@@ -670,11 +750,7 @@ class Player(pygame.sprite.Sprite):
                     if(self.mana > self.max_Mana):
                         self.mana = self.max_Mana
                         
-    def checkInventory(self, item):
-        """ Checks the player's inventory to see how many of an item the player has. """
-        for i in self.inventory:
-            if(item == self.inventory[i][0]):
-                return self.inventory[i][1]
+    
             
 class FeedbackSystem( ):      
     # TODO: Feedback System
@@ -767,6 +843,7 @@ class FeedbackSystem( ):
         
     def update(self, player):
         """ Updates the information needed to run the feedbacksystem. """
+        
         
         self.max_Health = player.max_Health
         self.max_Mana = player.max_Mana
@@ -929,6 +1006,9 @@ class FeedbackSystem( ):
         
     def switchSpellLeft(self, player):
         """ Switches the spell selection backward. """
+        # Set the spellSprite far off screen
+        player.spellx = 5000
+        player.spelly = 5000
         
         # Assume the player has no spells
         hasSpells= False
@@ -984,9 +1064,12 @@ class FeedbackSystem( ):
                 
     def switchSpellRight(self, player):
         """ Switches the spell selection backward. """
+        # Set the spellSprite far off screen
+        player.spellx = 5000
+        player.spelly = 5000
         
         # Assume the player has no spells
-        hasSpells= False
+        hasSpells = False
         
         # initialize a copy of the player's inventory
         inventory = player.inventory
@@ -1059,6 +1142,8 @@ class Game(object):
         
         # Create sprite lists
         self.all_boundaries_Group = pygame.sprite.Group()
+        self.all_explodables_Group = pygame.sprite.Group()
+        self.all_burnables_Group = pygame.sprite.Group()
         self.all_sprites_Group = pygame.sprite.Group()
         
         # Create the player
@@ -1067,9 +1152,9 @@ class Game(object):
         # Create a new feedback System
         self.feedback = FeedbackSystem(self.player)
 
-        # Add the player to the sprites group
-        self.all_sprites_Group.add(self.player)
-        
+#         # Add the player to the sprites group
+#         self.all_sprites_Group.add(self.player)
+#         
         # Instantiate  starting variables for event handling
         self.upKeyPressed = False
         self.downKeyPressed = False
@@ -1127,7 +1212,12 @@ class Game(object):
                     self.leftKeyPressed = True
                     self.DIRECTION = "LEFT"  
                 elif event.key == pygame.K_q:
-                    self.player.useSpell()
+                    if(self.player.currentSpell == 0):
+                        if self.player.mana >= 10:
+                            self.player.useSpell()
+                    if(self.player.currentSpell == 1):
+                        if self.player.mana >= 25:
+                            self.player.useSpell()                
                 elif event.key == pygame.K_e:
                     self.player.usePotion()
                 elif event.key == pygame.K_w:
@@ -1227,6 +1317,8 @@ class Game(object):
         leftmostTile = leftPixel // 25
         topmostTile = topPixel // 25
         self.all_boundaries_Group.empty()
+        self.all_burnables_Group.empty()
+        self.all_explodables_Group.empty()
         
         # Get the initial room surface
         roomSurf = pygame.Surface((ROOM_WIDTH, ROOM_HEIGHT))
@@ -1242,10 +1334,14 @@ class Game(object):
                 
                 roomSurf.blit(tile.getTile(tile_number), ((tilex - leftmostTile) * 25, (tiley - topmostTile) * 25))
                
-                # Check if the tile at tilex and tiley is a boundary
+                # Check if the tile at tilex and tiley is a boundary, burnable, or explodable
                 if tile_number in boundary_tiles:
                     self.all_boundaries_Group.add(tile)
-   
+                if tile_number in explodable_tiles:
+                    self.all_explodables_Group.add(tile)
+                if tile_number in burnable_tiles:
+                    self.all_burnables_Group.add(tile)
+                    
         # Zoom in on the room to make it more viewable and return the room
         roomSurf = pygame.transform.scale(roomSurf, (ROOM_WIDTH * WINDOW_MAGNIFICATION, ROOM_HEIGHT * WINDOW_MAGNIFICATION))
         return roomSurf
@@ -1268,7 +1364,9 @@ class Game(object):
             # Move all the sprites and update positions
             self.all_sprites_Group.update()
             self.all_boundaries_Group.update()
-            
+            self.all_explodables_Group.update()
+            self.all_burnables_Group.update()
+            self.player.update()
             # check if there are any collisions between th eplayer and a boundary tile.
             bump_list = spritecollide(self.player, self.all_boundaries_Group, False)
             
@@ -1291,7 +1389,45 @@ class Game(object):
             else: 
                 # Set the new position of the player. 
                 self.player = player
-        
+            # Create a rect to be used in spell collision detection
+            spellRect = pygame.sprite.Sprite()
+            spellRect.image = pygame.Surface([11 * WINDOW_MAGNIFICATION, 16 * WINDOW_MAGNIFICATION])
+            spellRect.rect = spellRect.image.get_rect()
+            spellRect.rect.x = self.player.spellx
+            spellRect.rect.y = self.player.spelly
+            
+            # Check to see if the fire spell collides with burnable objects
+            if(self.player.currentSpell == 0):
+                spell_burn_collision_list = spritecollide(spellRect, self.all_burnables_Group, False)
+                for i in range(len(spell_burn_collision_list)):
+                    tile = spell_burn_collision_list[i]
+                    tilex = tile.x
+                    tiley = tile.y
+                    tileNumber = tile_Data[tiley][tilex]
+                    # If it does, replace the exploded tiles with the new tile
+                    if(tileNumber == "44"):
+                        tile_Data[tiley][tilex] = "1"
+            
+            # Chack to see if the explosion spell collides with explodable objects
+            if(self.player.currentSpell  == 1):
+                spell_explode_collision_list = spritecollide(spellRect, self.all_explodables_Group, False)
+                for i in range(len(spell_explode_collision_list)):
+                    tile = spell_explode_collision_list[i]
+                    tilex = tile.x
+                    tiley = tile.y
+                    tileNumber = tile_Data[tiley][tilex]
+                    # If it does, replace the exploded tiles with the new tile
+                    print(tileNumber)
+                    if(tileNumber == "44"):
+                        tile_Data[tiley][tilex] = "1"
+                    elif(tileNumber == "47"):
+                        tile_Data[tiley][tilex] = "2"
+                    elif(tileNumber == "48"):
+                        tile_Data[tiley][tilex] = "2"
+                    elif(tileNumber == "55"):
+                        tile_Data[tiley][tilex] = "3"
+                    
+            
 # TODO: Add collision detection between the Player and the enemies     
 
     def display_frame(self, screen):
@@ -1311,7 +1447,7 @@ class Game(object):
             
             # Draw each of the sprites in the all_sprites_Group
             self.all_sprites_Group.draw(screen)
-            
+            self.player.draw()
             # Draw each of the feedback sprites and information
             self.feedback.draw()
             
