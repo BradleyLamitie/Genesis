@@ -119,4 +119,10 @@
  <tile id="56">
   <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Chest_closed.png"/>
  </tile>
+ <tile id="57">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Merchant.png"/>
+ </tile>
+ <tile id="58">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/OldMan.png"/>
+ </tile>
 </tileset>
