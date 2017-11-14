@@ -2,8 +2,8 @@
 Create the main game for "Genesis"
  
 Author: Bradley Lamitie
-Date: 11/11/2017
-Version Number: 1.9
+Date: 11/14/2017
+Version Number: 2.0 (Demo)
  
 What the Code Does: 
 The code so far creates the world using the tiles provided by rendering one room at a time
@@ -595,7 +595,8 @@ class Player(pygame.sprite.Sprite):
         self.currentSwordSprite.image.set_colorkey(COLORKEY)
         self.currentSwordSpritex = 0
         self.currentSwordSpritey =  0
-        self.currentSwordSprite = pygame.transform.scale(self.currentSwordSprite.image, (16 * WINDOW_MAGNIFICATION, 9 * WINDOW_MAGNIFICATION))
+        self.currentSwordSprite = pygame.transform.scale(self.currentSwordSprite.image,
+                                                     (16 * WINDOW_MAGNIFICATION, 9 * WINDOW_MAGNIFICATION))
         screen.blit(self.currentSwordSprite, (self.currentSwordSpritex, self.currentSwordSpritey))
         
         # Initialize the Interact Sprites Location
@@ -604,12 +605,14 @@ class Player(pygame.sprite.Sprite):
         
         # Initialize the interact sprite for interacting
         self.currentInteractSprite = pygame.sprite.Sprite()
-        self.currentInteractSprite.image = pygame.Surface([16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION])
+        self.currentInteractSprite.image = pygame.Surface([16 * WINDOW_MAGNIFICATION,
+                                                            21 * WINDOW_MAGNIFICATION])
         self.currentInteractSprite.image = Blank
         self.currentInteractSprite.image.set_colorkey(COLORKEY)
         self.currentInteractSpritex = 0
         self.currentInteractSpritey =  0
-        self.currentInteractSprite = pygame.transform.scale(self.currentInteractSprite.image, (16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION))
+        self.currentInteractSprite = pygame.transform.scale(self.currentInteractSprite.image,
+                                                     (16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION))
         screen.blit(self.currentInteractSprite, (self.currentInteractSpritex, self.currentInteractSpritey))
        
         # This sets the image to be the Angel surface defined above.
@@ -656,7 +659,8 @@ class Player(pygame.sprite.Sprite):
         self.worldy = (WORLD_HEIGHT * 5) // 6
         
         # Scale the image by the window magnification
-        self.image = pygame.transform.scale(self.image, (16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION))
+        self.image = pygame.transform.scale(self.image,
+                                             (16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION))
         
         # Create a timer to keep track of spell longevity
         self.timer = 0
@@ -695,7 +699,8 @@ class Player(pygame.sprite.Sprite):
         self.elapsed = pygame.time.get_ticks()
         self.timer += ((self.elapsed - previousElapsed)/100)
         if(self.timer < 3):
-            self.currentSpellSprite = pygame.transform.scale(self.currentSpellSprite, (16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION))
+            self.currentSpellSprite = pygame.transform.scale(self.currentSpellSprite,
+                                                     (16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION))
             screen.blit(self.currentSpellSprite, (self.spellx, self.spelly))
         else:
             # Once time is up, move the sprite far away where it can't collide anymore
@@ -723,7 +728,7 @@ class Player(pygame.sprite.Sprite):
             
         screen.blit(self.currentInteractSprite, (self.interactx, self.interacty))
     def changePlayerDirection(self, direction):
-        """ Change the player's sprite based on what direction the player last moved and what armor they have. """
+        """ Change the player's sprite based on what direction the player\ moved and what armor they have. """
         
         # Set the player's direction to the direction passed in.
         self.direction = direction
@@ -759,7 +764,8 @@ class Player(pygame.sprite.Sprite):
                 self.image = Angel_Gold_Right_Idle    
                 
         # Rescale the image and set the background to be translucent   
-        self.image = pygame.transform.scale(self.image, (16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION))
+        self.image = pygame.transform.scale(self.image,
+                                             (16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION))
         self.image.set_colorkey(COLORKEY)
         
 
@@ -1066,7 +1072,8 @@ class Enemy(pygame.sprite.Sprite):
             self.x -= self.walkRate
             
         # Rescale and set the background to be translucent
-        self.image = pygame.transform.scale(self.image, (25 * WINDOW_MAGNIFICATION , 25 * WINDOW_MAGNIFICATION ))
+        self.image = pygame.transform.scale(self.image, 
+                                            (25 * WINDOW_MAGNIFICATION , 25 * WINDOW_MAGNIFICATION ))
         self.image.set_colorkey(COLORKEY)
         
         # Reset the clock
@@ -1116,7 +1123,8 @@ class Enemy(pygame.sprite.Sprite):
             self.image = Snake_Forward_1
        
         # Rescale the image and set the background to translucent
-        self.image = pygame.transform.scale(self.image, (25 * WINDOW_MAGNIFICATION , 25 * WINDOW_MAGNIFICATION ))
+        self.image = pygame.transform.scale(self.image,
+                                             (25 * WINDOW_MAGNIFICATION , 25 * WINDOW_MAGNIFICATION ))
         self.image.set_colorkey(COLORKEY)
         
         # Reset the clock
@@ -1160,7 +1168,8 @@ class FeedbackSystem( ):
         self.coin_Image.image.set_colorkey(COLORKEY)
         self.coin_Imagex = 10
         self.coin_Imagey = WINDOW_HEIGHT - 40
-        self.coin_Image = pygame.transform.scale(self.coin_Image.image, (15 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
+        self.coin_Image = pygame.transform.scale(self.coin_Image.image,
+                                                  (15 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
         screen.blit(self.coin_Image, (self.coin_Imagex, self.coin_Imagey))
 
         
@@ -1177,7 +1186,8 @@ class FeedbackSystem( ):
         self.potion_Frame.image.set_colorkey(COLORKEY)
         self.potion_Framex = WINDOW_WIDTH - 100
         self.potion_Framey =  10
-        self.potion_Frame = pygame.transform.scale(self.potion_Frame.image, (15 * (WINDOW_MAGNIFICATION + 1), 15 * (WINDOW_MAGNIFICATION + 1)))
+        self.potion_Frame = pygame.transform.scale(self.potion_Frame.image,
+                                         (15 * (WINDOW_MAGNIFICATION + 1), 15 * (WINDOW_MAGNIFICATION + 1)))
         screen.blit(self.potion_Frame, (self.potion_Framex, self.potion_Framey))
         
         # Initialize and draw the frame used for displaying the current spell
@@ -1187,7 +1197,8 @@ class FeedbackSystem( ):
         self.spell_Frame.image.set_colorkey(COLORKEY)
         self.spell_Framex = WINDOW_WIDTH - 25 * WINDOW_MAGNIFICATION
         self.spell_Framey =  2 * WINDOW_MAGNIFICATION
-        self.spell_Frame = pygame.transform.scale(self.spell_Frame.image, (11 * (WINDOW_MAGNIFICATION + 1), 19 * (WINDOW_MAGNIFICATION + 1)))
+        self.spell_Frame = pygame.transform.scale(self.spell_Frame.image,
+                                         (11 * (WINDOW_MAGNIFICATION + 1), 19 * (WINDOW_MAGNIFICATION + 1)))
         screen.blit(self.spell_Frame, (self.spell_Framex, self.spell_Framey))
     
         # Initialize and draw the spell Sprite used for displaying the current spell
@@ -1197,17 +1208,20 @@ class FeedbackSystem( ):
         self.currentSpellSprite.image.set_colorkey(COLORKEY)
         self.currentSpellSpritex = WINDOW_WIDTH - 23 * WINDOW_MAGNIFICATION
         self.currentSpellSpritey =  10 * WINDOW_MAGNIFICATION
-        self.currentSpellSprite = pygame.transform.scale(self.currentSpellSprite.image, (11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
+        self.currentSpellSprite = pygame.transform.scale(self.currentSpellSprite.image,
+                                                     (11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
         screen.blit(self.currentSpellSprite, (self.currentSpellSpritex, self.currentSpellSpritey))
        
         # Initialize and draw the potion Sprite used for displaying the current potion
         self.currentPotionSprite = pygame.sprite.Sprite()
-        self.currentPotionSprite.image = pygame.Surface([11 * WINDOW_MAGNIFICATION, 19 * WINDOW_MAGNIFICATION])
+        self.currentPotionSprite.image = pygame.Surface([11 * WINDOW_MAGNIFICATION,
+                                                          19 * WINDOW_MAGNIFICATION])
         self.currentPotionSprite.image = Blank
         self.currentPotionSprite.image.set_colorkey(COLORKEY)
         self.currentPotionSpritex = WINDOW_WIDTH - 90
         self.currentPotionSpritey =  20
-        self.currentPotionSprite = pygame.transform.scale(self.currentPotionSprite.image, (11 * WINDOW_MAGNIFICATION , 15 * WINDOW_MAGNIFICATION))
+        self.currentPotionSprite = pygame.transform.scale(self.currentPotionSprite.image,
+                                                     (11 * WINDOW_MAGNIFICATION , 15 * WINDOW_MAGNIFICATION))
         screen.blit(self.currentPotionSprite, (self.currentPotionSpritex, self.currentPotionSpritey))
         
         # These 2 lines update the display frames for spells and potions. 
@@ -1254,11 +1268,15 @@ class FeedbackSystem( ):
         screen.blit(self.currentSpellSprite, (self.currentSpellSpritex, self.currentSpellSpritey))
         screen.blit(self.currentPotionSprite, (self.currentPotionSpritex, self.currentPotionSpritey))
         screen.blit(potionText, (self.potion_Framex + 30, self.potion_Framey + 30))
-        pygame.draw.rect(screen, GRAY, [10,10,self.max_Health * WINDOW_MAGNIFICATION, 5 * WINDOW_MAGNIFICATION])
-        pygame.draw.rect(screen, RED, [10,10,self.health * WINDOW_MAGNIFICATION, 5 * WINDOW_MAGNIFICATION])
+        pygame.draw.rect(screen, GRAY, [10,10,self.max_Health * WINDOW_MAGNIFICATION,
+                                         5 * WINDOW_MAGNIFICATION])
+        pygame.draw.rect(screen, RED, [10,10,self.health * WINDOW_MAGNIFICATION,
+                                        5 * WINDOW_MAGNIFICATION])
         screen.blit(self.healthText, (self.max_Health - 10, 8))
-        pygame.draw.rect(screen, GRAY, [10,20,self.max_Mana * WINDOW_MAGNIFICATION, 5 * WINDOW_MAGNIFICATION])
-        pygame.draw.rect(screen, LIGHTBLUE, [10,20,self.mana * WINDOW_MAGNIFICATION, 5 * WINDOW_MAGNIFICATION])
+        pygame.draw.rect(screen, GRAY, [10,20,self.max_Mana * WINDOW_MAGNIFICATION,
+                                         5 * WINDOW_MAGNIFICATION])
+        pygame.draw.rect(screen, LIGHTBLUE, [10,20,self.mana * WINDOW_MAGNIFICATION,
+                                              5 * WINDOW_MAGNIFICATION])
         screen.blit(self.manaText, (self.max_Mana - 10, 18))
         
     def switchPotionRight(self, player):
@@ -1315,7 +1333,8 @@ class FeedbackSystem( ):
             self.currentPotionSprite = Blank    
         
         # Rescale and set the image's background to clear
-        self.currentPotionSprite = pygame.transform.scale(self.currentPotionSprite, (11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
+        self.currentPotionSprite = pygame.transform.scale(self.currentPotionSprite,
+                                                     (11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
         self.currentPotionSprite.set_colorkey(COLORKEY)
         
     def switchPotionLeft(self, player):
@@ -1374,7 +1393,8 @@ class FeedbackSystem( ):
             self.currentPotionSprite = Blank    
         
         # Rescale and set the image's background to clear
-        self.currentPotionSprite = pygame.transform.scale(self.currentPotionSprite, (11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
+        self.currentPotionSprite = pygame.transform.scale(self.currentPotionSprite,
+                                                     (11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
         self.currentPotionSprite.set_colorkey(COLORKEY)
         
     def switchSpellLeft(self, player):
@@ -1433,7 +1453,8 @@ class FeedbackSystem( ):
             self.currentSpellSprite = Blank    
             
         # Rescale and set the image's background to clear
-        self.currentSpellSprite = pygame.transform.scale(self.currentSpellSprite, (11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
+        self.currentSpellSprite = pygame.transform.scale(self.currentSpellSprite,
+                                                     (11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
         self.currentSpellSprite.set_colorkey(COLORKEY)
                 
     def switchSpellRight(self, player):
@@ -1491,7 +1512,8 @@ class FeedbackSystem( ):
             self.currentSpellSprite = Blank    
             
         # Rescale and set the image's background to clear
-        self.currentSpellSprite = pygame.transform.scale(self.currentSpellSprite, (11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
+        self.currentSpellSprite = pygame.transform.scale(self.currentSpellSprite,
+                                                    (11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
         self.currentSpellSprite.set_colorkey(COLORKEY)
                 
 
@@ -1548,7 +1570,8 @@ class Game(object):
         room6 = [Enemy(150, 100), Enemy(400, 450), Enemy(600, 350)]
         room7 = [Enemy(150, 100), Enemy(400, 450), Enemy(600, 350)]
         room9 = [Enemy(100, 200), Enemy(500, 100), Enemy(150, 300), Enemy(200, 400), Enemy(500, 350)]
-        room12 = [Enemy(600, 200), Enemy(600, 100), Enemy(600, 400), Enemy(400, 200), Enemy(400, 100), Enemy(400, 400), Enemy(200, 200), Enemy(200, 100), Enemy(200, 400), Enemy(200, 200)]
+        room12 = [Enemy(600, 200), Enemy(600, 100), Enemy(600, 400), Enemy(400, 200), Enemy(400, 100),
+                   Enemy(400, 400), Enemy(200, 200), Enemy(200, 100), Enemy(200, 400), Enemy(200, 200)]
         room14 = [Enemy(100, 200), Enemy(500, 100), Enemy(150, 300), Enemy(200, 400), Enemy(500, 350)]
         for enemy in room1:
             self.room1_enemies_Group.add(enemy)
@@ -1751,7 +1774,8 @@ class Game(object):
              
     def getRoomSurface(self, leftPixel, topPixel, tileData):
         """
-        This method is used to fetch all tiles in a single room and expand them for easier viewing. It is a great space optimization. 
+        This method is used to fetch all tiles in a single room and expand them for easier viewing. 
+        It is a great space optimization. 
         """
         # Get the leftmost and topmost tile numbers
         leftmostTile = leftPixel // 25
@@ -1775,7 +1799,8 @@ class Game(object):
                 # Just in case, ensure tile_number is an integer.
                 tile_number = int(tile_number)
                 
-                roomSurf.blit(tile.getTile(tile_number), ((tilex - leftmostTile) * 25, (tiley - topmostTile) * 25))
+                roomSurf.blit(tile.getTile(tile_number), ((tilex - leftmostTile) * 25,
+                                                           (tiley - topmostTile) * 25))
                
                 # Check if the tile at tilex and tiley is a boundary, burnable, or explodable
                 if tile_number in boundary_tiles:
@@ -1789,7 +1814,8 @@ class Game(object):
                 if tile_number in interactive_tiles:
                     self.all_interactive_Group.add(tile)
         # Zoom in on the room to make it more viewable and return the room
-        roomSurf = pygame.transform.scale(roomSurf, (ROOM_WIDTH * WINDOW_MAGNIFICATION, ROOM_HEIGHT * WINDOW_MAGNIFICATION))
+        roomSurf = pygame.transform.scale(roomSurf, (ROOM_WIDTH * WINDOW_MAGNIFICATION,
+                                                      ROOM_HEIGHT * WINDOW_MAGNIFICATION))
         return roomSurf
     
     def run_logic(self):
@@ -2265,7 +2291,8 @@ class Game(object):
                 font2 = pygame.font.Font("SILKWONDER.ttf", 20)
                 text1 = font.render("You play as an angel cast onto Earth", True, WHITE)
                 text2 = font.render("after having your wings stripped from you.", True, (WHITE))
-                text3 = font.render("Your goal is to defeat all 7 virtues on Earth to redeem yourself", True, (WHITE))
+                text3 = font.render("Your goal is to defeat all 7 virtues on Earth to redeem yourself",
+                                     True, (WHITE))
                 text4 = font.render("and earn your place in heaven.", True, (WHITE))
                 text5 = font.render("Story:", True, WHITE)
                 continueText = font2.render("Click to continue", True, WHITE)
