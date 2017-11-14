@@ -3,8 +3,8 @@ Create the main game for "Genesis"
  
 Author: Bradley Lamitie
 Date: 11/11/2017
-Version Number: 1.78
-
+Version Number: 1.9
+ 
 What the Code Does: 
 The code so far creates the world using the tiles provided by rendering one room at a time
 and zooming in on it to make it more visible. 
@@ -12,12 +12,16 @@ Then, the player is put into the world and can use the directional
 keys( UpArrow, RightArrow, LeftArrow, and DownArrow ) to move around the world
 The player can also now use potions and spells using the E and Q key respectively
 The player can switch between potions using A and D and switch between spells with W and S
+The Right Shift key can be used to attack
 The code runs through the events and moves the sprite. 
 So far, the game doesnt have any real way to lose or win. 
 
 How to Play: 
 The player can use the directional keys( UpArrow, RightArrow, LeftArrow, and DownArrow )
- to move around the world
+ to move around the world. 
+ Use spells to fight and destroy obstacles. 
+ Use attacking to fight enemys. 
+ Use potions to heal and restore mana. 
 
 GitHub Repository: https://github.com/BradleyLamitie/Genesis
 
@@ -27,7 +31,8 @@ Silk Wonderland font by jelloween Found on https://jelloween.deviantart.com/art/
 All Sprites are made by me using Pixilart.com
 
 Changes in this version: 
-- Added the ability to use magic
+- Added Enemies with a basic AI
+- Added Collision detection for enemies
 
 TODOs for  Demo/Final Project: 
 - Finish building the world's second level. 
@@ -35,7 +40,6 @@ TODOs for  Demo/Final Project:
 - If possible import a tileset from a Tiled file. 
 - Learn to Use a sprite Sheet to load in sprites. 
 - Animate the characters as they move throughout the world. 
-- Add enemies with basic AI to fight.
 - Replace all clocktower_door sprites with new sprites. 
 - Add ability to interact with things like chests, NPCs, and signposts. 
 - Add Save states or a pause function.
@@ -43,12 +47,14 @@ TODOs for  Demo/Final Project:
 - Add Sounds.
 - Add cheat codes for quick demonstrations.
 - Add Screen animations
-- Add Collision detection for enemies
-- 
+- Add Item Drops
+- Add Quests
+
 """
 import pygame
-from pygame.sprite import spritecollide
-from pygame.examples.mask import Sprite
+from pygame.sprite import spritecollide, groupcollide
+import random
+from math import hypot
  
 # --- Global constants ---
 # Colors: 
@@ -74,7 +80,7 @@ WORLD_HEIGHT = 825
 WINDOW_MAGNIFICATION = 2
 
 # For every frame the player sprite will be moved by the WALKRATE variable
-WALKRATE = 3
+WALKRATE = 5
 
 # How many seconds an animation frame should last. 
 ANIMRATE = 0.15
@@ -88,7 +94,6 @@ CAMERA_LEFT = ROOM_WIDTH * 2
 CAMERA_TOP = ROOM_HEIGHT * 2
 
 # Set the need for a new game to false
-global NEWGAME 
 NEWGAME = False
 
 # Set the screen as a global variable
@@ -139,6 +144,10 @@ Signpost = pygame.image.load("Genesis_Sprites/Signpost.png").convert()
 Signpost_path = pygame.image.load("Genesis_Sprites/Signpost_path.png").convert()
 Chest_Closed = pygame.image.load("Genesis_Sprites/Chest_closed.png").convert()
 Map_Image = pygame.image.load("Genesis_Sprites/Genesis_Map.png").convert()
+ 
+# Add the NPCs
+Merchant = pygame.image.load("Genesis_Sprites/Merchant.png").convert()
+OldMan = pygame.image.load("Genesis_Sprites/OldMan.png").convert()
 
 # Add the images for the snake enemy
 Snake_Forward_1 = pygame.image.load("Genesis_Sprites/Snake_Forward_1.png").convert()
@@ -365,7 +374,7 @@ UP = "UP"
 # TODO: import this data from the .tmx file directly.
 WORLD_DATA = """50,16,16,16,16,16,16,16,16,16,16,16,16,16,16,49,50,16,16,16,16,16,16,16,16,16,16,16,16,16,16,49,22,41,41,41,41,41,41,41,41,41,41,41,41,41,41,21,50,16,16,16,16,16,16,16,16,16,16,16,16,16,16,49,50,16,16,16,16,16,16,16,16,16,16,16,16,16,16,49
 22,44,44,44,44,44,53,57,57,53,44,44,44,44,44,21,22,44,44,44,44,44,44,44,44,44,44,44,44,48,48,21,22,41,41,41,41,41,41,41,41,41,41,41,41,41,41,21,22,48,48,48,44,44,44,44,44,44,44,44,48,48,48,21,22,44,48,48,44,44,44,44,44,48,48,48,48,48,48,21
-22,44,44,45,45,45,45,54,54,45,45,45,45,44,44,21,22,44,44,44,44,44,44,44,44,44,44,44,44,44,48,21,22,41,41,41,41,41,41,41,42,41,41,41,41,41,41,21,22,48,44,44,44,44,44,44,44,44,44,44,44,44,48,21,22,48,48,44,55,55,41,55,55,44,48,48,48,48,48,21
+22,44,44,45,45,45,45,54,54,45,45,45,45,44,44,21,22,44,44,44,44,44,44,44,44,44,44,44,44,44,48,21,22,41,41,41,41,41,41,41,42,41,41,41,41,41,41,21,22,48,44,44,44,44,44,44,44,44,44,44,44,44,48,21,22,48,48,44,55,55,59,55,55,44,48,48,48,48,48,21
 22,44,44,45,45,45,45,54,54,45,45,45,45,45,44,17,18,45,45,45,45,45,45,45,45,45,44,44,44,44,44,21,22,48,48,48,48,48,48,56,41,48,48,48,48,47,48,21,22,48,44,44,44,44,45,45,45,45,44,44,44,44,48,21,22,48,44,54,54,54,54,54,54,54,44,48,48,47,48,21
 22,48,45,45,45,45,45,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,45,44,44,44,44,44,21,22,45,45,45,45,45,48,54,54,48,45,45,45,45,45,21,22,44,44,44,44,45,45,45,45,45,45,44,44,44,44,17,18,44,54,54,54,54,54,54,54,54,54,44,48,48,48,21
 22,48,48,45,45,45,45,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,45,44,44,44,44,44,21,22,45,45,45,45,45,48,54,54,48,45,45,45,45,45,21,22,44,44,44,44,45,45,45,45,45,45,44,44,44,44,45,45,54,54,54,54,54,54,54,54,54,54,54,54,54,48,21
@@ -378,10 +387,10 @@ WORLD_DATA = """50,16,16,16,16,16,16,16,16,16,16,16,16,16,16,49,50,16,16,16,16,1
 22,48,48,48,48,48,44,44,44,44,44,44,44,44,44,21,22,44,44,44,44,45,45,54,54,45,45,45,48,48,48,21,22,44,45,45,45,45,45,54,54,44,45,44,45,45,45,21,22,44,44,44,44,45,45,44,44,44,44,44,44,44,44,21,22,45,45,45,45,45,45,45,45,45,45,45,54,54,45,21
 22,48,47,48,48,44,44,44,44,44,44,44,44,44,44,21,22,44,44,44,44,45,45,54,54,45,45,45,45,48,48,21,22,45,45,44,45,45,45,54,54,45,45,45,45,45,45,21,22,44,44,44,44,45,45,45,45,45,45,45,44,45,48,21,22,48,45,45,45,45,45,45,45,45,45,45,54,54,45,21
 22,48,48,48,44,44,44,53,44,44,44,44,44,44,44,17,18,53,44,44,44,45,45,54,54,45,45,45,45,45,48,17,18,45,45,45,45,45,45,54,54,45,44,45,45,45,44,17,18,45,45,45,45,45,45,45,45,45,45,45,45,53,48,17,18,48,45,45,45,45,45,45,45,45,45,45,54,54,45,21
-22,48,48,44,44,44,44,45,45,45,45,45,45,45,45,48,48,44,44,44,44,45,45,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,55,55,55,55,54,54,54,54,54,54,54,54,54,54,54,54,44,21
-22,48,44,44,44,44,44,45,45,45,45,45,45,45,45,48,48,44,44,44,44,45,45,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,55,55,55,55,54,54,54,54,54,54,54,54,54,54,54,54,44,21
+22,48,48,44,44,44,44,45,45,45,45,45,45,45,45,45,45,48,44,44,44,45,45,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,55,54,54,55,54,54,54,54,54,54,54,54,54,54,54,54,44,21
+22,48,44,44,44,44,44,45,45,45,45,45,45,45,45,45,45,48,44,44,44,45,45,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,55,54,54,55,54,54,54,54,54,54,54,54,54,54,54,54,44,21
 22,44,44,44,44,44,53,45,45,44,44,44,44,44,44,19,20,44,44,44,44,45,45,45,45,45,45,45,45,45,45,19,20,45,45,45,45,45,45,54,54,45,45,45,45,45,45,19,20,45,45,45,45,45,45,45,45,45,45,45,45,45,48,19,20,48,45,45,45,45,45,45,45,45,45,45,44,44,44,21
-22,44,44,44,44,44,44,45,45,44,44,44,44,44,48,21,22,48,44,44,44,45,45,45,45,45,45,45,45,45,45,21,22,45,41,45,45,45,53,54,54,45,45,45,45,45,44,21,22,45,44,44,45,45,45,45,45,45,44,44,45,45,48,21,22,48,45,45,45,45,45,45,45,45,45,44,44,44,48,21
+22,44,44,44,44,44,44,45,45,44,44,44,44,44,48,21,22,48,44,44,44,45,45,45,45,45,45,45,45,45,45,21,22,45,58,45,45,45,53,54,54,45,45,45,45,45,44,21,22,45,44,44,45,45,45,45,45,45,44,44,45,45,48,21,22,48,45,45,45,45,45,45,45,45,45,44,44,44,48,21
 22,44,44,44,44,44,44,45,45,44,44,44,44,48,48,21,22,48,47,44,44,44,44,44,44,44,44,44,44,44,44,21,22,45,45,45,44,45,45,54,54,45,45,44,45,45,45,21,22,45,44,44,45,45,45,45,45,45,44,44,44,45,45,21,22,45,45,45,45,45,45,45,45,45,44,44,44,48,48,21
 22,44,44,44,44,44,53,45,45,44,44,44,48,48,47,21,22,48,48,48,44,44,44,44,44,44,44,44,44,44,44,21,22,45,45,45,45,45,45,54,54,45,45,45,45,44,45,21,22,45,45,45,45,45,45,45,45,45,45,45,45,45,45,21,22,45,45,45,45,45,45,45,45,44,44,44,48,48,47,21
 52,23,23,23,23,23,20,45,45,19,23,23,23,23,23,51,52,23,23,23,23,23,23,23,23,23,23,23,23,23,23,51,52,23,23,23,23,23,20,54,54,19,23,23,23,23,23,51,52,23,23,23,23,23,20,45,45,19,23,23,23,23,23,51,52,20,45,45,19,23,23,23,23,23,23,23,23,23,23,51
@@ -398,21 +407,25 @@ WORLD_DATA = """50,16,16,16,16,16,16,16,16,16,16,16,16,16,16,49,50,16,16,16,16,1
 52,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,51,52,23,23,23,23,23,23,23,23,23,23,23,23,23,23,51,52,23,23,23,23,23,23,23,23,23,23,23,23,23,23,51,37,34,28,28,28,28,28,28,28,28,28,28,28,28,28,28"""
 
 # Split the WORLD_DATA string and sort it into a 2D array
+global tile_Data
 tile_Data = WORLD_DATA
 tile_Data = tile_Data.split('\n')
 tile_Data = [line.split(',') for line in tile_Data]
 
-# This list represents the tile numbers of tiles the player shouldn't be able to walk through.
+# This list represents the tile numbers of tiles the player and enemies shouldn't be able to walk through.
 boundary_tiles = [15,16,17,18,19,20,21,22,23,24,25,26,28,29,30,31,32,33,34,35,36,37,40,41,4246,47,48,49,50,51,52,53,55,56,57]
 
-# These lists represent tiles that are able to be burned and tiles that can be exploded using spells
+# These lists represent tiles that are able to be interacted with
 explodable_tiles = [44,47,48,55]
 burnable_tiles = [44]
+interactive_tiles = [41,55,56,57,58,59]
+cuttable_tiles = [44]
+
 # --- Classes ---
  
 class Tile(pygame.sprite.Sprite):
     """ This class represents a simple block the player collects. """
- 
+    global tile_Data
     def __init__(self, x, y, leftmostTile, topmostTile):
         """ Constructor, create the image of the block. """
         super().__init__()
@@ -523,6 +536,10 @@ class Tile(pygame.sprite.Sprite):
             return Signpost_path
         elif(tileNumber == 57):
             return Chest_Closed 
+        elif(tileNumber == 58):
+            return Merchant
+        elif(tileNumber == 59):
+            return OldMan
         else:
             return Signpost_path
 
@@ -531,6 +548,8 @@ class Player(pygame.sprite.Sprite):
     # TODO: Player
     """ This class represents the player. """
     def __init__(self):
+        
+        # Call the superclass' constructor
         super().__init__()
         
         # This sets the player's current spell and potion to be used when using a potion
@@ -541,9 +560,10 @@ class Player(pygame.sprite.Sprite):
         self.spellx = 5000
         self.spelly = 5000
         
+       
         # Initialize the spell sprite
         self.currentSpellSprite = pygame.sprite.Sprite()
-        self.currentSpellSprite.image = pygame.Surface([11 * WINDOW_MAGNIFICATION, 19 * WINDOW_MAGNIFICATION])
+        self.currentSpellSprite.image = pygame.Surface([11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION])
         self.currentSpellSprite.image = Blank
         self.currentSpellSprite.image.set_colorkey(COLORKEY)
         self.currentSpellSpritex = WINDOW_WIDTH - 23 * WINDOW_MAGNIFICATION
@@ -551,6 +571,19 @@ class Player(pygame.sprite.Sprite):
         self.currentSpellSprite = pygame.transform.scale(self.currentSpellSprite.image, (11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
         screen.blit(self.currentSpellSprite, (self.currentSpellSpritex, self.currentSpellSpritey))
        
+        # Initialize the SwordTip Sprites Location
+        self.swordx = 5000
+        self.swordy = 5000
+        
+        # Initialize the sword sprite for attacking
+        self.currentSwordSprite = pygame.sprite.Sprite()
+        self.currentSwordSprite.image = pygame.Surface([16 * WINDOW_MAGNIFICATION, 9 * WINDOW_MAGNIFICATION])
+        self.currentSwordSprite.image = Blank
+        self.currentSwordSprite.image.set_colorkey(COLORKEY)
+        self.currentSwordSpritex = 0
+        self.currentSwordSpritey =  0
+        self.currentSwordSprite = pygame.transform.scale(self.currentSwordSprite.image, (16 * WINDOW_MAGNIFICATION, 9 * WINDOW_MAGNIFICATION))
+        screen.blit(self.currentSwordSprite, (self.currentSwordSpritex, self.currentSwordSpritey))
        
         # This sets the image to be the Angel surface defined above.
         self.image = pygame.Surface([16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION])
@@ -573,8 +606,8 @@ class Player(pygame.sprite.Sprite):
         self.max_Mana = 50
         
         # Set the player's health and mana
-        self.health = 25
-        self.mana =  0
+        self.health = 75
+        self.mana =  50
         
         # Set the player's current money
         self.money = 0
@@ -601,6 +634,19 @@ class Player(pygame.sprite.Sprite):
         
         # Initialize the elapsed variable
         self.elapsed = 0
+        
+        # Initialize what room the player is in currently
+        self.room = 3
+        
+        # Initialize the defense and attack for the player
+        self.defense = 1
+        self.attack = 10
+        
+        # Initialize the counters for enemy kills
+        self.rockTurtles = 13
+        self.snakes = 0
+        
+        
     def update(self):
         """ Update the player location. """
         # Update a rect to be used in spell collision detection
@@ -610,6 +656,8 @@ class Player(pygame.sprite.Sprite):
         
     def draw(self):
         """ Draw the Player sprite onto the back buffer. """
+        
+        # Scale the player's sprite and copy it to back buffer
         Angel = pygame.transform.scale(self.image, (16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION))
         screen.blit(Angel,[self.x, self.y] )
         
@@ -624,12 +672,33 @@ class Player(pygame.sprite.Sprite):
             # Once time is up, move the sprite far away where it can't collide anymore
             self.spellx = 5000
             self.spelly = 5000
+        
+        # Change the dimensions of the swordtip sprite depending on the attack directions.    
+        if self.direction == "RIGHT" or self.direction == "LEFT":
+            magx = 9 * WINDOW_MAGNIFICATION 
+            magy = 16 * WINDOW_MAGNIFICATION
+        else: 
+            magx = 16 * WINDOW_MAGNIFICATION 
+            magy = 9 * WINDOW_MAGNIFICATION
+            
+        # Limit the time the player attacks. 
+        if(self.timer < 3):
+            self.currentSwordSprite = pygame.transform.scale(self.currentSwordSprite, (magx, magy))
+            print(self.swordx, self.swordy)
+            screen.blit(self.currentSwordSprite, (self.swordx, self.swordy))
+        else: 
+            # Once time is up, move the sword sprite far away
+            self.changePlayerDirection(self.direction)
+            self.swordx = 5000
+            self.swordy = 5000
+            
     def changePlayerDirection(self, direction):
         """ Change the player's sprite based on what direction the player last moved and what armor they have. """
         
         # Set the player's direction to the direction passed in.
         self.direction = direction
         
+        # Change the sprite based on whatever direction the player is in.
         if direction == "UP":
             if self.armor == "Wood":
                 self.image = Angel_wood_Back_Idle
@@ -664,12 +733,76 @@ class Player(pygame.sprite.Sprite):
         self.image.set_colorkey(COLORKEY)
         
 
-    def attack(self):
-        # TODO: add ability to attack
-        print("HIYA")
+    def attackEnemy(self):
+        """ Allow the player to attack. """
+       
+        # Depending on what direction and armor the player is in, change the sprites needed to attack.         
+        if self.direction == "UP":
+            if self.armor == "Wood":
+                self.image = Angel_wood_Back_Attacking3
+                self.currentSwordSprite = Angel_wood_Back_Attacking3_Swordtip
+            elif self.armor == "Steel":
+                self.image = Angel_Steel_Back_Attacking3
+                self.currentSwordSprite = Angel_Steel_Back_Attacking3_Swordtip
+            elif self.armor == "Gold":
+                self.image = Angel_Gold_Back_Attacking3
+                self.currentSwordSprite = Angel_Gold_Back_Attacking3_Swordtip
+        elif self.direction == "DOWN":
+            if self.armor == "Wood":
+                self.image = Angel_wood_Front_Attacking3
+                self.currentSwordSprite = Angel_wood_Front_Attacking3_Swordtip
+            elif self.armor == "Steel":
+                self.image = Angel_Steel_Front_Attacking3
+                self.currentSwordSprite = Angel_Steel_Front_Attacking3_Swordtip
+            elif self.armor == "Gold":
+                self.image = Angel_Gold_Front_Attacking3
+                self.currentSwordSprite = Angel_Gold_Front_Attacking3_Swordtip
+        elif self.direction == "LEFT":
+            if self.armor == "Wood":
+                self.image = Angel_wood_Left_Attacking3
+                self.currentSwordSprite = Angel_wood_Left_Attacking3_Swordtip
+            elif self.armor == "Steel":
+                self.image = Angel_Steel_Left_Attacking3
+                self.currentSwordSprite = Angel_Steel_Left_Attacking3_Swordtip
+            elif self.armor == "Gold":
+                self.image = Angel_Gold_Left_Attacking3
+                self.currentSwordSprite = Angel_Gold_Left_Attacking3_Swordtip
+        elif self.direction == "RIGHT":
+            if self.armor == "Wood":
+                self.image = Angel_wood_Right_Attacking3
+                self.currentSwordSprite = Angel_wood_Right_Attacking3_Swordtip
+            elif self.armor == "Steel":
+                self.image = Angel_Steel_Right_Attacking3
+                self.currentSwordSprite = Angel_Steel_Right_Attacking3_Swordtip
+            elif self.armor == "Gold":
+                self.image = Angel_Gold_Right_Attacking3    
+                self.currentSwordSprite = Angel_Gold_Right_Attacking3_Swordtip
         
+        # Depending on the user's direction change the location of the swordtip used in collision detection
+        if self.direction == "RIGHT":
+                self.swordx = self.x + (16 * WINDOW_MAGNIFICATION) 
+                self.swordy = self.y + 8
+        elif self.direction == "LEFT":
+            self.swordx = self.x - (9 * WINDOW_MAGNIFICATION)
+            self.swordy = self.y + 8
+        elif self.direction == "UP":
+            self.swordx = self.x 
+            self.swordy = self.y - (9 * WINDOW_MAGNIFICATION)
+        elif self.direction == "DOWN":
+            self.swordx = self.x + 2
+            self.swordy = self.y + (21 * WINDOW_MAGNIFICATION)
+            
+        # Rescale the image and set the background to be translucent   
+        self.image = pygame.transform.scale(self.image, (9 * WINDOW_MAGNIFICATION, 16 * WINDOW_MAGNIFICATION))
+        self.image.set_colorkey(COLORKEY)
+        self.currentSwordSprite.set_colorkey(COLORKEY)
+        
+        # Reset the timer
+        self.timer = 0
+
     def useSpell(self):
         """ Function used to allow player to use spells"""
+        
         # Grab the spell inventory
         spellInventory = [self.inventory[3][1], self.inventory[4][1]]
         for i in range(len(spellInventory)):
@@ -677,6 +810,7 @@ class Player(pygame.sprite.Sprite):
             # Check to see if the player has any spells 
             if(spellInventory[i] >= 1):
                 hasSpells = True
+                
         # Initialize the spellSprite's location to be far off screen
         spell = self.currentSpell
         self.spellx = 5000
@@ -684,6 +818,7 @@ class Player(pygame.sprite.Sprite):
         playerx = self.x
         playery = self.y
         if(hasSpells):
+            
             # Set the x and y coordinates of the spell sprite
             if(self.direction == "LEFT"):
                 self.spellx = playerx - 30
@@ -707,17 +842,23 @@ class Player(pygame.sprite.Sprite):
                 self.mana -= 25
         
         # Rescale and set the image's background to clear
-        self.currentSpellSprite = pygame.transform.scale(self.currentSpellSprite, (11 * WINDOW_MAGNIFICATION + 1, 15 * WINDOW_MAGNIFICATION + 1))
+        self.currentSpellSprite = pygame.transform.scale(self.currentSpellSprite, 
+                                                        (11 * WINDOW_MAGNIFICATION + 1,
+                                                        15 * WINDOW_MAGNIFICATION + 1))
         self.currentSpellSprite.set_colorkey(COLORKEY)
+        
+        # Reset the timer
         self.timer = 0
         
     def usePotion(self):
         """ This function allows the player to consume a potion and have it heal them or restore mana. """
+        
         # Assume the player has no potions
         hasPotions = False
         
         # Grab the inventory slots of each potion
-        potionInventory = [self.inventory[6][1], self.inventory[7][1], self.inventory[8][1], self.inventory[9][1]]
+        potionInventory = [self.inventory[6][1], self.inventory[7][1], self.inventory[8][1], 
+                           self.inventory[9][1]]
         
         # Check if the player has any potions at all. 
         for i in range(len(potionInventory)):
@@ -750,10 +891,185 @@ class Player(pygame.sprite.Sprite):
                     if(self.mana > self.max_Mana):
                         self.mana = self.max_Mana
                         
+    def interact(self):
+        """ This function will allow the player to interact with certain tiles. """
+        print("INTERACT")
+        
+class Enemy(pygame.sprite.Sprite):
+    """ This class represents the enemy. The enemy can attack and move around the world. """
     
+    def __init__(self, x, y): 
+        """ Constructs the enemy object and Initializes variables. """
+        # This calls the superconstructor
+        super().__init__()
+        
+        # This sets the image to be the Snake surface defined above.
+        self.image = pygame.Surface([25 * WINDOW_MAGNIFICATION, 25 * WINDOW_MAGNIFICATION])
+        self.rect = self.image.get_rect()
+        self.image = Snake_Forward_1
+        self.image.set_colorkey(COLORKEY)
+        
+        # Initialize the many variables used in making enemies
+        # Initialize location
+        self.x = x
+        self.y = y
+        
+        # Initialize direction enemy is facing
+        self.direction = "DOWN"
+        
+        # Initialize how many pixels an enemy walks at a time.
+        self.walkRate = 10
+        
+        # Initialize how close the player must be before the enemy starts to chase.
+        self.aggroRange = 100
+        
+        # Initialize variables used to calculate distance from player. 
+        self.distancePlayerx = 0
+        self.distancePlayery = 0
+        self.distancePlayerTheta = 0
+        self.distancePlayer = 0
+        
+        # Initialize variables used to calculate and update time
+        self.elapsed = 0
+        self.dt = 0
+        self.clock = pygame.time.Clock()
+        
+        # Initialize the coordinates of the x and ys
+        self.playerx2 = 0
+        self.playery2 = 0
+        self.playerx1 = 0
+        self.playery1 = 0
+        
+        # Initialize what direction the enemy is from the player's point of view. 
+        self.sector = "TOP LEFT"
+        
+        # Initialize health, defense and attack
+        self.health = 100
+        self.defense = 1
+        self.attackDamage = 10
+        self.spellDefense = 1
+        
+    def update(self, player):
+        """ Updates the Enemy's variables """
+        
+        # Calculate the distance from the player. 
+        self.distancePlayerx = self.rect.x - player.rect.x
+        self.distancePlayery = self.rect.y - player.rect.y
+        self.distancePlayer = hypot(self.distancePlayerx, self.distancePlayery)
+        
+        # Allow the spell sprite to exist for a few seconds
+        self.dt = self.clock.tick()
+        self.elapsed += self.dt
+        if(self.elapsed > 200):
+            self.distancePlayerx = self.rect.x - player.rect.x
+            self.distancePlayery = self.rect.y - player.rect.y
+            self.distancePlayer = hypot(self.distancePlayerx, self.distancePlayery)
+        
+            # If the enemy is within aggroRange we chase after them, otherwise, the enemy wanders randomly. 
+            if(self.distancePlayer > self.aggroRange):
+                self.wander()
+            else:
+                self.attack()
+                
+        # Update where to set the image. 
+        self.rect.x = self.x
+        self.rect.y = self.y
+        self.playerx1 = player.x
+        self.playery1 = player.y
+        self.playerx2 = player.x + (16 * WINDOW_MAGNIFICATION)
+        self.playery2 = player.y + (21 * WINDOW_MAGNIFICATION)
+        
+    def draw(self, screen): 
+        """ Draw the sprites in their new positions """
+        Enemy = pygame.transform.scale(self.image, (25 * WINDOW_MAGNIFICATION, 25 * WINDOW_MAGNIFICATION))
+        screen.blit(Enemy,[self.x, self.y] )
+
+    def wander(self):
+        """ Moves  the enemy object. """
+        
+        # Randomly assign a direction to move the enemy in
+        chance = random.random()
+        if(chance < 0.25):
+            self.direction = "DOWN"
+        elif(chance < 0.50):
+            self.direction = "UP"
+        elif(chance < 0.75):
+            self.direction = "LEFT"
+        elif(chance < 1.0):
+            self.direction = "RIGHT"
             
+        # Change the sprite image and move the sprite in a direction
+        if self.direction == "DOWN":
+            self.image = Snake_Forward_1
+            self.y += self.walkRate 
+        elif self.direction == "UP":
+            self.image = Snake_Back_1
+            self.y -= self.walkRate
+        elif self.direction == "RIGHT":
+            self.image = Snake_Right_1
+            self.x += self.walkRate
+        elif self.direction == "LEFT":
+            self.image = Snake_Left_1
+            self.x -= self.walkRate
+            
+        # Rescale and set the background to be translucent
+        self.image = pygame.transform.scale(self.image, (25 * WINDOW_MAGNIFICATION , 25 * WINDOW_MAGNIFICATION ))
+        self.image.set_colorkey(COLORKEY)
+        
+        # Reset the clock
+        self.elapsed = 0
+        
+    def attack(self):
+        """ Allows the enemy to attack. """  
+        
+        # Change the sector, image, and update the coordinates to reach the player. 
+        if(self.x < self.playerx2 and self.x > self.playerx1 and self.y > self.playery2):
+            self.sector = "BOTTOM"
+            self.y -= self.walkRate
+            self.image = Snake_Back_1
+        elif(self.y < self.playery2 and self.y > self.playery1 and self.x < self.playerx1):
+            self.sector = "LEFT"
+            self.x += self.walkRate
+            self.image = Snake_Right_1
+        elif(self.y < self.playery2 and self.y > self.playery1 and self.x > self.playerx2):
+            self.sector = "RIGHT"
+            self.x += self.walkRate
+            self.y += self.walkRate
+            self.image = Snake_Left_1
+        elif(self.x > self.playerx1 and self.x < self.playerx2 and self.y < self.playery1):
+            self.sector = "UP"
+            self.x += self.walkRate
+            self.y += self.walkRate
+            self.image = Snake_Forward_1
+        elif(self.x < self.playerx1 and self.y < self.playery2):
+            self.sector = "UP LEFT"
+            self.x += self.walkRate
+            self.y += self.walkRate
+            self.image = Snake_Forward_1 
+        elif(self.x < self.playerx1 and self.y > self.playery2):
+            self.sector = "BOTTOM LEFT"
+            self.x += self.walkRate
+            self.y -= self.walkRate
+            self.image = Snake_Back_1
+        elif(self.x > self.playerx2 and self.y > self.playery2):
+            self.sector = "BOTTOM RIGHT"
+            self.x -= self.walkRate
+            self.y -= self.walkRate
+            self.image = Snake_Back_1
+        elif(self.x < self.playerx2 and self.y < self.playery1):
+            self.sector = "UP RIGHT"
+            self.x -= self.walkRate
+            self.y += self.walkRate
+            self.image = Snake_Forward_1
+       
+        # Rescale the image and set the background to translucent
+        self.image = pygame.transform.scale(self.image, (25 * WINDOW_MAGNIFICATION , 25 * WINDOW_MAGNIFICATION ))
+        self.image.set_colorkey(COLORKEY)
+        
+        # Reset the clock
+        self.elapsed = 0
+        
 class FeedbackSystem( ):      
-    # TODO: Feedback System
     """ This class represents the Feedback system that displays health, mana, potions, spells, 
     current quest, and currency"""
     
@@ -841,6 +1157,9 @@ class FeedbackSystem( ):
         self.currentPotionSprite = pygame.transform.scale(self.currentPotionSprite.image, (11 * WINDOW_MAGNIFICATION , 15 * WINDOW_MAGNIFICATION))
         screen.blit(self.currentPotionSprite, (self.currentPotionSpritex, self.currentPotionSpritey))
         
+        # These 2 lines update the display frames for spells and potions. 
+        self.switchPotionRight(player)
+        self.switchSpellLeft(player)
     def update(self, player):
         """ Updates the information needed to run the feedbacksystem. """
         
@@ -926,7 +1245,6 @@ class FeedbackSystem( ):
                     break
                 
             # Check what potion is selected
-            print(inventory[self.currentPotion + 6][0])
             if inventory[self.currentPotion + 6][0] == "Health Potion":
                 self.currentPotionSprite = Health_Potion
             elif inventory[self.currentPotion + 6][0] == "Lesser Health Potion":
@@ -974,6 +1292,7 @@ class FeedbackSystem( ):
                 if(not started): 
                     startPoint = self.currentPotion 
                 started = True
+                
                 # Cycle through each potion until we find one the player has or we wind up where we started. 
                 self.currentPotion -= 1 
                 if self.currentPotion < 0:
@@ -982,8 +1301,8 @@ class FeedbackSystem( ):
                     player.currentPotion = self.currentPotion
                     self.potion_Number = player.inventory[self.currentPotion + 6][1]
                     break
+                
             # Check what potion is selected
-            print(inventory[self.currentPotion + 6][0])
             if inventory[self.currentPotion + 6][0] == "Health Potion":
                 self.currentPotionSprite = Health_Potion
             elif inventory[self.currentPotion + 6][0] == "Lesser Health Potion":
@@ -993,6 +1312,7 @@ class FeedbackSystem( ):
             elif inventory[self.currentPotion + 6][0] == "Lesser Mana Potion":
                 self.currentPotionSprite = Lesser_Mana_Potion
             else: 
+                
                 # If we dont have any potions we dont display anything.
                 self.currentPotionSprite = Blank    
                 
@@ -1006,6 +1326,7 @@ class FeedbackSystem( ):
         
     def switchSpellLeft(self, player):
         """ Switches the spell selection backward. """
+        
         # Set the spellSprite far off screen
         player.spellx = 5000
         player.spelly = 5000
@@ -1045,12 +1366,12 @@ class FeedbackSystem( ):
                     break
                 
             # Check what spell iis selected
-            print(inventory[self.currentSpell + 3][0])
             if inventory[self.currentSpell + 3][0] == "Fireball Spell":
                 self.currentSpellSprite = Fireball_Regular
             elif inventory[self.currentSpell + 3][0] == "Explosion Spell":
                 self.currentSpellSprite = Explosion_Blast
             else: 
+                
                 # If we dont have any spells we dont display anything
                 self.currentSpellSprite = Blank    
         
@@ -1102,13 +1423,13 @@ class FeedbackSystem( ):
                     self.spell_Number = player.inventory[self.currentSpell + 3][1]
                     break
                 
-            # Check what spell iis selected
-            print(inventory[self.currentSpell + 3][0])
+            # Check what spell is selected
             if inventory[self.currentSpell + 3][0] == "Fireball Spell":
                 self.currentSpellSprite = Fireball_Regular
             elif inventory[self.currentSpell + 3][0] == "Explosion Spell":
                 self.currentSpellSprite = Explosion_Blast
             else: 
+                
                 # If we dont have any spells we dont display anything
                 self.currentSpellSprite = Blank    
         
@@ -1125,11 +1446,15 @@ class Game(object):
     """ This class represents an instance of the game. If we need to
         reset the game we'd just need to create a new instance of this
         class. """
- 
+    
     def __init__(self):
         """ Constructor. Create all our attributes and initialize
         the game. """
-        
+        global tile_Data
+        tile_Data = WORLD_DATA
+        tile_Data = tile_Data.split('\n')
+        tile_Data = [line.split(',') for line in tile_Data]
+          
         # Initialize the current splash screen number
         self.splashNumber = 1
         
@@ -1137,24 +1462,53 @@ class Game(object):
         self.game_over = False
         self.game_start = False
         
-        # Initialize the need foor a new game to start
-        NEWGAME = False
-        
-        # Create sprite lists
+        # Create sprite groups
         self.all_boundaries_Group = pygame.sprite.Group()
         self.all_explodables_Group = pygame.sprite.Group()
         self.all_burnables_Group = pygame.sprite.Group()
         self.all_sprites_Group = pygame.sprite.Group()
+        self.all_cuttables_Group = pygame.sprite.Group()
+        self.room1_enemies_Group = pygame.sprite.Group()
+        self.room2_enemies_Group = pygame.sprite.Group()
+        self.room4_enemies_Group = pygame.sprite.Group()
+        self.room6_enemies_Group = pygame.sprite.Group()
+        self.room7_enemies_Group = pygame.sprite.Group()
+        self.room9_enemies_Group = pygame.sprite.Group()
+        self.room12_enemies_Group = pygame.sprite.Group()
+        self.room14_enemies_Group = pygame.sprite.Group()
         
         # Create the player
         self.player = Player()
         
+        # Add all the enemys for each room. 
+        room1 = [Enemy(150,50), Enemy(150, 250), Enemy(300, 250)]
+        room2 = [Enemy(100, 200), Enemy(500, 100), Enemy(150, 300), Enemy(200, 400), Enemy(500, 350)]
+        room4 = [Enemy(150,100), Enemy(300, 100)]
+        room6 = [Enemy(150, 100), Enemy(400, 450), Enemy(600, 350)]
+        room7 = [Enemy(150, 100), Enemy(400, 450), Enemy(600, 350)]
+        room9 = [Enemy(100, 200), Enemy(500, 100), Enemy(150, 300), Enemy(200, 400), Enemy(500, 350)]
+        room12 = [Enemy(600, 200), Enemy(600, 100), Enemy(600, 400), Enemy(400, 200), Enemy(400, 100), Enemy(400, 400), Enemy(200, 200), Enemy(200, 100), Enemy(200, 400), Enemy(200, 200)]
+        room14 = [Enemy(100, 200), Enemy(500, 100), Enemy(150, 300), Enemy(200, 400), Enemy(500, 350)]
+        for enemy in room1:
+            self.room1_enemies_Group.add(enemy)
+        for enemy in room2:
+            self.room2_enemies_Group.add(enemy)
+        for enemy in room4:
+            self.room4_enemies_Group.add(enemy)
+        for enemy in room6:
+            self.room6_enemies_Group.add(enemy)
+        for enemy in room7:
+            self.room7_enemies_Group.add(enemy)
+        for enemy in room9:
+            self.room9_enemies_Group.add(enemy)
+        for enemy in room12:
+            self.room12_enemies_Group.add(enemy)
+        for enemy in room14:
+            self.room14_enemies_Group.add(enemy)
+                
         # Create a new feedback System
         self.feedback = FeedbackSystem(self.player)
 
-#         # Add the player to the sprites group
-#         self.all_sprites_Group.add(self.player)
-#         
         # Instantiate  starting variables for event handling
         self.upKeyPressed = False
         self.downKeyPressed = False
@@ -1185,6 +1539,8 @@ class Game(object):
             # If the game is over and the mouse is clicked start a new game
             elif (self.game_over and event.type == pygame.MOUSEBUTTONDOWN):
                 NEWGAME = True
+                CAMERA_LEFT = ROOM_WIDTH * 2
+                CAMERA_TOP = ROOM_HEIGHT * 2
                 
             # If the game hasn't started yet and the player clicks, advance to the next splash screen
             elif (not self.game_start and event.type == pygame.MOUSEBUTTONDOWN):
@@ -1228,6 +1584,10 @@ class Game(object):
                     self.feedback.switchPotionLeft(self.player) 
                 elif event.key == pygame.K_d:
                     self.feedback.switchPotionRight(self.player) 
+                elif event.key == pygame.K_RSHIFT:
+                    self.player.attackEnemy()
+                elif event.key == pygame.K_SPACE:
+                    self.player.interact()
                     
             # Detect when a key is released
             elif event.type == pygame.KEYUP:
@@ -1264,7 +1624,6 @@ class Game(object):
 
             # Actually move the position of the player
             # If the player exits the room we move to the next one. 
-            
             if self.DIRECTION == "UP":
                 self.player.y -= WALKRATE
                 self.player.worldy -= WALKRATE
@@ -1274,7 +1633,7 @@ class Game(object):
                 elif self.player.y < 0:
                     self.player.y = WINDOW_WIDTH - 300
                     CAMERA_TOP -= ROOM_HEIGHT
-                
+                    self.player.room += 5
 
             if self.DIRECTION == "DOWN":
                 self.player.y += WALKRATE
@@ -1284,13 +1643,15 @@ class Game(object):
                 elif self.player.y  > WINDOW_HEIGHT:
                     self.player.y = 0
                     CAMERA_TOP += ROOM_HEIGHT
-                    
+                    self.player.room -= 5
+
             if self.DIRECTION == "LEFT":
                 self.player.x -= WALKRATE
                 self.player.worldx -= WALKRATE
                 if self.player.x < 0:
                     self.player.x = WINDOW_WIDTH - 25 * WINDOW_MAGNIFICATION
                     CAMERA_LEFT -= ROOM_WIDTH
+                    self.player.room += 1
                 if self.player.worldx < 0:
                     self.player.worldx = 0
                     self.player.worldx -= WALKRATE
@@ -1301,10 +1662,11 @@ class Game(object):
                 if self.player.x  > WINDOW_WIDTH :
                     self.player.x = 0 
                     CAMERA_LEFT += ROOM_WIDTH
+                    self.player.room -= 1
                 if self.player.worldx + 25 > WORLD_WIDTH:
                     self.player.worldx = WORLD_WIDTH - 25
                     self.player.worldx -= WALKRATE
-
+            
         return False
  
     
@@ -1316,9 +1678,12 @@ class Game(object):
         # Get the leftmost and topmost tile numbers
         leftmostTile = leftPixel // 25
         topmostTile = topPixel // 25
+        
+        # Empty all the tile groups
         self.all_boundaries_Group.empty()
         self.all_burnables_Group.empty()
         self.all_explodables_Group.empty()
+        self.all_cuttables_Group.empty()
         
         # Get the initial room surface
         roomSurf = pygame.Surface((ROOM_WIDTH, ROOM_HEIGHT))
@@ -1341,7 +1706,9 @@ class Game(object):
                     self.all_explodables_Group.add(tile)
                 if tile_number in burnable_tiles:
                     self.all_burnables_Group.add(tile)
-                    
+                if tile_number in cuttable_tiles:
+                    self.all_cuttables_Group.add(tile)
+        
         # Zoom in on the room to make it more viewable and return the room
         roomSurf = pygame.transform.scale(roomSurf, (ROOM_WIDTH * WINDOW_MAGNIFICATION, ROOM_HEIGHT * WINDOW_MAGNIFICATION))
         return roomSurf
@@ -1351,23 +1718,56 @@ class Game(object):
         This method is run each time through the frame. It
         updates positions and checks for collisions.
         """
+        # If the player has no health start over
         if(self.player.health <= 0):
             self.game_over = True
         
         # Updates the feedback system's information
         self.feedback.update(self.player)
+        group = self.room1_enemies_Group
         
         # If the game isnt over continue to update sprites
         if not self.game_over:
             player = self.player
+            
             
             # Move all the sprites and update positions
             self.all_sprites_Group.update()
             self.all_boundaries_Group.update()
             self.all_explodables_Group.update()
             self.all_burnables_Group.update()
+            self.all_burnables_Group.update()
+            
+            # Update the enemies in the room the player is in.
+            if self.player.room == 1:
+                self.room1_enemies_Group.update(self.player)
+                group = self.room1_enemies_Group
+            elif self.player.room == 2:
+                self.room2_enemies_Group.update(self.player)
+                group = self.room2_enemies_Group
+            elif self.player.room == 4:
+                self.room4_enemies_Group.update(self.player)
+                group = self.room4_enemies_Group
+            elif self.player.room == 6:
+                self.room6_enemies_Group.update(self.player)
+                group = self.room6_enemies_Group
+            elif self.player.room == 7:
+                self.room7_enemies_Group.update(self.player)
+                group = self.room7_enemies_Group
+            elif self.player.room == 9:
+                self.room9_enemies_Group.update(self.player)
+                group = self.room9_enemies_Group
+            elif self.player.room == 12:
+                self.room12_enemies_Group.update(self.player)
+                group = self.room12_enemies_Group
+            elif self.player.room == 14:
+                self.room14_enemies_Group.update(self.player)
+                group = self.room14_enemies_Group
+            
+            # Update the player sprite
             self.player.update()
-            # check if there are any collisions between th eplayer and a boundary tile.
+            
+            # Check if there are any collisions between th eplayer and a boundary tile.
             bump_list = spritecollide(self.player, self.all_boundaries_Group, False)
             
             # If there is than we have to move the player back to where they were
@@ -1387,8 +1787,101 @@ class Game(object):
                     self.player.x += WALKRATE
                     self.player.worldx += WALKRATE
             else: 
+                
                 # Set the new position of the player. 
                 self.player = player
+                
+            # Get a list of all the enemies that collide with boundaries
+            enemy_collision_list = groupcollide(group, self.all_boundaries_Group, False, False)
+            
+            # If there is than we have to move the enemy back to where they were
+            if(len(enemy_collision_list) >= 1):
+                for enemy in enemy_collision_list:
+                    # Based on the direction we last moved the sprite in, move the sprite back.
+                    if(enemy.direction == "UP"):
+                        enemy.y += enemy.walkRate
+                    elif (enemy.direction == "DOWN"):
+                        enemy.y -= enemy.walkRate
+                    elif (enemy.direction == "RIGHT"):
+                        enemy.x -= enemy.walkRate 
+                    elif (enemy.direction == "LEFT"):
+                        enemy.x += enemy.walkRate
+                    elif (enemy.sector == "UP LEFT"):
+                        enemy.y += enemy.walkRate
+                        enemy.x += enemy.walkRate
+                    elif (enemy.sector == "UP RIGHT"):
+                        enemy.x -= enemy.walkRate
+                        enemy.y += enemy.walkRate
+                    elif (enemy.sector == "DOWN LEFT"):
+                        enemy.y -= enemy.walkRate
+                        enemy.x += enemy.walkRate
+                    elif (enemy.sector == "DOWN RIGHT"):
+                        enemy.x -= enemy.walkRate
+                        enemy.y -= enemy.walkRate
+
+            # Check to see collisions between the player and enemies in the current room
+            player_collision_list = spritecollide(self.player, group, False)
+            
+            # If there are any collisions we knock the player backwards. 
+            for enemy in player_collision_list:
+                if(enemy.sector == "UP"):
+                    self.player.y += 25 * WINDOW_MAGNIFICATION
+                elif(enemy.sector == "DOWN"):
+                    self.player.y -= 25 * WINDOW_MAGNIFICATION
+                elif(enemy.sector == "RIGHT"):
+                    self.player.x -= 25 * WINDOW_MAGNIFICATION
+                elif(enemy.sector == "LEFT"):
+                    self.player.x += 25 * WINDOW_MAGNIFICATION
+                elif(enemy.sector == "UP LEFT"):
+                    self.player.x += 25 * WINDOW_MAGNIFICATION
+                    self.player.y += 25 * WINDOW_MAGNIFICATION
+                elif(enemy.sector == "UP RIGHT"):
+                    self.player.x -= 25 * WINDOW_MAGNIFICATION
+                    self.player.y += 25 * WINDOW_MAGNIFICATION
+                elif(enemy.sector == "DOWN LEFT"):
+                    self.player.x += 25 * WINDOW_MAGNIFICATION
+                    self.player.y -= 25 * WINDOW_MAGNIFICATION
+                elif(enemy.sector == "DOWN RIGHT"):
+                    self.player.x -= 25 * WINDOW_MAGNIFICATION
+                    self.player.y -= 25 * WINDOW_MAGNIFICATION
+                    
+                # Take away health from the player
+                self.player.health -= enemy.attackDamage // self.player.defense
+
+            # Create a Rect to be used in attack collision detection
+            swordTipRect = pygame.sprite.Sprite()
+            if self.player.direction == "RIGHT" or self.player.direction == "LEFT":
+                swordTipRect.image = pygame.Surface([9 * WINDOW_MAGNIFICATION, 16 * WINDOW_MAGNIFICATION])
+            else: 
+                swordTipRect.image = pygame.Surface([16 * WINDOW_MAGNIFICATION, 9 * WINDOW_MAGNIFICATION])
+            swordTipRect.rect = swordTipRect.image.get_rect()
+            
+            # Move the swordtip's frame 
+            swordTipRect.rect.x = self.player.swordx
+            swordTipRect.rect.y = self.player.swordy
+        
+            # Check collisions between the enemies and the tip of the sword.
+            attack_enemy_list = spritecollide(swordTipRect, group, False)
+            for enemy in attack_enemy_list:
+                # Decrement the enemy's health
+                enemy.health -= self.player.attack
+                if enemy.health <= 0:
+                    group.remove(enemy)
+                    
+            # Check collisions between cuttable tiles and the player's sword. 
+            cuttable_list = spritecollide(swordTipRect, self.all_cuttables_Group, False)
+            
+            # Change the tiles to a changed form. 
+            for i in range(len(cuttable_list)):
+                    tile = cuttable_list[i]
+                    tilex = tile.x
+                    tiley = tile.y
+                    tileNumber = tile_Data[tiley][tilex]
+                    
+                    # If it does, replace the exploded tiles with the new tile
+                    if(tileNumber == "44"):
+                        tile_Data[tiley][tilex] = "1"
+            
             # Create a rect to be used in spell collision detection
             spellRect = pygame.sprite.Sprite()
             spellRect.image = pygame.Surface([11 * WINDOW_MAGNIFICATION, 16 * WINDOW_MAGNIFICATION])
@@ -1404,11 +1897,12 @@ class Game(object):
                     tilex = tile.x
                     tiley = tile.y
                     tileNumber = tile_Data[tiley][tilex]
-                    # If it does, replace the exploded tiles with the new tile
+                    
+                    # If it does, replace the burned tiles with the new tile
                     if(tileNumber == "44"):
                         tile_Data[tiley][tilex] = "1"
             
-            # Chack to see if the explosion spell collides with explodable objects
+            # Check to see if the explosion spell collides with explodable objects
             if(self.player.currentSpell  == 1):
                 spell_explode_collision_list = spritecollide(spellRect, self.all_explodables_Group, False)
                 for i in range(len(spell_explode_collision_list)):
@@ -1416,20 +1910,65 @@ class Game(object):
                     tilex = tile.x
                     tiley = tile.y
                     tileNumber = tile_Data[tiley][tilex]
+                    
                     # If it does, replace the exploded tiles with the new tile
-                    print(tileNumber)
                     if(tileNumber == "44"):
                         tile_Data[tiley][tilex] = "1"
                     elif(tileNumber == "47"):
                         tile_Data[tiley][tilex] = "2"
+                        self.player.rockTurtles -= 1
                     elif(tileNumber == "48"):
                         tile_Data[tiley][tilex] = "2"
                     elif(tileNumber == "55"):
                         tile_Data[tiley][tilex] = "3"
                     
+            # Check collisions between spells and enemies
+            enemy_spell_collisions = spritecollide(spellRect, group, False)
+            for enemy in enemy_spell_collisions:
+                
+                # Depending on the spell equipped deal damage
+                spellDamage = 0
+                if(self.player.currentSpell == 0):
+                    spellDamage = 50                       
+                elif(self.player.currentSpell == 1):
+                    spellDamage = 100 
+                
+                # Decrement enemy's health
+                enemy.health -= spellDamage // enemy.spellDefense
+                
+                # Depending on the direction the player faces, the spell knocks back the enemy.
+                if (self.player.direction == "LEFT"):
+                    enemy.x -= 25 * WINDOW_MAGNIFICATION
+                elif (self.player.direction == "RIGHT"):
+                    enemy.x += 25 * WINDOW_MAGNIFICATION
+                elif (self.player.direction == "UP"):
+                    enemy.y -= 25 * WINDOW_MAGNIFICATION
+                elif (self.player.direction == "DOWN"):
+                    enemy.y += 25 * WINDOW_MAGNIFICATION
+                    
+                # If an enemy's health dies we increment the counter to be used in quests. 
+                if enemy.health <= 0:
+                    self.room1_enemies_Group.remove(enemy)
+                    self.player.snakes += 1
+                    
+            # Update each of the room groups based on the current room.
+            if self.player.room == 1:
+                self.room1_enemies_Group = group
+            elif self.player.room == 2:
+                self.room2_enemies_Group = group
+            elif self.player.room == 4:
+                self.room4_enemies_Group = group
+            elif self.player.room == 6:
+                self.room6_enemies_Group = group
+            elif self.player.room == 7:
+                self.room7_enemies_Group = group
+            elif self.player.room == 9:
+                self.room9_enemies_Group = group
+            elif self.player.room == 12:
+                self.room12_enemies_Group = group
+            elif self.player.room == 14:
+                self.room14_enemies_Group = group
             
-# TODO: Add collision detection between the Player and the enemies     
-
     def display_frame(self, screen):
         """ Display everything to the screen for the game. """
         
@@ -1438,7 +1977,6 @@ class Game(object):
         
         # If the game hasnt ended and the game has started draw he sprites
         if(not self.game_over and self.game_start):
-            
             # Create a new surface for the current room
             roomSurface = self.getRoomSurface(CAMERA_LEFT, CAMERA_TOP, tile_Data)
             
@@ -1447,9 +1985,30 @@ class Game(object):
             
             # Draw each of the sprites in the all_sprites_Group
             self.all_sprites_Group.draw(screen)
+            
+            # Draw the player
             self.player.draw()
+            
             # Draw each of the feedback sprites and information
             self.feedback.draw()
+            
+            # Draw the current enemies for the room the player is in. 
+            if self.player.room == 1:
+                self.room1_enemies_Group.draw(screen)
+            elif self.player.room == 2:
+                self.room2_enemies_Group.draw(screen)
+            elif self.player.room == 4:
+                self.room4_enemies_Group.draw(screen)
+            elif self.player.room == 6:
+                self.room6_enemies_Group.draw(screen)
+            elif self.player.room == 7:
+                self.room7_enemies_Group.draw(screen)
+            elif self.player.room == 9:
+                self.room9_enemies_Group.draw(screen)
+            elif self.player.room == 12:
+                self.room12_enemies_Group.draw(screen)
+            elif self.player.room == 14:
+                self.room14_enemies_Group.draw(screen)
             
             # Copy back buffer onto the front buffer
             pygame.display.flip()
@@ -1490,7 +2049,7 @@ class Game(object):
                 font2 = pygame.font.Font("SILKWONDER.ttf", 20)
                 text1 = font.render("You play as an angel cast onto Earth", True, WHITE)
                 text2 = font.render("after having your wings stripped from you.", True, (WHITE))
-                text3 = font.render("Your goal is to defeat all 7 sins on Earth to redeem yourself", True, (WHITE))
+                text3 = font.render("Your goal is to defeat all 7 virtues on Earth to redeem yourself", True, (WHITE))
                 text4 = font.render("and earn your place in heaven.", True, (WHITE))
                 text5 = font.render("Story:", True, WHITE)
                 continueText = font2.render("Click to continue", True, WHITE)
@@ -1539,12 +2098,14 @@ class Game(object):
                 screen.blit(continueText, (WINDOW_WIDTH//2 - 100, WINDOW_HEIGHT - 75))
                 pygame.display.flip()
             else:
+                
                 # Start the game once we finish
                 self.game_start = True
             
 def main():
     """ Main program function. """
     global NEWGAME
+    
     # Initialize Pygame and set up the window
     pygame.init()
     
@@ -1582,6 +2143,7 @@ def main():
             pygame.mixer.music.stop()
             NEWGAME = False
             game = Game()
+            
     # Close window and exit
     pygame.quit()
  

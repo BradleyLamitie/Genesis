@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="Genesis_grassland_tiles" tilewidth="25" tileheight="25" tilecount="39" columns="0">
+<tileset name="Genesis_grassland_tiles" tilewidth="25" tileheight="25" tilecount="41" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="15">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_bottom_bottom.png"/>
