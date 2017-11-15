@@ -2,8 +2,8 @@
 Create the main game for "Genesis"
  
 Author: Bradley Lamitie
-Date: 11/14/2017
-Version Number: 2.0 (Demo)
+Date: 11/15/2017
+Version Number: 2.1 (Demo updated)
  
 What the Code Does: 
 The code so far creates the world using the tiles provided by rendering one room at a time
@@ -13,6 +13,7 @@ keys( UpArrow, RightArrow, LeftArrow, and DownArrow ) to move around the world
 The player can also now use potions and spells using the E and Q key respectively
 The player can switch between potions using A and D and switch between spells with W and S
 The Right Shift key can be used to attack
+The H key shows the controls for 5 seconds
 The code runs through the events and moves the sprite. 
 So far, the game doesnt have any real way to lose or win. 
 
@@ -31,14 +32,16 @@ Silk Wonderland font by jelloween Found on https://jelloween.deviantart.com/art/
 All Sprites are made by me using Pixilart.com
 
 Changes in this version: 
-- Added Quests
-- Added ability to interact with things like chests, NPCs, and signposts. 
-
+- Added a temporary way to win
+- Added a help button to display controls
+- Fixed Glitches: 
+    - Dialog runs through too quickly
+    
 Known Glitches: 
-- Dialog runs through too quickly
 - Player attack sprite is too short
-- Sometimes enemies disappear into walls or move unnaturally fast
-- 
+- Sometimes enemies and player disappear into walls
+- Occasionally enemies move unnaturally fast
+- Player Sprite warps when attacking
 
 TODOs for Final Project: 
 - Finish building the world's second level. 
@@ -288,7 +291,7 @@ Angel_Steel_Left_Attacking4 = pygame.image.load("Genesis_Sprites/Angel_steel_lef
 Angel_Steel_Left_Attacking5 = Angel_Steel_Left_Idle
 Angel_Steel_Left_Attacking1_Swordtip = pygame.image.load("Genesis_Sprites/Angel_steel_left_Attacking1_Swordtip.png").convert()
 Angel_Steel_Left_Attacking2_Swordtip = pygame.image.load("Genesis_Sprites/Angel_steel_left_Attacking2_Swordtip.png").convert()
-Angel_Steel_Left_Attacking3_Swordtip = pygame.image.load("Genesis_Sprites/Angel_steel_left_Attacking3_Swordtip.png").convert()
+Angel_Steel_Left_Attacking3_Swordtip = pygame.image.load("Genesis_Sprites/Angel_steel_left_Attacking2_Swordtip.png").convert()
 Angel_Steel_Left_Attacking4_Swordtip = pygame.image.load("Genesis_Sprites/Angel_steel_left_Attacking4_Swordtip.png").convert()
 Angel_Steel_Left_Attacking5_Swordtip = pygame.image.load("Genesis_Sprites/Angel_steel_left_Attacking5_Swordtip.png").convert()
 
@@ -564,8 +567,8 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
         
         # This sets the player's current spell and potion to be used when using a potion
-        self.currentPotion = 0
-        self.currentSpell = 0
+        self.currentPotion = -1
+        self.currentSpell = -1
         
         # Initialize the Spell Sprites location
         self.spellx = 5000
@@ -662,8 +665,9 @@ class Player(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image,
                                              (16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION))
         
-        # Create a timer to keep track of spell longevity
+        # Create a timer to keep track of sprite longevity
         self.timer = 0
+        self.interactTimer = 0
         
         # Initialize the elapsed variable
         self.elapsed = 0
@@ -676,9 +680,14 @@ class Player(pygame.sprite.Sprite):
         self.attack = 10
         
         # Initialize the counters for enemy kills
-        self.rockTurtles = 13
-        self.snakes = 0
+        # TODO: Uncomment this for final version
+#         self.rockMimics = 13
+#         self.snakes = 20
+        self.rockMimics = 1
+        self.snakes = 1
         
+        # Instantiate dialog
+        self.dialog = ""
         
     def update(self):
         """ Update the player location. """
@@ -698,6 +707,8 @@ class Player(pygame.sprite.Sprite):
         previousElapsed = self.elapsed
         self.elapsed = pygame.time.get_ticks()
         self.timer += ((self.elapsed - previousElapsed)/100)
+        self.interactTimer += ((self.elapsed - previousElapsed)/100)
+        
         if(self.timer < 3):
             self.currentSpellSprite = pygame.transform.scale(self.currentSpellSprite,
                                                      (16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION))
@@ -718,17 +729,22 @@ class Player(pygame.sprite.Sprite):
         # Limit the time the player attacks. 
         if(self.timer < 3):
             self.currentSwordSprite = pygame.transform.scale(self.currentSwordSprite, (magx, magy))
-            print(self.swordx, self.swordy)
             screen.blit(self.currentSwordSprite, (self.swordx, self.swordy))
         else: 
+            
             # Once time is up, move the sword sprite far away
             self.changePlayerDirection(self.direction)
             self.swordx = 5000
             self.swordy = 5000
+        
+        # Limit the time the player interacts and reset dialog
+        if(self.interactTimer > 15):
+            self.interactx = 5000
+            self.interacty = 5000
+            self.dialog = ""
             
-        screen.blit(self.currentInteractSprite, (self.interactx, self.interacty))
     def changePlayerDirection(self, direction):
-        """ Change the player's sprite based on what direction the player\ moved and what armor they have. """
+        """ Change the player's sprite based on what direction the player moved and what armor they have. """
         
         # Set the player's direction to the direction passed in.
         self.direction = direction
@@ -953,6 +969,9 @@ class Player(pygame.sprite.Sprite):
             self.interactx = self.x - 16 * WINDOW_MAGNIFICATION
             self.interacty = self.y 
         
+        # Reset the timer
+        self.interactTimer = 0
+
 class Enemy(pygame.sprite.Sprite):
     """ This class represents the enemy. The enemy can attack and move around the world. """
     
@@ -1005,7 +1024,7 @@ class Enemy(pygame.sprite.Sprite):
         # Initialize health, defense and attack
         self.health = 100
         self.defense = 1
-        self.attackDamage = 10
+        self.attackDamage = 5
         self.spellDefense = 1
         
     def update(self, player):
@@ -1536,7 +1555,7 @@ class Game(object):
         # Initialize that the game hasn't ended or started yet
         self.game_over = False
         self.game_start = False
-        
+        self.game_won = False
         # Create sprite groups
         self.all_boundaries_Group = pygame.sprite.Group()
         self.all_explodables_Group = pygame.sprite.Group()
@@ -1602,8 +1621,6 @@ class Game(object):
         self.leftKeyPressed = False
         self.DIRECTION = "UP"
         
-        # Instantiate the starting dialog used in interactions
-        self.dialog = ""
         
         # Instantiate variables for managing how long dialog is displayed. 
         # Allow the spell sprite to exist for a few seconds
@@ -1619,6 +1636,9 @@ class Game(object):
         # Instantiate progress for NPC interactions
         self.merchant_dialog = 0
         self.old_man_dialog = 0
+        
+        # Instantiate whether or not the NPC can talk
+        self.talk = False
     def process_events(self):
         """ Process all of the events. Return a "True" if we need
             to close the window. """
@@ -1639,6 +1659,12 @@ class Game(object):
                 CAMERA_LEFT = ROOM_WIDTH * 2
                 CAMERA_TOP = ROOM_HEIGHT * 2
                 
+            # If the game is over and the mouse is clicked start a new game
+            elif (self.game_won and event.type == pygame.MOUSEBUTTONDOWN):
+                NEWGAME = True
+                CAMERA_LEFT = ROOM_WIDTH * 2
+                CAMERA_TOP = ROOM_HEIGHT * 2
+                
             # If the game hasn't started yet and the player clicks, advance to the next splash screen
             elif (not self.game_start and event.type == pygame.MOUSEBUTTONDOWN):
                 self.splashNumber += 1
@@ -1652,22 +1678,22 @@ class Game(object):
                     
                     # DIRECTION is used later to determine movement direction
                     self.DIRECTION = "UP"
-                    self.dialog = ""
+                    self.player.dialog = ""
                 elif event.key == pygame.K_DOWN:
                     self.downKeyPressed = True
                     self.upKeyPressed = False
                     self.DIRECTION = "DOWN"
-                    self.dialog = ""
+                    self.player.dialog = ""
                 elif event.key == pygame.K_RIGHT:
                     self.rightKeyPressed = True
                     self.leftKeyPressed = False
                     self.DIRECTION = "RIGHT"
-                    self.dialog = ""
+                    self.player.dialog = ""
                 elif event.key == pygame.K_LEFT:
                     self.rightKeyPressed = False
                     self.leftKeyPressed = True
                     self.DIRECTION = "LEFT"  
-                    self.dialog = ""
+                    self.player.dialog = ""
                 elif event.key == pygame.K_q:
                     if(self.player.currentSpell == 0):
                         if self.player.mana >= 10:
@@ -1677,6 +1703,37 @@ class Game(object):
                             self.player.useSpell()                
                 elif event.key == pygame.K_e:
                     self.player.usePotion()
+                elif event.key == pygame.K_h:
+                    
+                    # Pause the game for a couple seconds. 
+                    font = pygame.font.Font("SILKWONDER.ttf", 25)
+                    text1 = font.render("Controls:", True, WHITE)
+                    text2 = font.render("W - Cycle Spell Forward", True, (WHITE))
+                    text3 = font.render("A - Cycle Potion Backward", True, (WHITE))
+                    text4 = font.render("S - Cycle Spell Backward", True, (WHITE))
+                    text5 = font.render("D - Cycle Potion Forward", True, (WHITE))
+                    text6 = font.render("Q - Use Spell", True, (WHITE))
+                    text7 = font.render("E - Use Potion", True, (WHITE))
+                    text8 = font.render("SPACE BAR - Interact", True, (WHITE))
+                    text9 = font.render("Arrow Keys - Move", True, (WHITE))
+                    text10 = font.render("Right Shift - Attack", True, (WHITE))
+                    text11 = font.render("H - View Controls", True, (WHITE))
+    
+    
+                    screen.fill(BLACK)
+                    screen.blit(text1, (WINDOW_WIDTH//2 - 75, 25))
+                    screen.blit(text2, (75, WINDOW_HEIGHT//2 - 150))
+                    screen.blit(text3, (WINDOW_WIDTH//2 , WINDOW_HEIGHT//2 -150))
+                    screen.blit(text4, (75, WINDOW_HEIGHT//2 - 100))
+                    screen.blit(text5, (WINDOW_WIDTH//2 , WINDOW_HEIGHT//2 - 100))
+                    screen.blit(text6, (75, WINDOW_HEIGHT//2 - 50))
+                    screen.blit(text7, (WINDOW_WIDTH//2 , WINDOW_HEIGHT//2 - 50))
+                    screen.blit(text8, (75, WINDOW_HEIGHT//2 ))
+                    screen.blit(text9, (WINDOW_WIDTH//2 , WINDOW_HEIGHT//2 ))
+                    screen.blit(text10, (75, WINDOW_HEIGHT//2 + 50))
+                    screen.blit(text11, (WINDOW_WIDTH//2 , WINDOW_HEIGHT//2 + 50))
+                    pygame.display.flip()
+                    pygame.time.wait(5000)
                 elif event.key == pygame.K_w:
                     self.feedback.switchSpellLeft(self.player) 
                 elif event.key == pygame.K_s:
@@ -1688,8 +1745,9 @@ class Game(object):
                 elif event.key == pygame.K_RSHIFT:
                     self.player.attackEnemy()
                 elif event.key == pygame.K_SPACE:
+                    self.talk = True
                     self.player.interact()
-                print(self.dialog)       
+                    
             # Detect when a key is released
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_UP:
@@ -1787,6 +1845,7 @@ class Game(object):
         self.all_explodables_Group.empty()
         self.all_cuttables_Group.empty()
         self.all_interactive_Group.empty()
+        
         # Get the initial room surface
         roomSurf = pygame.Surface((ROOM_WIDTH, ROOM_HEIGHT))
         
@@ -1813,6 +1872,7 @@ class Game(object):
                     self.all_cuttables_Group.add(tile)
                 if tile_number in interactive_tiles:
                     self.all_interactive_Group.add(tile)
+                    
         # Zoom in on the room to make it more viewable and return the room
         roomSurf = pygame.transform.scale(roomSurf, (ROOM_WIDTH * WINDOW_MAGNIFICATION,
                                                       ROOM_HEIGHT * WINDOW_MAGNIFICATION))
@@ -1975,6 +2035,8 @@ class Game(object):
                 enemy.health -= self.player.attack
                 if enemy.health <= 0:
                     group.remove(enemy)
+                    self.player.snakes -= 1
+                    print(self.player.snakes)
                     
             # Check collisions between cuttable tiles and the player's sword. 
             cuttable_list = spritecollide(swordTipRect, self.all_cuttables_Group, False)
@@ -2013,104 +2075,114 @@ class Game(object):
                 # Depending on the room and tile that is interacted with, change the dialog.
                 if(room == 3):
                     if(coords == (38,23)):
-                        self.dialog = "Press Right Shift to attack"
+                        self.player.dialog = "Press Right Shift to attack"
                 elif(room == 4):
                     if(coords == (30,31)):
-                        self.dialog = "You found 5 Health Potions!"
+                        self.player.dialog = "You found 5 Health Potions and the Clocktower Key!"
                         self.player.inventory[6][1] += 5
+                        self.player.inventory[5][1] = 1
                         tile_Data[31][30] = 60
                 elif(room == 7):
                     if(coords == (61,14)):
-                        self.dialog = "A rockslide has blocked this path! Sorry for the inconvenience!"
+                        self.player.dialog = "A rockslide has blocked this path! Sorry for the inconvenience!"
                 elif(room == 8):
                     if(coords == (38,18)):
-                        self.dialog = "North - Clocktower, South - Glade"
+                        self.player.dialog = "North - Clocktower, South - Glade"
                     if(coords == (34,18)):
-                        if self.merchant_dialog == 0:
-                            self.dialog = "Hey there! I'll sell you a health potion for 10 coins. Just talk to me again."
-                            self.merchant_dialog += 1
-                        else: 
-                            if(self.player.money >= 10):
-                                self.player.money -= 10
-                                self.player.inventory[6][1] += 1
-                                self.dialog = "Thanks for the business!"
-                            else:
-                                self.dialog = "Sorry you dont have enough coins!"
+                        if(self.talk):
+                            if self.merchant_dialog == 0:
+                                self.player.dialog = "Hey there! I'll sell you a health potion for 10 coins. Just talk to me again."
+                                self.talk = False
+                                self.merchant_dialog += 1
+                            else: 
+                                if(self.player.money >= 10):
+                                    self.player.money -= 10
+                                    self.player.inventory[6][1] += 1
+                                    self.player.dialog = "Thanks for the business!"
+                                    self.talk = False
+                                else:
+                                    self.player.dialog = "Sorry you dont have enough coins!"
+                                    self.talk = False
                 elif(room == 9):
                     if(coords == (17,14)):
-                        self.dialog = "Please do not go any further, danger ahead"
+                        self.player.dialog = "Please do not go any further, danger ahead"
                 elif(room == 10):
                     if(coords == (7,14)):
-                        self.dialog = "PLEASE DONT GO ANY FURTHER"
+                        self.player.dialog = "PLEASE DONT GO ANY FURTHER"
                     elif(coords == (6,17)):
-                        self.dialog = "I MEAN IT"
+                        self.player.dialog = "I MEAN IT"
                     elif(coords == (6,20)):
-                        self.dialog = "DONT SAY I DIDNT WARN YOU"
+                        self.player.dialog = "DONT SAY I DIDNT WARN YOU"
                     
                 elif(room == 11):
+                    print(self.player.snakes)
                     if(coords == (70,2)):
-                        self.old_man_dialog += 1
-                        if self.old_man_dialog == 0:
-                            self.dialog = "Hey! I bet youre here for the clocktower key right?"
-                            self.old_man_dialog += 1
-                        elif self.old_man_dialog == 1:
-                            self.dialog = "Well, first youll have to do a couple of favors for me."
-                            self.old_man_dialog += 1
-                        elif self.old_man_dialog == 2:
-                            self.dialog = "You may have noticed there are a lot of snakes around here."
-                            self.old_man_dialog += 1
-                        elif self.old_man_dialog == 3:
-                            self.dialog = "I need you to get rid of 20 of them for me."
-                            self.old_man_dialog += 1
-                        elif self.old_man_dialog == 4:
-                            if(self.player.snakes < 20):
-                                self.dialog = "Go out there and kill those snakes!"
-                            elif(self.player.snakes >= 20):
-                                self.dialog = "Nice Job!"
-                                self.old_man_dialog += 1
-                        elif self.old_man_dialog == 5:
-                            self.dialog = "Here's the key, but I have another offer for you!."
-                            self.old_man_dialog += 1
-                        elif self.old_man_dialog == 6:
-                            self.dialog = "You may have noticed some rock mimics here or there."
-                            self.old_man_dialog += 1
-                        elif self.old_man_dialog == 7:
-                            self.dialog = "I need you to get rid of all 13 of them for me."
-                            self.old_man_dialog += 1
-                        elif self.old_man_dialog == 8:
-                            self.dialog = "There's some shiny new armor in it for you!"
-                            self.old_man_dialog += 1
-                        elif self.old_man_dialog == 9:
-                            if(self.player.snakes < 20):
-                                self.dialog = "Go out there and kill those mimics!"
-                            elif(self.player.rockTurtles <= 0):
-                                self.dialog = "Nice Job, now i can sleep soundly with my eyes open!"  
-                                self.old_man_dialog += 1 
-                        else: 
-                                self.dialog = "Zzz"  
+                        if(self.talk):
+                            if self.old_man_dialog == 0:
+                                self.player.dialog = "Hey! I bet youre here for the clocktower key right?"
+                            elif self.old_man_dialog == 1:
+                                self.player.dialog = "Well, first youll have to do a couple of favors for me."
+                            elif self.old_man_dialog == 2:
+                                self.player.dialog = "You may have noticed there are a lot of snakes around here."
+                            elif self.old_man_dialog == 3:
+                                self.player.dialog = "I need you to get rid of 20 of them for me."
+                            elif self.old_man_dialog == 4:
+                                if(self.player.snakes > 0):
+                                    self.player.dialog = "Go out there and kill those snakes!"
+                                    self.old_man_dialog -= 1
+                                elif(self.player.snakes <= 0):
+                                    self.player.dialog = "Nice Job!"
+                            elif self.old_man_dialog == 5:
+                                self.player.dialog = "Here's the explosion spell, the key is to the west of the merchant. But I have another offer for you!."
+                                self.player.inventory[4][1] = 1
+                            elif self.old_man_dialog == 6:
+                                self.player.dialog = "You may have noticed some strange rocks here or there."
+                            elif self.old_man_dialog == 7:
+                                self.player.dialog = "I need you to get rid of all 13 of them for me using the spell I gave you."
+                            elif self.old_man_dialog == 8:
+                                self.player.dialog = "There's some shiny new armor in it for you!"
+                            elif self.old_man_dialog == 9:
+                                if(self.player.rockMimics > 0):
+                                    self.player.dialog = "Go out there and kill those mimics!"
+                                    self.old_man_dialog -= 1
+                                elif(self.player.rockMimics <= 0):
+                                    self.player.dialog = "Nice Job, take this steel Armor and sword. (Your defense and offense rose!)"  
+                                    self.player.defense += 1
+                                    self.player.attack += 10
+                                    self.player.inventory[1][1] = 1
+                                    self.player.armor = "Steel"
+                            elif self.old_man_dialog == 10: 
+                                self.player.dialog = "Now i can sleep soundly with my eyes open!"  
+                            else:
+                                    self.player.dialog = "Zzz"  
+                            self.talk = False
+                            self.old_man_dialog += 1 
+
                 elif(room == 13):
                     if(coords == (39,3)):
-                        self.dialog = "Clocktower is closed for maintenance. See Old Man for the key"
+                        self.player.dialog = "Clocktower is closed for maintenance. See Old Man for the key"
                     elif(coords == (40,3)):
                         if(self.player.inventory[5][1] == 1):
                             tile_Data[3][40] = "42"
-                            self.dialog = "Door Opened"
+                            self.player.dialog = "Door Opened"
+                            self.game_won = True
                         else: 
-                            self.dialog = "Door is locked"
+                            self.player.dialog = "Door is locked"
                 elif(room == 15):
                     if(coords == (6,1)):
-                        self.dialog = "REMINDER: Use A and D to switch between potions and E to use them"
+                        self.player.dialog = "REMINDER: Use A and D to switch between potions and E to use them"
                     elif(coords == (7,1)):
-                        self.dialog = "You found 5 Lesser Health Potions and 5 Lesser Mana Potions!"
+                        self.player.dialog = "You found Health and Mana Potions!"
                         self.player.inventory[9][1] += 5
+                        self.player.inventory[8][1] += 3
                         self.player.inventory[7][1] += 5
                         tile_Data[1][7] = 60    
                     elif(coords == (8,1)):
-                        self.dialog = "You found the Fireball Spell!" 
+                        self.player.dialog = "You found the Fireball Spell!" 
                         self.player.inventory[3][1] += 1
                         tile_Data[1][8] = 60                    
                     elif(coords == (9,1)):
-                        self.dialog = "REMINDER: Use W and S to switch between potions and Q to use them"
+                        self.player.dialog = "REMINDER: Use W and S to switch between potions and Q to use them"
                     
                     
             # Create a rect to be used in spell collision detection
@@ -2147,7 +2219,7 @@ class Game(object):
                         tile_Data[tiley][tilex] = "1"
                     elif(tileNumber == "47"):
                             tile_Data[tiley][tilex] = "2"
-                            self.player.rockTurtles -= 1
+                            self.player.rockMimics -= 1
                     elif(tileNumber == "48"):
                         tile_Data[tiley][tilex] = "2"
                     elif(tileNumber == "55"):
@@ -2179,8 +2251,9 @@ class Game(object):
                     
                 # If an enemy's health dies we increment the counter to be used in quests. 
                 if enemy.health <= 0:
-                    self.room1_enemies_Group.remove(enemy)
-                    self.player.snakes += 1
+                    group.remove(enemy)
+                    self.player.snakes -= 1
+                    print(self.player.snakes)
                     
             # Update each of the room groups based on the current room.
             if self.player.room == 1:
@@ -2209,7 +2282,7 @@ class Game(object):
         screen.fill(WHITE)
         
         # If the game hasnt ended and the game has started draw he sprites
-        if(not self.game_over and self.game_start):
+        if(not self.game_over and self.game_start and not self.game_won):
             
             # Instantiate the font needed
             font = pygame.font.Font("SILKWONDER.ttf", 25)
@@ -2250,9 +2323,20 @@ class Game(object):
                 self.room14_enemies_Group.draw(screen)
             
             # Draw the dialog onto the screen. 
-            dialog_text = font.render(self.dialog, True, WHITE)
-            screen.blit(dialog_text, (120, WINDOW_HEIGHT - 150))
+            dialog_text = font.render(self.player.dialog, True, WHITE)
+            screen.blit(dialog_text, (120, WINDOW_HEIGHT - 50))
             # Copy back buffer onto the front buffer
+            pygame.display.flip()
+        
+        # If the game is over display game over screen
+        elif(self.game_won):
+            
+            font = pygame.font.Font("SILKWONDER.ttf", 50)
+            text1 = font.render("YOU WON!", True, WHITE)
+            playAgain = font.render("Click to play again", True, WHITE)
+            screen.fill(BLACK)
+            screen.blit(text1, (WINDOW_WIDTH//2 - 120, WINDOW_HEIGHT//2 - 150))
+            screen.blit(playAgain, (WINDOW_WIDTH//2 - 200, WINDOW_HEIGHT - 150))
             pygame.display.flip()
             
         # If the game is over display game over screen
@@ -2265,6 +2349,7 @@ class Game(object):
             screen.blit(text1, (WINDOW_WIDTH//2 - 120, WINDOW_HEIGHT//2 - 150))
             screen.blit(playAgain, (WINDOW_WIDTH//2 - 200, WINDOW_HEIGHT - 150))
             pygame.display.flip()
+            
             
             # If the game hasn't started yet, display the splash screen
         elif(not self.game_start):
