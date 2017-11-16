@@ -4,7 +4,7 @@ Create the main game for "Genesis"
 Author: Bradley Lamitie
 Date: 11/15/2017
 Version Number: 2.1 (Demo updated)
- 
+
 What the Code Does: 
 The code so far creates the world using the tiles provided by rendering one room at a time
 and zooming in on it to make it more visible. 
@@ -32,10 +32,7 @@ Silk Wonderland font by jelloween Found on https://jelloween.deviantart.com/art/
 All Sprites are made by me using Pixilart.com
 
 Changes in this version: 
-- Added a temporary way to win
-- Added a help button to display controls
-- Fixed Glitches: 
-    - Dialog runs through too quickly
+- Centered dialogs and fit them to screen
     
 Known Glitches: 
 - Player attack sprite is too short
@@ -53,8 +50,7 @@ TODOs for Final Project:
 - Add Save states or a pause function.
 - Add a menu.
 - Add Sounds.
-- Add cheat codes for quick demonstrations.
-- Add Screen animations
+ - Add Screen animations
 - Add Item Drops
 - Add quest feedback
 - Add enemy knockback when player attacks
@@ -643,7 +639,7 @@ class Player(pygame.sprite.Sprite):
         self.mana =  50
         
         # Set the player's current money
-        self.money = 0
+        self.money = 50
         
         # Set the player's current quest 
         self.quest = "" 
@@ -688,7 +684,8 @@ class Player(pygame.sprite.Sprite):
         
         # Instantiate dialog
         self.dialog = ""
-        
+        self.dialogCoords = [120,WINDOW_HEIGHT - 50]
+        self.fontSize = 25
     def update(self):
         """ Update the player location. """
         # Update a rect to be used in spell collision detection
@@ -738,7 +735,7 @@ class Player(pygame.sprite.Sprite):
             self.swordy = 5000
         
         # Limit the time the player interacts and reset dialog
-        if(self.interactTimer > 15):
+        if(self.interactTimer > 25):
             self.interactx = 5000
             self.interacty = 5000
             self.dialog = ""
@@ -2036,7 +2033,6 @@ class Game(object):
                 if enemy.health <= 0:
                     group.remove(enemy)
                     self.player.snakes -= 1
-                    print(self.player.snakes)
                     
             # Check collisions between cuttable tiles and the player's sword. 
             cuttable_list = spritecollide(swordTipRect, self.all_cuttables_Group, False)
@@ -2076,22 +2072,37 @@ class Game(object):
                 if(room == 3):
                     if(coords == (38,23)):
                         self.player.dialog = "Press Right Shift to attack"
+                        self.player.dialogCoords[0] = 250
+                        self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                        self.player.fontSize = 25
                 elif(room == 4):
                     if(coords == (30,31)):
                         self.player.dialog = "You found 5 Health Potions and the Clocktower Key!"
+                        self.player.dialogCoords[0] = 175
+                        self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                        self.player.fontSize = 25
                         self.player.inventory[6][1] += 5
                         self.player.inventory[5][1] = 1
                         tile_Data[31][30] = 60
                 elif(room == 7):
                     if(coords == (61,14)):
                         self.player.dialog = "A rockslide has blocked this path! Sorry for the inconvenience!"
+                        self.player.dialogCoords[0] = 150
+                        self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                        self.player.fontSize = 20
                 elif(room == 8):
                     if(coords == (38,18)):
                         self.player.dialog = "North - Clocktower, South - Glade"
+                        self.player.dialogCoords[0] = 250
+                        self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                        self.player.fontSize = 25
                     if(coords == (34,18)):
                         if(self.talk):
                             if self.merchant_dialog == 0:
                                 self.player.dialog = "Hey there! I'll sell you a health potion for 10 coins. Just talk to me again."
+                                self.player.dialogCoords[0] = 100
+                                self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                self.player.fontSize = 20
                                 self.talk = False
                                 self.merchant_dialog += 1
                             else: 
@@ -2099,90 +2110,175 @@ class Game(object):
                                     self.player.money -= 10
                                     self.player.inventory[6][1] += 1
                                     self.player.dialog = "Thanks for the business!"
+                                    self.player.dialogCoords[0] = 300 
+                                    self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                    self.player.fontSize = 25
                                     self.talk = False
                                 else:
                                     self.player.dialog = "Sorry you dont have enough coins!"
+                                    self.player.dialogCoords[0] = 250
+                                    self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                    self.player.fontSize = 25
                                     self.talk = False
                 elif(room == 9):
                     if(coords == (17,14)):
                         self.player.dialog = "Please do not go any further, danger ahead"
+                        self.player.dialogCoords[0] = 200
+                        self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                        self.player.fontSize = 25
                 elif(room == 10):
                     if(coords == (7,14)):
                         self.player.dialog = "PLEASE DONT GO ANY FURTHER"
+                        self.player.dialogCoords[0] = 250
+                        self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                        self.player.fontSize = 25
                     elif(coords == (6,17)):
                         self.player.dialog = "I MEAN IT"
+                        self.player.dialogCoords[0] = 350
+                        self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                        self.player.fontSize = 25
                     elif(coords == (6,20)):
                         self.player.dialog = "DONT SAY I DIDNT WARN YOU"
+                        self.player.dialogCoords[0] = 250
+                        self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                        self.player.fontSize = 25
                     
                 elif(room == 11):
-                    print(self.player.snakes)
                     if(coords == (70,2)):
                         if(self.talk):
                             if self.old_man_dialog == 0:
                                 self.player.dialog = "Hey! I bet youre here for the clocktower key right?"
+                                self.player.dialogCoords[0] = 150
+                                self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                self.player.fontSize = 25
                             elif self.old_man_dialog == 1:
                                 self.player.dialog = "Well, first youll have to do a couple of favors for me."
+                                self.player.dialogCoords[0] = 175
+                                self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                self.player.fontSize = 20
                             elif self.old_man_dialog == 2:
                                 self.player.dialog = "You may have noticed there are a lot of snakes around here."
+                                self.player.dialogCoords[0] = 150
+                                self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                self.player.fontSize = 20
                             elif self.old_man_dialog == 3:
                                 self.player.dialog = "I need you to get rid of 20 of them for me."
+                                self.player.dialogCoords[0] = 200
+                                self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                self.player.fontSize = 25
                             elif self.old_man_dialog == 4:
                                 if(self.player.snakes > 0):
                                     self.player.dialog = "Go out there and kill those snakes!"
+                                    self.player.dialogCoords[0] = 200
+                                    self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                    self.player.fontSize = 25
                                     self.old_man_dialog -= 1
                                 elif(self.player.snakes <= 0):
                                     self.player.dialog = "Nice Job!"
+                                    self.player.dialogCoords[0] = 350
+                                    self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                    self.player.fontSize = 25
                             elif self.old_man_dialog == 5:
-                                self.player.dialog = "Here's the explosion spell, the key is to the west of the merchant. But I have another offer for you!."
+                                self.player.dialog = "Here's the explosion spell, the key is to the west of the merchant."
+                                self.player.dialogCoords[0] = 150
+                                self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                self.player.fontSize = 20
                                 self.player.inventory[4][1] = 1
                             elif self.old_man_dialog == 6:
-                                self.player.dialog = "You may have noticed some strange rocks here or there."
+                                self.player.dialog = "But I have another offer for you!"
+                                self.player.dialogCoords[0] = 250
+                                self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                self.player.fontSize = 25
                             elif self.old_man_dialog == 7:
-                                self.player.dialog = "I need you to get rid of all 13 of them for me using the spell I gave you."
+                                self.player.dialog = "You may have noticed some strange rocks here or there."
+                                self.player.dialogCoords[0] = 175
+                                self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                self.player.fontSize = 20
                             elif self.old_man_dialog == 8:
-                                self.player.dialog = "There's some shiny new armor in it for you!"
+                                self.player.dialog = "I need you to get rid of all 13 of them for me using the spell I gave you."
+                                self.player.dialogCoords[0] = 150
+                                self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                self.player.fontSize = 16
                             elif self.old_man_dialog == 9:
+                                self.player.dialog = "There's some shiny new armor in it for you!"
+                                self.player.dialogCoords[0] = 175
+                                self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                self.player.fontSize = 25
+                            elif self.old_man_dialog == 10:
                                 if(self.player.rockMimics > 0):
                                     self.player.dialog = "Go out there and kill those mimics!"
+                                    self.player.dialogCoords[0] = 200
+                                    self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                    self.player.fontSize = 25
                                     self.old_man_dialog -= 1
                                 elif(self.player.rockMimics <= 0):
-                                    self.player.dialog = "Nice Job, take this steel Armor and sword. (Your defense and offense rose!)"  
+                                    self.player.dialog = "Nice Job, take this steel Armor and sword. (Your defense and offense rose!)"
+                                    self.player.dialogCoords[0] = 150
+                                    self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                    self.player.fontSize = 16
                                     self.player.defense += 1
                                     self.player.attack += 10
                                     self.player.inventory[1][1] = 1
                                     self.player.armor = "Steel"
-                            elif self.old_man_dialog == 10: 
+                            elif self.old_man_dialog == 11: 
                                 self.player.dialog = "Now i can sleep soundly with my eyes open!"  
+                                self.player.dialogCoords[0] = 200
+                                self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                self.player.fontSize = 25
                             else:
-                                    self.player.dialog = "Zzz"  
+                                self.player.dialog = "Zzz"  
+                                self.player.dialogCoords[0] = 400
+                                self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                self.player.fontSize = 25
                             self.talk = False
                             self.old_man_dialog += 1 
 
                 elif(room == 13):
                     if(coords == (39,3)):
                         self.player.dialog = "Clocktower is closed for maintenance. See Old Man for the key"
+                        self.player.dialogCoords[0] = 100
+                        self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                        self.player.fontSize = 20
                     elif(coords == (40,3)):
                         if(self.player.inventory[5][1] == 1):
                             tile_Data[3][40] = "42"
                             self.player.dialog = "Door Opened"
+                            self.player.dialogCoords[0] = 250
+                            self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                            self.player.fontSize = 25
                             self.game_won = True
                         else: 
                             self.player.dialog = "Door is locked"
+                            self.player.dialogCoords[0] = 250
+                            self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                            self.player.fontSize = 25
                 elif(room == 15):
                     if(coords == (6,1)):
                         self.player.dialog = "REMINDER: Use A and D to switch between potions and E to use them"
+                        self.player.dialogCoords[0] = 150
+                        self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                        self.player.fontSize = 20
                     elif(coords == (7,1)):
                         self.player.dialog = "You found Health and Mana Potions!"
+                        self.player.dialogCoords[0] = 225
+                        self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                        self.player.fontSize = 25
                         self.player.inventory[9][1] += 5
                         self.player.inventory[8][1] += 3
                         self.player.inventory[7][1] += 5
                         tile_Data[1][7] = 60    
                     elif(coords == (8,1)):
                         self.player.dialog = "You found the Fireball Spell!" 
+                        self.player.dialogCoords[0] = 250
+                        self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                        self.player.fontSize = 25
                         self.player.inventory[3][1] += 1
                         tile_Data[1][8] = 60                    
                     elif(coords == (9,1)):
-                        self.player.dialog = "REMINDER: Use W and S to switch between potions and Q to use them"
+                        self.player.dialog = "REMINDER: Use W and S to switch between spells and Q to use them"
+                        self.player.dialogCoords[0] = 150
+                        self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                        self.player.fontSize = 20
                     
                     
             # Create a rect to be used in spell collision detection
@@ -2253,7 +2349,6 @@ class Game(object):
                 if enemy.health <= 0:
                     group.remove(enemy)
                     self.player.snakes -= 1
-                    print(self.player.snakes)
                     
             # Update each of the room groups based on the current room.
             if self.player.room == 1:
@@ -2285,7 +2380,7 @@ class Game(object):
         if(not self.game_over and self.game_start and not self.game_won):
             
             # Instantiate the font needed
-            font = pygame.font.Font("SILKWONDER.ttf", 25)
+            font = pygame.font.Font("SILKWONDER.ttf", self.player.fontSize)
             
             # Create a new surface for the current room
             roomSurface = self.getRoomSurface(CAMERA_LEFT, CAMERA_TOP, tile_Data)
@@ -2324,7 +2419,7 @@ class Game(object):
             
             # Draw the dialog onto the screen. 
             dialog_text = font.render(self.player.dialog, True, WHITE)
-            screen.blit(dialog_text, (120, WINDOW_HEIGHT - 50))
+            screen.blit(dialog_text, (self.player.dialogCoords[0], self.player.dialogCoords[1]))
             # Copy back buffer onto the front buffer
             pygame.display.flip()
         
