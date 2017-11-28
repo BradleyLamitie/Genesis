@@ -6,20 +6,20 @@ Date: 11/28/2017
 Version Number: 2.3
 
 What the Code Does:
-The code so far creates the world using the tiles provided by rendering one room at a time
-and zooming in on it to make it more visible.
+The code so far creates the world using the tiles provided by rendering
+one room at a time and zooming in on it to make it more visible.
 Then, the player is put into the world and can use the directional
 keys( UpArrow, RightArrow, LeftArrow, and DownArrow ) to move around the world
-The player can also now use potions and spells using the E and Q key respectively
-The player can switch between potions using A and D and switch between spells with W and S
+The player can also now use potions and spells using the E and Q key
+The player can switch between potions using A and D
+and switch between spells with W and S
 The Right Shift key can be used to attack
 The H key shows the controls for 5 seconds
 The code runs through the events and moves the sprite.
 So far, the game doesnt have any real way to lose or win.
 
 How to Play:
-The player can use the directional keys( UpArrow, RightArrow, LeftArrow, and DownArrow )
-to move around the world.
+The player can use the directional keys to move around the world.
 Use spells to fight and destroy obstacles.
 Use attacking to fight enemys.
 Use potions to heal and restore mana.
@@ -27,13 +27,13 @@ Use potions to heal and restore mana.
 GitHub Repository: https://github.com/BradleyLamitie/Genesis
 
 Credits:
-Silk Wonderland font by jelloween Found on https://jelloween.deviantart.com/art/Font-SILKY-WONDERLAND-free-45103645
+Silk Wonderland font by jelloween Found on:
+ https://jelloween.deviantart.com/art/Font-SILKY-WONDERLAND-free-45103645
 "The White" By RoleMusic found on http://freemusicarchive.org/genre/Chiptune/
 All Sprites are made by me using Pixilart.com
 
 Changes in this version:
-- Added quest feedback
-- Fixed about half of the style errors
+- Fixed all style errors except the 2d Array
 
 Known Glitches:
 - Player attack sprite is too short
@@ -51,7 +51,7 @@ TODOs for Final Project:
 - Animate the characters as they move throughout the world.
 - Pass the style checker without errors
 
-Optional objectives: 
+Optional objectives:
 - Make it so that the WORLD_DATA is imported from a .tmx file.
 - If possible import a tileset from a Tiled file.
 - Learn to Use a sprite Sheet to load in sprites.
@@ -112,277 +112,488 @@ size = (WINDOW_WIDTH, WINDOW_HEIGHT)
 screen = pygame.display.set_mode(size)
 
 # Load in each of the sprite images
-Cliff_bottom_bottom = pygame.image.load("Genesis_Sprites/Cliff_bottom_bottom.png").convert()
-Cliff_bottom_corner_bottomleft = pygame.image.load("Genesis_Sprites/Cliff_bottom_corner_bottomleft.png").convert()
-Cliff_bottom_corner_bottomright = pygame.image.load("Genesis_Sprites/Cliff_bottom_corner_bottomright.png").convert()
-Cliff_bottom_corner_inset_bottomleft = pygame.image.load("Genesis_Sprites/Cliff_bottom_corner_inset_bottomleft.png").convert()
-Cliff_bottom_corner_inset_bottomright = pygame.image.load("Genesis_Sprites/Cliff_bottom_corner_inset_bottomright.png").convert()
-Cliff_bottom_topleft = pygame.image.load("Genesis_Sprites/Cliff_bottom_corner_inset_topleft.png").convert()
-Cliff_bottom_corner_inset_topright = pygame.image.load("Genesis_Sprites/Cliff_bottom_corner_inset_topright.png").convert()
-Cliff_bottom_corner_inset_topleft = pygame.image.load("Genesis_Sprites/Cliff_bottom_corner_inset_topleft.png").convert()
-Cliff_bottom_corner_topleft = pygame.image.load("Genesis_Sprites/Cliff_bottom_corner_topleft.png").convert()
-Cliff_bottom_corner_topright = pygame.image.load("Genesis_Sprites/Cliff_bottom_corner_topright.png").convert()
-Cliff_bottom_left = pygame.image.load("Genesis_Sprites/Cliff_bottom_left.png").convert()
-Cliff_bottom_right = pygame.image.load("Genesis_Sprites/Cliff_bottom_right.png").convert()
-Cliff_bottom_top = pygame.image.load("Genesis_Sprites/Cliff_bottom_top.png").convert()
-Cliff_corner_bottomleft = pygame.image.load("Genesis_Sprites/Cliff_corner_bottomleft.png").convert()
-Cliff_corner_bottomright = pygame.image.load("Genesis_Sprites/Cliff_corner_bottomright.png").convert()
-Cliff_corner_topleft = pygame.image.load("Genesis_Sprites/Cliff_corner_topleft.png").convert()
-Cliff_corner_topright = pygame.image.load("Genesis_Sprites/Cliff_corner_topright.png").convert()
-Cliff_top = pygame.image.load("Genesis_Sprites/Cliff_top.png").convert()
-Cliff_top_corner_bottomleft = pygame.image.load("Genesis_Sprites/Cliff_top_corner_bottomleft.png").convert()
-Cliff_top_corner_bottomright = pygame.image.load("Genesis_Sprites/Cliff_top_corner_bottomright.png").convert()
-Cliff_top_corner_topleft = pygame.image.load("Genesis_Sprites/Cliff_top_corner_topleft.png").convert()
-Cliff_top_corner_topright = pygame.image.load("Genesis_Sprites/Cliff_top_corner_topright.png").convert()
-Cliff_top_edge_bottom = pygame.image.load("Genesis_Sprites/Cliff_top_edge_bottom.png").convert()
-Cliff_top_edge_left = pygame.image.load("Genesis_Sprites/Cliff_top_edge_left.png").convert()
-Cliff_top_edge_right = pygame.image.load("Genesis_Sprites/Cliff_top_edge_right.png").convert()
-Cliff_top_edge_top = pygame.image.load("Genesis_Sprites/Cliff_top_edge_top.png").convert()
-Cliff_wall = pygame.image.load("Genesis_Sprites/Cliff_wall.png").convert()
-Clocktower_door = pygame.image.load("Genesis_Sprites/Clocktower_door.png").convert()
-Clocktower_door_open = pygame.image.load("Genesis_Sprites/Clocktower_door_open.png").convert()
-Grass_cut = pygame.image.load("Genesis_Sprites/Grass_cut.png").convert()
-Grass_uncut = pygame.image.load("Genesis_Sprites/Grass_uncut.png").convert()
-gray_ground_path = pygame.image.load("Genesis_Sprites/gray_ground_path.png").convert()
-Ground_grass = pygame.image.load("Genesis_Sprites/Ground_grass.png").convert()
-Rock_exploded = pygame.image.load("Genesis_Sprites/Rock_exploded.png").convert()
-Rock_exploded_path = pygame.image.load("Genesis_Sprites/Rock_exploded_path.png").convert()
-Rock_turtle = pygame.image.load("Genesis_Sprites/Rock_turtle.png").convert()
-Rock_unexploded = pygame.image.load("Genesis_Sprites/Rock_unexploded.png").convert()
-Rock_unexploded_path = pygame.image.load("Genesis_Sprites/Rock_unexploded_path.png").convert()
-Signpost = pygame.image.load("Genesis_Sprites/Signpost.png").convert()
-Signpost_path = pygame.image.load("Genesis_Sprites/Signpost_path.png").convert()
-Chest_Closed = pygame.image.load("Genesis_Sprites/Chest_closed.png").convert()
-Chest_Open = pygame.image.load("Genesis_Sprites/Chest_open.png").convert()
-Map_Image = pygame.image.load("Genesis_Sprites/Genesis_Map.png").convert()
+Cliff_bottom_bottom = pygame.image.load(
+    "Genesis_Sprites/Cliff_bottom_bottom.png").convert()
+Cliff_bottom_corner_bottomleft = pygame.image.load(
+    "Genesis_Sprites/Cliff_bottom_corner_bottomleft.png").convert()
+Cliff_bottom_corner_bottomright = pygame.image.load(
+    "Genesis_Sprites/Cliff_bottom_corner_bottomright.png").convert()
+Cliff_bottom_corner_inset_bottomleft = pygame.image.load(
+    "Genesis_Sprites/Cliff_bottom_corner_inset_bottomleft.png").convert()
+Cliff_bottom_corner_inset_bottomright = pygame.image.load(
+    "Genesis_Sprites/Cliff_bottom_corner_inset_bottomright.png").convert()
+Cliff_bottom_topleft = pygame.image.load(
+    "Genesis_Sprites/Cliff_bottom_corner_inset_topleft.png").convert()
+Cliff_bottom_corner_inset_topright = pygame.image.load(
+    "Genesis_Sprites/Cliff_bottom_corner_inset_topright.png").convert()
+Cliff_bottom_corner_inset_topleft = pygame.image.load(
+    "Genesis_Sprites/Cliff_bottom_corner_inset_topleft.png").convert()
+Cliff_bottom_corner_topleft = pygame.image.load(
+    "Genesis_Sprites/Cliff_bottom_corner_topleft.png").convert()
+Cliff_bottom_corner_topright = pygame.image.load(
+    "Genesis_Sprites/Cliff_bottom_corner_topright.png").convert()
+Cliff_bottom_left = pygame.image.load(
+    "Genesis_Sprites/Cliff_bottom_left.png").convert()
+Cliff_bottom_right = pygame.image.load(
+    "Genesis_Sprites/Cliff_bottom_right.png").convert()
+Cliff_bottom_top = pygame.image.load(
+    "Genesis_Sprites/Cliff_bottom_top.png").convert()
+Cliff_corner_bottomleft = pygame.image.load(
+    "Genesis_Sprites/Cliff_corner_bottomleft.png").convert()
+Cliff_corner_bottomright = pygame.image.load(
+    "Genesis_Sprites/Cliff_corner_bottomright.png").convert()
+Cliff_corner_topleft = pygame.image.load(
+    "Genesis_Sprites/Cliff_corner_topleft.png").convert()
+Cliff_corner_topright = pygame.image.load(
+    "Genesis_Sprites/Cliff_corner_topright.png").convert()
+Cliff_top = pygame.image.load(
+    "Genesis_Sprites/Cliff_top.png").convert()
+Cliff_top_corner_bottomleft = pygame.image.load(
+    "Genesis_Sprites/Cliff_top_corner_bottomleft.png").convert()
+Cliff_top_corner_bottomright = pygame.image.load(
+    "Genesis_Sprites/Cliff_top_corner_bottomright.png").convert()
+Cliff_top_corner_topleft = pygame.image.load(
+    "Genesis_Sprites/Cliff_top_corner_topleft.png").convert()
+Cliff_top_corner_topright = pygame.image.load(
+    "Genesis_Sprites/Cliff_top_corner_topright.png").convert()
+Cliff_top_edge_bottom = pygame.image.load(
+    "Genesis_Sprites/Cliff_top_edge_bottom.png").convert()
+Cliff_top_edge_left = pygame.image.load(
+    "Genesis_Sprites/Cliff_top_edge_left.png").convert()
+Cliff_top_edge_right = pygame.image.load(
+    "Genesis_Sprites/Cliff_top_edge_right.png").convert()
+Cliff_top_edge_top = pygame.image.load(
+    "Genesis_Sprites/Cliff_top_edge_top.png").convert()
+Cliff_wall = pygame.image.load(
+    "Genesis_Sprites/Cliff_wall.png").convert()
+Clocktower_door = pygame.image.load(
+    "Genesis_Sprites/Clocktower_door.png").convert()
+Clocktower_door_open = pygame.image.load(
+    "Genesis_Sprites/Clocktower_door_open.png").convert()
+Grass_cut = pygame.image.load(
+    "Genesis_Sprites/Grass_cut.png").convert()
+Grass_uncut = pygame.image.load(
+    "Genesis_Sprites/Grass_uncut.png").convert()
+gray_ground_path = pygame.image.load(
+    "Genesis_Sprites/gray_ground_path.png").convert()
+Ground_grass = pygame.image.load(
+    "Genesis_Sprites/Ground_grass.png").convert()
+Rock_exploded = pygame.image.load(
+    "Genesis_Sprites/Rock_exploded.png").convert()
+Rock_exploded_path = pygame.image.load(
+    "Genesis_Sprites/Rock_exploded_path.png").convert()
+Rock_turtle = pygame.image.load(
+    "Genesis_Sprites/Rock_turtle.png").convert()
+Rock_unexploded = pygame.image.load(
+    "Genesis_Sprites/Rock_unexploded.png").convert()
+Rock_unexploded_path = pygame.image.load(
+    "Genesis_Sprites/Rock_unexploded_path.png").convert()
+Signpost = pygame.image.load(
+    "Genesis_Sprites/Signpost.png").convert()
+Signpost_path = pygame.image.load(
+    "Genesis_Sprites/Signpost_path.png").convert()
+Chest_Closed = pygame.image.load(
+    "Genesis_Sprites/Chest_closed.png").convert()
+Chest_Open = pygame.image.load(
+    "Genesis_Sprites/Chest_open.png").convert()
+Map_Image = pygame.image.load(
+    "Genesis_Sprites/Genesis_Map.png").convert()
 
 # Add the NPCs
-Merchant = pygame.image.load("Genesis_Sprites/Merchant.png").convert()
-OldMan = pygame.image.load("Genesis_Sprites/OldMan.png").convert()
+Merchant = pygame.image.load(
+    "Genesis_Sprites/Merchant.png").convert()
+OldMan = pygame.image.load(
+    "Genesis_Sprites/OldMan.png").convert()
 
 # Add the images for the snake enemy
-Snake_Forward_1 = pygame.image.load("Genesis_Sprites/Snake_Forward_1.png").convert()
-Snake_Forward_2 = pygame.image.load("Genesis_Sprites/Snake_Forward_2.png").convert()
+Snake_Forward_1 = pygame.image.load(
+    "Genesis_Sprites/Snake_Forward_1.png").convert()
+Snake_Forward_2 = pygame.image.load(
+    "Genesis_Sprites/Snake_Forward_2.png").convert()
 Snake_Back_1 = pygame.image.load("Genesis_Sprites/Snake_Back_1.png").convert()
 Snake_Back_2 = pygame.image.load("Genesis_Sprites/Snake_Back_2.png").convert()
-Snake_Right_1 = pygame.image.load("Genesis_Sprites/Snake_Right_1.png").convert()
-Snake_Right_2 = pygame.image.load("Genesis_Sprites/Snake_Right_2.png").convert()
+Snake_Right_1 = pygame.image.load(
+    "Genesis_Sprites/Snake_Right_1.png").convert()
+Snake_Right_2 = pygame.image.load(
+    "Genesis_Sprites/Snake_Right_2.png").convert()
 Snake_Left_1 = pygame.transform.flip(Snake_Right_1, True, False)
 Snake_Left_2 = pygame.transform.flip(Snake_Right_2, True, False)
-Rock_Turtle_Quest = pygame.image.load("Genesis_Sprites/Rock_Turtle_quest.png").convert()
+Rock_Turtle_Quest = pygame.image.load(
+    "Genesis_Sprites/Rock_Turtle_quest.png").convert()
 
 # Add the icons that will be used in the feedback system
-Fireball_Regular = pygame.image.load("Genesis_Sprites/Fireball_Regular.png").convert()
-Fireball_Swirl = pygame.image.load("Genesis_Sprites/Fireball_Swirl.png").convert()
-Explosion_Bomb = pygame.image.load("Genesis_Sprites/Explosion_Bomb.png").convert()
-Explosion_Blast = pygame.image.load("Genesis_Sprites/Explosion_Blast.png").convert()
-Lesser_Mana_Potion = pygame.image.load("Genesis_Sprites/Lesser_Mana_Potion.png").convert()
-Lesser_Health_Potion = pygame.image.load("Genesis_Sprites/Lesser_Health_Potion.png").convert()
-Mana_Potion = pygame.image.load("Genesis_Sprites/Mana_Potion.png").convert()
-Health_Potion = pygame.image.load("Genesis_Sprites/Health_Potion.png").convert()
-Spell_Frame = pygame.image.load("Genesis_Sprites/Spell_Frame_Filled.png").convert()
-Potion_Frame = pygame.image.load("Genesis_Sprites/Potion_Frame_Filled.png").convert()
-Coin = pygame.image.load("Genesis_Sprites/Coin.png").convert()
-Blank = pygame.image.load("Genesis_Sprites/Blank.png").convert()
+Fireball_Regular = pygame.image.load(
+    "Genesis_Sprites/Fireball_Regular.png").convert()
+Fireball_Swirl = pygame.image.load(
+    "Genesis_Sprites/Fireball_Swirl.png").convert()
+Explosion_Bomb = pygame.image.load(
+    "Genesis_Sprites/Explosion_Bomb.png").convert()
+Explosion_Blast = pygame.image.load(
+    "Genesis_Sprites/Explosion_Blast.png").convert()
+Lesser_Mana_Potion = pygame.image.load(
+    "Genesis_Sprites/Lesser_Mana_Potion.png").convert()
+Lesser_Health_Potion = pygame.image.load(
+    "Genesis_Sprites/Lesser_Health_Potion.png").convert()
+Mana_Potion = pygame.image.load(
+    "Genesis_Sprites/Mana_Potion.png").convert()
+Health_Potion = pygame.image.load(
+    "Genesis_Sprites/Health_Potion.png").convert()
+Spell_Frame = pygame.image.load(
+    "Genesis_Sprites/Spell_Frame_Filled.png").convert()
+Potion_Frame = pygame.image.load(
+    "Genesis_Sprites/Potion_Frame_Filled.png").convert()
+Coin = pygame.image.load(
+    "Genesis_Sprites/Coin.png").convert()
+Blank = pygame.image.load(
+    "Genesis_Sprites/Blank.png").convert()
 
 # Add the images for Angel sprites in each armor
 # Add the images for Angel with wooden Armor and Sword
-Angel_wood_Back_Idle = pygame.image.load("Genesis_Sprites/Angel_wood_back_idle.png").convert()
-Angel_wood_Back_Walking1 = pygame.image.load("Genesis_Sprites/Angel_wood_back_walking1.png").convert()
+Angel_wood_Back_Idle = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_back_idle.png").convert()
+Angel_wood_Back_Walking1 = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_back_walking1.png").convert()
 Angel_wood_Back_Walking2 = Angel_wood_Back_Idle
-Angel_wood_Back_Walking3 = pygame.transform.flip(Angel_wood_Back_Walking1, True, False)
+Angel_wood_Back_Walking3 = pygame.transform.flip(
+    Angel_wood_Back_Walking1, True, False)
 Angel_wood_Back_Walking4 = Angel_wood_Back_Idle
 Angel_wood_Back_Attacking1 = Angel_wood_Back_Idle
-Angel_wood_Back_Attacking2 = pygame.image.load("Genesis_Sprites/Angel_wood_back_Attacking2.png").convert()
-Angel_wood_Back_Attacking3 = pygame.image.load("Genesis_Sprites/Angel_wood_back_Attacking3.png").convert()
-Angel_wood_Back_Attacking4 = pygame.image.load("Genesis_Sprites/Angel_wood_back_Attacking4.png").convert()
+Angel_wood_Back_Attacking2 = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_back_Attacking2.png").convert()
+Angel_wood_Back_Attacking3 = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_back_Attacking3.png").convert()
+Angel_wood_Back_Attacking4 = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_back_Attacking4.png").convert()
 Angel_wood_Back_Attacking5 = Angel_wood_Back_Idle
-Angel_wood_Back_Attacking2_Swordtip = pygame.image.load("Genesis_Sprites/Angel_wood_back_Attacking2_swordtip.png").convert()
-Angel_wood_Back_Attacking3_Swordtip = pygame.image.load("Genesis_Sprites/Angel_wood_back_Attacking3_swordtip.png").convert()
-Angel_wood_Back_Attacking4_Swordtip = pygame.image.load("Genesis_Sprites/Angel_wood_back_Attacking4_swordtip.png").convert()
+Angel_wood_Back_Attacking2_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_back_Attacking2_swordtip.png").convert()
+Angel_wood_Back_Attacking3_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_back_Attacking3_swordtip.png").convert()
+Angel_wood_Back_Attacking4_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_back_Attacking4_swordtip.png").convert()
 
-Angel_wood_Front_Idle = pygame.image.load("Genesis_Sprites/Angel_wood_front_idle.png").convert()
-Angel_wood_Front_Walking1 = pygame.image.load("Genesis_Sprites/Angel_wood_front_walking1.png").convert()
-Angel_wood_Front_Walking2 = pygame.image.load("Genesis_Sprites/Angel_wood_front_walking2.png").convert()
-Angel_wood_Front_Walking3 = pygame.image.load("Genesis_Sprites/Angel_wood_front_walking3.png").convert()
-Angel_wood_Front_Walking4 = pygame.image.load("Genesis_Sprites/Angel_wood_front_walking4.png").convert()
+Angel_wood_Front_Idle = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_front_idle.png").convert()
+Angel_wood_Front_Walking1 = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_front_walking1.png").convert()
+Angel_wood_Front_Walking2 = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_front_walking2.png").convert()
+Angel_wood_Front_Walking3 = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_front_walking3.png").convert()
+Angel_wood_Front_Walking4 = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_front_walking4.png").convert()
 Angel_wood_Front_Attacking1 = Angel_wood_Front_Idle
-Angel_wood_Front_Attacking2 = pygame.image.load("Genesis_Sprites/Angel_wood_front_Attacking2.png").convert()
-Angel_wood_Front_Attacking3 = pygame.image.load("Genesis_Sprites/Angel_wood_front_Attacking3.png").convert()
-Angel_wood_Front_Attacking4 = pygame.image.load("Genesis_Sprites/Angel_wood_front_Attacking4.png").convert()
+Angel_wood_Front_Attacking2 = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_front_Attacking2.png").convert()
+Angel_wood_Front_Attacking3 = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_front_Attacking3.png").convert()
+Angel_wood_Front_Attacking4 = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_front_Attacking4.png").convert()
 Angel_wood_Front_Attacking5 = Angel_wood_Front_Idle
-Angel_wood_Front_Attacking2_Swordtip = pygame.image.load("Genesis_Sprites/Angel_wood_front_Attacking2_swordtip.png").convert()
-Angel_wood_Front_Attacking3_Swordtip = pygame.image.load("Genesis_Sprites/Angel_wood_front_Attacking3_swordtip.png").convert()
-Angel_wood_Front_Attacking4_Swordtip = pygame.image.load("Genesis_Sprites/Angel_wood_front_Attacking4_swordtip.png").convert()
+Angel_wood_Front_Attacking2_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_front_Attacking2_swordtip.png").convert()
+Angel_wood_Front_Attacking3_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_front_Attacking3_swordtip.png").convert()
+Angel_wood_Front_Attacking4_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_front_Attacking4_swordtip.png").convert()
 
-Angel_wood_Left_Idle = pygame.image.load("Genesis_Sprites/Angel_wood_left_idle.png").convert()
-Angel_wood_Left_Walking1 = pygame.image.load("Genesis_Sprites/Angel_wood_left_walking1.png").convert()
-Angel_wood_Left_Walking2 = pygame.image.load("Genesis_Sprites/Angel_wood_left_walking2.png").convert()
-Angel_wood_Left_Walking3 = pygame.image.load("Genesis_Sprites/Angel_wood_left_walking3.png").convert()
-Angel_wood_Left_Walking4 = pygame.image.load("Genesis_Sprites/Angel_wood_left_walking4.png").convert()
+Angel_wood_Left_Idle = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_left_idle.png").convert()
+Angel_wood_Left_Walking1 = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_left_walking1.png").convert()
+Angel_wood_Left_Walking2 = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_left_walking2.png").convert()
+Angel_wood_Left_Walking3 = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_left_walking3.png").convert()
+Angel_wood_Left_Walking4 = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_left_walking4.png").convert()
 Angel_wood_Left_Attacking1 = Angel_wood_Left_Idle
-Angel_wood_Left_Attacking2 = pygame.image.load("Genesis_Sprites/Angel_wood_left_Attacking2.png").convert()
-Angel_wood_Left_Attacking3 = pygame.image.load("Genesis_Sprites/Angel_wood_left_Attacking3.png").convert()
-Angel_wood_Left_Attacking4 = pygame.image.load("Genesis_Sprites/Angel_wood_left_Attacking4.png").convert()
+Angel_wood_Left_Attacking2 = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_left_Attacking2.png").convert()
+Angel_wood_Left_Attacking3 = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_left_Attacking3.png").convert()
+Angel_wood_Left_Attacking4 = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_left_Attacking4.png").convert()
 Angel_wood_Left_Attacking5 = Angel_wood_Left_Idle
-Angel_wood_Left_Attacking1_Swordtip = pygame.image.load("Genesis_Sprites/Angel_wood_left_Attacking1_Swordtip.png").convert()
-Angel_wood_Left_Attacking2_Swordtip = pygame.image.load("Genesis_Sprites/Angel_wood_left_Attacking2_Swordtip.png").convert()
-Angel_wood_Left_Attacking3_Swordtip = pygame.image.load("Genesis_Sprites/Angel_wood_left_Attacking3_Swordtip.png").convert()
-Angel_wood_Left_Attacking4_Swordtip = pygame.image.load("Genesis_Sprites/Angel_wood_left_Attacking4_Swordtip.png").convert()
-Angel_wood_Left_Attacking5_Swordtip = pygame.image.load("Genesis_Sprites/Angel_wood_left_Attacking5_Swordtip.png").convert()
+Angel_wood_Left_Attacking1_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_left_Attacking1_Swordtip.png").convert()
+Angel_wood_Left_Attacking2_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_left_Attacking2_Swordtip.png").convert()
+Angel_wood_Left_Attacking3_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_left_Attacking3_Swordtip.png").convert()
+Angel_wood_Left_Attacking4_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_left_Attacking4_Swordtip.png").convert()
+Angel_wood_Left_Attacking5_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_left_Attacking5_Swordtip.png").convert()
 
-Angel_wood_Right_Idle = pygame.transform.flip(Angel_wood_Left_Idle, True, False)
-Angel_wood_Right_Walking1 = pygame.transform.flip(Angel_wood_Left_Walking1, True, False)
-Angel_wood_Right_Walking2 = pygame.transform.flip(Angel_wood_Left_Walking2, True, False)
-Angel_wood_Right_Walking3 = pygame.transform.flip(Angel_wood_Left_Walking3, True, False)
-Angel_wood_Right_Walking4 = pygame.transform.flip(Angel_wood_Left_Walking4, True, False)
-Angel_wood_Right_Attacking1 = pygame.transform.flip(Angel_wood_Left_Attacking1, True, False)
-Angel_wood_Right_Attacking2 = pygame.transform.flip(Angel_wood_Left_Attacking2, True, False)
-Angel_wood_Right_Attacking3 = pygame.transform.flip(Angel_wood_Left_Attacking3, True, False)
-Angel_wood_Right_Attacking4 = pygame.transform.flip(Angel_wood_Left_Attacking4, True, False)
-Angel_wood_Right_Attacking5 = pygame.transform.flip(Angel_wood_Left_Attacking5, True, False)
-Angel_wood_Right_Attacking1_Swordtip = pygame.transform.flip(Angel_wood_Left_Attacking1_Swordtip, True, False)
-Angel_wood_Right_Attacking2_Swordtip = pygame.transform.flip(Angel_wood_Left_Attacking2_Swordtip, True, False)
-Angel_wood_Right_Attacking3_Swordtip = pygame.transform.flip(Angel_wood_Left_Attacking3_Swordtip, True, False)
-Angel_wood_Right_Attacking4_Swordtip = pygame.transform.flip(Angel_wood_Left_Attacking4_Swordtip, True, False)
-Angel_wood_Right_Attacking5_Swordtip = pygame.transform.flip(Angel_wood_Left_Attacking5_Swordtip, True, False)
+Angel_wood_Right_Idle = pygame.transform.flip(
+    Angel_wood_Left_Idle, True, False)
+Angel_wood_Right_Walking1 = pygame.transform.flip(
+    Angel_wood_Left_Walking1, True, False)
+Angel_wood_Right_Walking2 = pygame.transform.flip(
+    Angel_wood_Left_Walking2, True, False)
+Angel_wood_Right_Walking3 = pygame.transform.flip(
+    Angel_wood_Left_Walking3, True, False)
+Angel_wood_Right_Walking4 = pygame.transform.flip(
+    Angel_wood_Left_Walking4, True, False)
+Angel_wood_Right_Attacking1 = pygame.transform.flip(
+    Angel_wood_Left_Attacking1, True, False)
+Angel_wood_Right_Attacking2 = pygame.transform.flip(
+    Angel_wood_Left_Attacking2, True, False)
+Angel_wood_Right_Attacking3 = pygame.transform.flip(
+    Angel_wood_Left_Attacking3, True, False)
+Angel_wood_Right_Attacking4 = pygame.transform.flip(
+    Angel_wood_Left_Attacking4, True, False)
+Angel_wood_Right_Attacking5 = pygame.transform.flip(
+    Angel_wood_Left_Attacking5, True, False)
+Angel_wood_Right_Attacking1_Swordtip = pygame.transform.flip(
+    Angel_wood_Left_Attacking1_Swordtip, True, False)
+Angel_wood_Right_Attacking2_Swordtip = pygame.transform.flip(
+    Angel_wood_Left_Attacking2_Swordtip, True, False)
+Angel_wood_Right_Attacking3_Swordtip = pygame.transform.flip(
+    Angel_wood_Left_Attacking3_Swordtip, True, False)
+Angel_wood_Right_Attacking4_Swordtip = pygame.transform.flip(
+    Angel_wood_Left_Attacking4_Swordtip, True, False)
+Angel_wood_Right_Attacking5_Swordtip = pygame.transform.flip(
+    Angel_wood_Left_Attacking5_Swordtip, True, False)
 
-Angel_wood_Get_Item = pygame.image.load("Genesis_Sprites/Angel_wood_get_item.png").convert()
+Angel_wood_Get_Item = pygame.image.load(
+    "Genesis_Sprites/Angel_wood_get_item.png").convert()
 
 
 # Steel Armor and sword
-Angel_Steel_Back_Idle = pygame.image.load("Genesis_Sprites/Angel_steel_back_idle.png").convert()
-Angel_Steel_Back_Walking1 = pygame.image.load("Genesis_Sprites/Angel_steel_back_walking1.png").convert()
+Angel_Steel_Back_Idle = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_back_idle.png").convert()
+Angel_Steel_Back_Walking1 = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_back_walking1.png").convert()
 Angel_Steel_Back_Walking2 = Angel_Steel_Back_Idle
-Angel_Steel_Back_Walking3 = pygame.transform.flip(Angel_Steel_Back_Walking1, True, False)
+Angel_Steel_Back_Walking3 = pygame.transform.flip(
+    Angel_Steel_Back_Walking1, True, False)
 Angel_Steel_Back_Walking4 = Angel_Steel_Back_Idle
 Angel_Steel_Back_Attacking1 = Angel_Steel_Back_Idle
-Angel_Steel_Back_Attacking2 = pygame.image.load("Genesis_Sprites/Angel_steel_back_Attacking2.png").convert()
-Angel_Steel_Back_Attacking3 = pygame.image.load("Genesis_Sprites/Angel_steel_back_Attacking3.png").convert()
-Angel_Steel_Back_Attacking4 = pygame.image.load("Genesis_Sprites/Angel_steel_back_Attacking4.png").convert()
+Angel_Steel_Back_Attacking2 = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_back_Attacking2.png").convert()
+Angel_Steel_Back_Attacking3 = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_back_Attacking3.png").convert()
+Angel_Steel_Back_Attacking4 = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_back_Attacking4.png").convert()
 Angel_Steel_Back_Attacking5 = Angel_Steel_Back_Idle
-Angel_Steel_Back_Attacking2_Swordtip = pygame.image.load("Genesis_Sprites/Angel_steel_back_Attacking2_swordtip.png").convert()
-Angel_Steel_Back_Attacking3_Swordtip = pygame.image.load("Genesis_Sprites/Angel_steel_back_Attacking3_swordtip.png").convert()
-Angel_Steel_Back_Attacking4_Swordtip = pygame.image.load("Genesis_Sprites/Angel_steel_back_Attacking4_swordtip.png").convert()
+Angel_Steel_Back_Attacking2_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_back_Attacking2_swordtip.png").convert()
+Angel_Steel_Back_Attacking3_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_back_Attacking3_swordtip.png").convert()
+Angel_Steel_Back_Attacking4_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_back_Attacking4_swordtip.png").convert()
 
-Angel_Steel_Front_Idle = pygame.image.load("Genesis_Sprites/Angel_steel_front_idle.png").convert()
-Angel_Steel_Front_Walking1 = pygame.image.load("Genesis_Sprites/Angel_steel_front_walking1.png").convert()
-Angel_Steel_Front_Walking2 = pygame.image.load("Genesis_Sprites/Angel_steel_front_walking2.png").convert()
-Angel_Steel_Front_Walking3 = pygame.image.load("Genesis_Sprites/Angel_steel_front_walking3.png").convert()
-Angel_Steel_Front_Walking4 = pygame.image.load("Genesis_Sprites/Angel_steel_front_walking4.png").convert()
+Angel_Steel_Front_Idle = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_front_idle.png").convert()
+Angel_Steel_Front_Walking1 = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_front_walking1.png").convert()
+Angel_Steel_Front_Walking2 = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_front_walking2.png").convert()
+Angel_Steel_Front_Walking3 = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_front_walking3.png").convert()
+Angel_Steel_Front_Walking4 = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_front_walking4.png").convert()
 Angel_Steel_Front_Attacking1 = Angel_Steel_Front_Idle
-Angel_Steel_Front_Attacking2 = pygame.image.load("Genesis_Sprites/Angel_steel_front_Attacking2.png").convert()
-Angel_Steel_Front_Attacking3 = pygame.image.load("Genesis_Sprites/Angel_steel_front_Attacking3.png").convert()
-Angel_Steel_Front_Attacking4 = pygame.image.load("Genesis_Sprites/Angel_steel_front_Attacking4.png").convert()
+Angel_Steel_Front_Attacking2 = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_front_Attacking2.png").convert()
+Angel_Steel_Front_Attacking3 = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_front_Attacking3.png").convert()
+Angel_Steel_Front_Attacking4 = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_front_Attacking4.png").convert()
 Angel_Steel_Front_Attacking5 = Angel_Steel_Front_Idle
-Angel_Steel_Front_Attacking2_Swordtip = pygame.image.load("Genesis_Sprites/Angel_steel_front_Attacking2_swordtip.png").convert()
-Angel_Steel_Front_Attacking3_Swordtip = pygame.image.load("Genesis_Sprites/Angel_steel_front_Attacking3_swordtip.png").convert()
-Angel_Steel_Front_Attacking4_Swordtip = pygame.image.load("Genesis_Sprites/Angel_steel_front_Attacking4_swordtip.png").convert()
+Angel_Steel_Front_Attacking2_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_front_Attacking2_swordtip.png").convert()
+Angel_Steel_Front_Attacking3_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_front_Attacking3_swordtip.png").convert()
+Angel_Steel_Front_Attacking4_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_front_Attacking4_swordtip.png").convert()
 
-Angel_Steel_Left_Idle = pygame.image.load("Genesis_Sprites/Angel_steel_left_idle.png").convert()
-Angel_Steel_Left_Walking1 = pygame.image.load("Genesis_Sprites/Angel_steel_left_walking1.png").convert()
-Angel_Steel_Left_Walking2 = pygame.image.load("Genesis_Sprites/Angel_steel_left_walking2.png").convert()
-Angel_Steel_Left_Walking3 = pygame.image.load("Genesis_Sprites/Angel_steel_left_walking3.png").convert()
-Angel_Steel_Left_Walking4 = pygame.image.load("Genesis_Sprites/Angel_steel_left_walking4.png").convert()
+Angel_Steel_Left_Idle = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_left_idle.png").convert()
+Angel_Steel_Left_Walking1 = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_left_walking1.png").convert()
+Angel_Steel_Left_Walking2 = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_left_walking2.png").convert()
+Angel_Steel_Left_Walking3 = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_left_walking3.png").convert()
+Angel_Steel_Left_Walking4 = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_left_walking4.png").convert()
 Angel_Steel_Left_Attacking1 = Angel_Steel_Left_Idle
-Angel_Steel_Left_Attacking2 = pygame.image.load("Genesis_Sprites/Angel_steel_left_Attacking2.png").convert()
-Angel_Steel_Left_Attacking3 = pygame.image.load("Genesis_Sprites/Angel_steel_left_Attacking3.png").convert()
-Angel_Steel_Left_Attacking4 = pygame.image.load("Genesis_Sprites/Angel_steel_left_Attacking4.png").convert()
+Angel_Steel_Left_Attacking2 = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_left_Attacking2.png").convert()
+Angel_Steel_Left_Attacking3 = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_left_Attacking3.png").convert()
+Angel_Steel_Left_Attacking4 = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_left_Attacking4.png").convert()
 Angel_Steel_Left_Attacking5 = Angel_Steel_Left_Idle
-Angel_Steel_Left_Attacking1_Swordtip = pygame.image.load("Genesis_Sprites/Angel_steel_left_Attacking1_Swordtip.png").convert()
-Angel_Steel_Left_Attacking2_Swordtip = pygame.image.load("Genesis_Sprites/Angel_steel_left_Attacking2_Swordtip.png").convert()
-Angel_Steel_Left_Attacking3_Swordtip = pygame.image.load("Genesis_Sprites/Angel_steel_left_Attacking2_Swordtip.png").convert()
-Angel_Steel_Left_Attacking4_Swordtip = pygame.image.load("Genesis_Sprites/Angel_steel_left_Attacking4_Swordtip.png").convert()
-Angel_Steel_Left_Attacking5_Swordtip = pygame.image.load("Genesis_Sprites/Angel_steel_left_Attacking5_Swordtip.png").convert()
+Angel_Steel_Left_Attacking1_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_left_Attacking1_Swordtip.png").convert()
+Angel_Steel_Left_Attacking2_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_left_Attacking2_Swordtip.png").convert()
+Angel_Steel_Left_Attacking3_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_left_Attacking2_Swordtip.png").convert()
+Angel_Steel_Left_Attacking4_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_left_Attacking4_Swordtip.png").convert()
+Angel_Steel_Left_Attacking5_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_steel_left_Attacking5_Swordtip.png").convert()
 
-Angel_Steel_Right_Idle = pygame.transform.flip(Angel_Steel_Left_Idle, True, False)
-Angel_Steel_Right_Walking1 = pygame.transform.flip(Angel_Steel_Left_Walking1, True, False)
-Angel_Steel_Right_Walking2 = pygame.transform.flip(Angel_Steel_Left_Walking2, True, False)
-Angel_Steel_Right_Walking3 = pygame.transform.flip(Angel_Steel_Left_Walking3, True, False)
-Angel_Steel_Right_Walking4 = pygame.transform.flip(Angel_Steel_Left_Walking4, True, False)
-Angel_Steel_Right_Attacking1 = pygame.transform.flip(Angel_Steel_Left_Attacking1, True, False)
-Angel_Steel_Right_Attacking2 = pygame.transform.flip(Angel_Steel_Left_Attacking2, True, False)
-Angel_Steel_Right_Attacking3 = pygame.transform.flip(Angel_Steel_Left_Attacking3, True, False)
-Angel_Steel_Right_Attacking4 = pygame.transform.flip(Angel_Steel_Left_Attacking4, True, False)
-Angel_Steel_Right_Attacking5 = pygame.transform.flip(Angel_Steel_Left_Attacking5, True, False)
-Angel_Steel_Right_Attacking1_Swordtip = pygame.transform.flip(Angel_Steel_Left_Attacking1_Swordtip, True, False)
-Angel_Steel_Right_Attacking2_Swordtip = pygame.transform.flip(Angel_Steel_Left_Attacking2_Swordtip, True, False)
-Angel_Steel_Right_Attacking3_Swordtip = pygame.transform.flip(Angel_Steel_Left_Attacking3_Swordtip, True, False)
-Angel_Steel_Right_Attacking4_Swordtip = pygame.transform.flip(Angel_Steel_Left_Attacking4_Swordtip, True, False)
-Angel_Steel_Right_Attacking5_Swordtip = pygame.transform.flip(Angel_Steel_Left_Attacking5_Swordtip, True, False)
+Angel_Steel_Right_Idle = pygame.transform.flip(
+    Angel_Steel_Left_Idle, True, False)
+Angel_Steel_Right_Walking1 = pygame.transform.flip(
+    Angel_Steel_Left_Walking1, True, False)
+Angel_Steel_Right_Walking2 = pygame.transform.flip(
+    Angel_Steel_Left_Walking2, True, False)
+Angel_Steel_Right_Walking3 = pygame.transform.flip(
+    Angel_Steel_Left_Walking3, True, False)
+Angel_Steel_Right_Walking4 = pygame.transform.flip(
+    Angel_Steel_Left_Walking4, True, False)
+Angel_Steel_Right_Attacking1 = pygame.transform.flip(
+    Angel_Steel_Left_Attacking1, True, False)
+Angel_Steel_Right_Attacking2 = pygame.transform.flip(
+    Angel_Steel_Left_Attacking2, True, False)
+Angel_Steel_Right_Attacking3 = pygame.transform.flip(
+    Angel_Steel_Left_Attacking3, True, False)
+Angel_Steel_Right_Attacking4 = pygame.transform.flip(
+    Angel_Steel_Left_Attacking4, True, False)
+Angel_Steel_Right_Attacking5 = pygame.transform.flip(
+    Angel_Steel_Left_Attacking5, True, False)
+Angel_Steel_Right_Attacking1_Swordtip = pygame.transform.flip(
+    Angel_Steel_Left_Attacking1_Swordtip, True, False)
+Angel_Steel_Right_Attacking2_Swordtip = pygame.transform.flip(
+    Angel_Steel_Left_Attacking2_Swordtip, True, False)
+Angel_Steel_Right_Attacking3_Swordtip = pygame.transform.flip(
+    Angel_Steel_Left_Attacking3_Swordtip, True, False)
+Angel_Steel_Right_Attacking4_Swordtip = pygame.transform.flip(
+    Angel_Steel_Left_Attacking4_Swordtip, True, False)
+Angel_Steel_Right_Attacking5_Swordtip = pygame.transform.flip(
+    Angel_Steel_Left_Attacking5_Swordtip, True, False)
 
-Angel_Steel_Get_Item = pygame.image.load("Genesis_Sprites/Angel_Steel_get_item.png").convert()
+Angel_Steel_Get_Item = pygame.image.load(
+    "Genesis_Sprites/Angel_Steel_get_item.png").convert()
 
 # Golden Armor and sword
-Angel_Gold_Back_Idle = pygame.image.load("Genesis_Sprites/Angel_Gold_back_idle.png").convert()
-Angel_Gold_Back_Walking1 = pygame.image.load("Genesis_Sprites/Angel_Gold_back_walking1.png").convert()
+Angel_Gold_Back_Idle = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_back_idle.png").convert()
+Angel_Gold_Back_Walking1 = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_back_walking1.png").convert()
 Angel_Gold_Back_Walking2 = Angel_Gold_Back_Idle
-Angel_Gold_Back_Walking3 = pygame.transform.flip(Angel_Gold_Back_Walking1, True, False)
+Angel_Gold_Back_Walking3 = pygame.transform.flip(
+    Angel_Gold_Back_Walking1, True, False)
 Angel_Gold_Back_Walking4 = Angel_Gold_Back_Idle
 Angel_Gold_Back_Attacking1 = Angel_Gold_Back_Idle
-Angel_Gold_Back_Attacking2 = pygame.image.load("Genesis_Sprites/Angel_Gold_back_Attacking2.png").convert()
-Angel_Gold_Back_Attacking3 = pygame.image.load("Genesis_Sprites/Angel_Gold_back_Attacking3.png").convert()
-Angel_Gold_Back_Attacking4 = pygame.image.load("Genesis_Sprites/Angel_Gold_back_Attacking4.png").convert()
+Angel_Gold_Back_Attacking2 = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_back_Attacking2.png").convert()
+Angel_Gold_Back_Attacking3 = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_back_Attacking3.png").convert()
+Angel_Gold_Back_Attacking4 = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_back_Attacking4.png").convert()
 Angel_Gold_Back_Attacking5 = Angel_Gold_Back_Idle
-Angel_Gold_Back_Attacking2_Swordtip = pygame.image.load("Genesis_Sprites/Angel_Gold_back_Attacking2_swordtip.png").convert()
-Angel_Gold_Back_Attacking3_Swordtip = pygame.image.load("Genesis_Sprites/Angel_Gold_back_Attacking3_swordtip.png").convert()
-Angel_Gold_Back_Attacking4_Swordtip = pygame.image.load("Genesis_Sprites/Angel_Gold_back_Attacking4_swordtip.png").convert()
+Angel_Gold_Back_Attacking2_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_back_Attacking2_swordtip.png").convert()
+Angel_Gold_Back_Attacking3_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_back_Attacking3_swordtip.png").convert()
+Angel_Gold_Back_Attacking4_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_back_Attacking4_swordtip.png").convert()
 
-Angel_Gold_Front_Idle = pygame.image.load("Genesis_Sprites/Angel_Gold_front_idle.png").convert()
-Angel_Gold_Front_Walking1 = pygame.image.load("Genesis_Sprites/Angel_Gold_front_walking1.png").convert()
-Angel_Gold_Front_Walking2 = pygame.image.load("Genesis_Sprites/Angel_Gold_front_walking2.png").convert()
-Angel_Gold_Front_Walking3 = pygame.image.load("Genesis_Sprites/Angel_Gold_front_walking3.png").convert()
-Angel_Gold_Front_Walking4 = pygame.image.load("Genesis_Sprites/Angel_Gold_front_walking4.png").convert()
+Angel_Gold_Front_Idle = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_front_idle.png").convert()
+Angel_Gold_Front_Walking1 = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_front_walking1.png").convert()
+Angel_Gold_Front_Walking2 = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_front_walking2.png").convert()
+Angel_Gold_Front_Walking3 = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_front_walking3.png").convert()
+Angel_Gold_Front_Walking4 = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_front_walking4.png").convert()
 Angel_Gold_Front_Attacking1 = Angel_Gold_Front_Idle
-Angel_Gold_Front_Attacking2 = pygame.image.load("Genesis_Sprites/Angel_Gold_front_Attacking2.png").convert()
-Angel_Gold_Front_Attacking3 = pygame.image.load("Genesis_Sprites/Angel_Gold_front_Attacking3.png").convert()
-Angel_Gold_Front_Attacking4 = pygame.image.load("Genesis_Sprites/Angel_Gold_front_Attacking4.png").convert()
+Angel_Gold_Front_Attacking2 = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_front_Attacking2.png").convert()
+Angel_Gold_Front_Attacking3 = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_front_Attacking3.png").convert()
+Angel_Gold_Front_Attacking4 = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_front_Attacking4.png").convert()
 Angel_Gold_Front_Attacking5 = Angel_Gold_Front_Idle
-Angel_Gold_Front_Attacking2_Swordtip = pygame.image.load("Genesis_Sprites/Angel_Gold_front_Attacking2_swordtip.png").convert()
-Angel_Gold_Front_Attacking3_Swordtip = pygame.image.load("Genesis_Sprites/Angel_Gold_front_Attacking3_swordtip.png").convert()
-Angel_Gold_Front_Attacking4_Swordtip = pygame.image.load("Genesis_Sprites/Angel_Gold_front_Attacking4_swordtip.png").convert()
+Angel_Gold_Front_Attacking2_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_front_Attacking2_swordtip.png").convert()
+Angel_Gold_Front_Attacking3_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_front_Attacking3_swordtip.png").convert()
+Angel_Gold_Front_Attacking4_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_front_Attacking4_swordtip.png").convert()
 
-Angel_Gold_Left_Idle = pygame.image.load("Genesis_Sprites/Angel_Gold_left_idle.png").convert()
-Angel_Gold_Left_Walking1 = pygame.image.load("Genesis_Sprites/Angel_Gold_left_walking1.png").convert()
-Angel_Gold_Left_Walking2 = pygame.image.load("Genesis_Sprites/Angel_Gold_left_walking2.png").convert()
-Angel_Gold_Left_Walking3 = pygame.image.load("Genesis_Sprites/Angel_Gold_left_walking3.png").convert()
-Angel_Gold_Left_Walking4 = pygame.image.load("Genesis_Sprites/Angel_Gold_left_walking4.png").convert()
+Angel_Gold_Left_Idle = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_left_idle.png").convert()
+Angel_Gold_Left_Walking1 = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_left_walking1.png").convert()
+Angel_Gold_Left_Walking2 = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_left_walking2.png").convert()
+Angel_Gold_Left_Walking3 = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_left_walking3.png").convert()
+Angel_Gold_Left_Walking4 = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_left_walking4.png").convert()
 Angel_Gold_Left_Attacking1 = Angel_Gold_Left_Idle
-Angel_Gold_Left_Attacking2 = pygame.image.load("Genesis_Sprites/Angel_Gold_left_Attacking2.png").convert()
-Angel_Gold_Left_Attacking3 = pygame.image.load("Genesis_Sprites/Angel_Gold_left_Attacking3.png").convert()
-Angel_Gold_Left_Attacking4 = pygame.image.load("Genesis_Sprites/Angel_Gold_left_Attacking4.png").convert()
+Angel_Gold_Left_Attacking2 = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_left_Attacking2.png").convert()
+Angel_Gold_Left_Attacking3 = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_left_Attacking3.png").convert()
+Angel_Gold_Left_Attacking4 = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_left_Attacking4.png").convert()
 Angel_Gold_Left_Attacking5 = Angel_Gold_Left_Idle
-Angel_Gold_Left_Attacking1_Swordtip = pygame.image.load("Genesis_Sprites/Angel_Gold_left_Attacking1_Swordtip.png").convert()
-Angel_Gold_Left_Attacking2_Swordtip = pygame.image.load("Genesis_Sprites/Angel_Gold_left_Attacking2_Swordtip.png").convert()
-Angel_Gold_Left_Attacking3_Swordtip = pygame.image.load("Genesis_Sprites/Angel_Gold_left_Attacking3_Swordtip.png").convert()
-Angel_Gold_Left_Attacking4_Swordtip = pygame.image.load("Genesis_Sprites/Angel_Gold_left_Attacking4_Swordtip.png").convert()
-Angel_Gold_Left_Attacking5_Swordtip = pygame.image.load("Genesis_Sprites/Angel_Gold_left_Attacking5_Swordtip.png").convert()
+Angel_Gold_Left_Attacking1_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_left_Attacking1_Swordtip.png").convert()
+Angel_Gold_Left_Attacking2_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_left_Attacking2_Swordtip.png").convert()
+Angel_Gold_Left_Attacking3_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_left_Attacking3_Swordtip.png").convert()
+Angel_Gold_Left_Attacking4_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_left_Attacking4_Swordtip.png").convert()
+Angel_Gold_Left_Attacking5_Swordtip = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_left_Attacking5_Swordtip.png").convert()
 
-Angel_Gold_Right_Idle = pygame.transform.flip(Angel_Gold_Left_Idle, True, False)
-Angel_Gold_Right_Walking1 = pygame.transform.flip(Angel_Gold_Left_Walking1, True, False)
-Angel_Gold_Right_Walking2 = pygame.transform.flip(Angel_Gold_Left_Walking2, True, False)
-Angel_Gold_Right_Walking3 = pygame.transform.flip(Angel_Gold_Left_Walking3, True, False)
-Angel_Gold_Right_Walking4 = pygame.transform.flip(Angel_Gold_Left_Walking4, True, False)
-Angel_Gold_Right_Attacking1 = pygame.transform.flip(Angel_Gold_Left_Attacking1, True, False)
-Angel_Gold_Right_Attacking2 = pygame.transform.flip(Angel_Gold_Left_Attacking2, True, False)
-Angel_Gold_Right_Attacking3 = pygame.transform.flip(Angel_Gold_Left_Attacking3, True, False)
-Angel_Gold_Right_Attacking4 = pygame.transform.flip(Angel_Gold_Left_Attacking4, True, False)
-Angel_Gold_Right_Attacking5 = pygame.transform.flip(Angel_Gold_Left_Attacking5, True, False)
-Angel_Gold_Right_Attacking1_Swordtip = pygame.transform.flip(Angel_Gold_Left_Attacking1_Swordtip, True, False)
-Angel_Gold_Right_Attacking2_Swordtip = pygame.transform.flip(Angel_Gold_Left_Attacking2_Swordtip, True, False)
-Angel_Gold_Right_Attacking3_Swordtip = pygame.transform.flip(Angel_Gold_Left_Attacking3_Swordtip, True, False)
-Angel_Gold_Right_Attacking4_Swordtip = pygame.transform.flip(Angel_Gold_Left_Attacking4_Swordtip, True, False)
-Angel_Gold_Right_Attacking5_Swordtip = pygame.transform.flip(Angel_Gold_Left_Attacking5_Swordtip, True, False)
+Angel_Gold_Right_Idle = pygame.transform.flip(
+    Angel_Gold_Left_Idle, True, False)
+Angel_Gold_Right_Walking1 = pygame.transform.flip(
+    Angel_Gold_Left_Walking1, True, False)
+Angel_Gold_Right_Walking2 = pygame.transform.flip(
+    Angel_Gold_Left_Walking2, True, False)
+Angel_Gold_Right_Walking3 = pygame.transform.flip(
+    Angel_Gold_Left_Walking3, True, False)
+Angel_Gold_Right_Walking4 = pygame.transform.flip(
+    Angel_Gold_Left_Walking4, True, False)
+Angel_Gold_Right_Attacking1 = pygame.transform.flip(
+    Angel_Gold_Left_Attacking1, True, False)
+Angel_Gold_Right_Attacking2 = pygame.transform.flip(
+    Angel_Gold_Left_Attacking2, True, False)
+Angel_Gold_Right_Attacking3 = pygame.transform.flip(
+    Angel_Gold_Left_Attacking3, True, False)
+Angel_Gold_Right_Attacking4 = pygame.transform.flip(
+    Angel_Gold_Left_Attacking4, True, False)
+Angel_Gold_Right_Attacking5 = pygame.transform.flip(
+    Angel_Gold_Left_Attacking5, True, False)
+Angel_Gold_Right_Attacking1_Swordtip = pygame.transform.flip(
+    Angel_Gold_Left_Attacking1_Swordtip, True, False)
+Angel_Gold_Right_Attacking2_Swordtip = pygame.transform.flip(
+    Angel_Gold_Left_Attacking2_Swordtip, True, False)
+Angel_Gold_Right_Attacking3_Swordtip = pygame.transform.flip(
+    Angel_Gold_Left_Attacking3_Swordtip, True, False)
+Angel_Gold_Right_Attacking4_Swordtip = pygame.transform.flip(
+    Angel_Gold_Left_Attacking4_Swordtip, True, False)
+Angel_Gold_Right_Attacking5_Swordtip = pygame.transform.flip(
+    Angel_Gold_Left_Attacking5_Swordtip, True, False)
 
-Angel_Gold_Get_Item = pygame.image.load("Genesis_Sprites/Angel_Gold_get_item.png").convert()
+Angel_Gold_Get_Item = pygame.image.load(
+    "Genesis_Sprites/Angel_Gold_get_item.png").convert()
 
-# Add global variables to hold String constants used in event processing and player direction
+# Add global variables to hold String constants used
+# in event processing and player direction
 RIGHT = "RIGHT"
 DOWN = "DOWN"
 LEFT = "LEFT"
 UP = "UP"
 
-# WORLD_DATA is a large string that includes all the tile data copied from Tiled file.
+# WORLD_DATA is a large string that includes
+# all the tile data copied from Tiled file.
 # TODO: import this data from the .tmx file directly.
 WORLD_DATA = """50,16,16,16,16,16,16,16,16,16,16,16,16,16,16,49,50,16,16,16,16,16,16,16,16,16,16,16,16,16,16,49,22,41,41,41,41,41,41,41,41,41,41,41,41,41,41,21,50,16,16,16,16,16,16,16,16,16,16,16,16,16,16,49,50,16,16,16,16,16,16,16,16,16,16,16,16,16,16,49
 22,44,44,44,44,44,53,57,57,53,44,44,44,44,44,21,22,44,44,44,44,44,44,44,44,44,44,44,44,48,48,21,22,41,41,41,41,41,41,41,41,41,41,41,41,41,41,21,22,48,48,48,44,44,44,44,44,44,44,44,48,48,48,21,22,44,48,48,44,44,44,44,44,48,48,48,48,48,48,21
@@ -424,8 +635,11 @@ tile_Data = WORLD_DATA
 tile_Data = tile_Data.split('\n')
 tile_Data = [line.split(',') for line in tile_Data]
 
-# This list represents the tile numbers of tiles the player and enemies shouldn't be able to walk through.
-boundary_tiles = [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 40, 41, 42, 46, 47, 48, 49, 50, 51, 52, 53, 55, 56, 57, 58, 59, 60]
+# This list represents the tile numbers of tiles the player and
+# enemies shouldn't be able to walk through.
+boundary_tiles = [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28, 29, 30,
+                  31, 32, 33, 34, 35, 36, 37, 40, 41, 42, 46, 47, 48, 49, 50,
+                  51, 52, 53, 55, 56, 57, 58, 59, 60]
 
 # These lists represent tiles that are able to be interacted with
 explodable_tiles = [44, 47, 48, 55]
@@ -445,7 +659,8 @@ class Tile(pygame.sprite.Sprite):
         super().__init__()
 
         # Initialize the tiles size and locations
-        self.image = pygame.Surface([25 * WINDOW_MAGNIFICATION, 25 * WINDOW_MAGNIFICATION])
+        self.image = pygame.Surface(
+            [25 * WINDOW_MAGNIFICATION, 25 * WINDOW_MAGNIFICATION])
         self.rect = self.image.get_rect()
         self.y = y
         self.x = x
@@ -460,7 +675,8 @@ class Tile(pygame.sprite.Sprite):
         return tileNumber
 
     def getTile(self, tileNumber):
-        """ This function is used to retrieve the sprite surfaces using the tile Number provided. """
+        """ This function is used to retrieve the sprite
+        surfaces using the tile Number provided. """
 
         # Just in case, ensure tileNumber is an integer.
         tileNumber = int(tileNumber)
@@ -568,7 +784,8 @@ class Player(pygame.sprite.Sprite):
         # Call the superclass' constructor
         super().__init__()
 
-        # This sets the player's current spell and potion to be used when using a potion
+        # This sets the player's current spell and potion
+        # to be used when using a potion
         self.currentPotion = -1
         self.currentSpell = -1
 
@@ -578,13 +795,17 @@ class Player(pygame.sprite.Sprite):
 
         # Initialize the spell sprite
         self.currentSpellSprite = pygame.sprite.Sprite()
-        self.currentSpellSprite.image = pygame.Surface([11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION])
+        self.currentSpellSprite.image = pygame.Surface(
+            [11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION])
         self.currentSpellSprite.image = Blank
         self.currentSpellSprite.image.set_colorkey(COLORKEY)
         self.currentSpellSpritex = WINDOW_WIDTH - 23 * WINDOW_MAGNIFICATION
         self.currentSpellSpritey = 10 * WINDOW_MAGNIFICATION
-        self.currentSpellSprite = pygame.transform.scale(self.currentSpellSprite.image, (11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
-        screen.blit(self.currentSpellSprite, (self.currentSpellSpritex, self.currentSpellSpritey))
+        self.currentSpellSprite = pygame.transform.scale(
+            self.currentSpellSprite.image,
+            (11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
+        screen.blit(self.currentSpellSprite,
+                    (self.currentSpellSpritex, self.currentSpellSpritey))
 
         # Initialize the SwordTip Sprites Location
         self.swordx = 5000
@@ -592,13 +813,17 @@ class Player(pygame.sprite.Sprite):
 
         # Initialize the sword sprite for attacking
         self.currentSwordSprite = pygame.sprite.Sprite()
-        self.currentSwordSprite.image = pygame.Surface([16 * WINDOW_MAGNIFICATION, 9 * WINDOW_MAGNIFICATION])
+        self.currentSwordSprite.image = pygame.Surface(
+            [16 * WINDOW_MAGNIFICATION, 9 * WINDOW_MAGNIFICATION])
         self.currentSwordSprite.image = Blank
         self.currentSwordSprite.image.set_colorkey(COLORKEY)
         self.currentSwordSpritex = 0
         self.currentSwordSpritey = 0
-        self.currentSwordSprite = pygame.transform.scale(self.currentSwordSprite.image, (16 * WINDOW_MAGNIFICATION, 9 * WINDOW_MAGNIFICATION))
-        screen.blit(self.currentSwordSprite, (self.currentSwordSpritex, self.currentSwordSpritey))
+        self.currentSwordSprite = pygame.transform.scale(
+            self.currentSwordSprite.image,
+            (16 * WINDOW_MAGNIFICATION, 9 * WINDOW_MAGNIFICATION))
+        screen.blit(self.currentSwordSprite,
+                    (self.currentSwordSpritex, self.currentSwordSpritey))
 
         # Initialize the Interact Sprites Location
         self.interactx = 5000
@@ -606,16 +831,21 @@ class Player(pygame.sprite.Sprite):
 
         # Initialize the interact sprite for interacting
         self.currentInteractSprite = pygame.sprite.Sprite()
-        self.currentInteractSprite.image = pygame.Surface([16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION])
+        self.currentInteractSprite.image = pygame.Surface(
+            [16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION])
         self.currentInteractSprite.image = Blank
         self.currentInteractSprite.image.set_colorkey(COLORKEY)
         self.currentInteractSpritex = 0
         self.currentInteractSpritey = 0
-        self.currentInteractSprite = pygame.transform.scale(self.currentInteractSprite.image, (16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION))
-        screen.blit(self.currentInteractSprite, (self.currentInteractSpritex, self.currentInteractSpritey))
+        self.currentInteractSprite = pygame.transform.scale(
+            self.currentInteractSprite.image,
+            (16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION))
+        screen.blit(self.currentInteractSprite,
+                    (self.currentInteractSpritex, self.currentInteractSpritey))
 
         # This sets the image to be the Angel surface defined above.
-        self.image = pygame.Surface([16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION])
+        self.image = pygame.Surface(
+            [16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION])
         self.rect = self.image.get_rect()
         self.image = Angel_wood_Front_Idle
         self.image.set_colorkey(COLORKEY)
@@ -648,14 +878,19 @@ class Player(pygame.sprite.Sprite):
         self.armor = "Wood"
 
         # Set the player's inventory
-        self.inventory = [["Wood Armor", 1], ["Steel Armor", 0], ["Gold Armor", 0], ["Fireball Spell", 0], ["Explosion Spell", 0], ["Boss Key", 0], ["Health Potion", 0], ["Lesser Health Potion", 0], ["Mana Potion", 0], ["Lesser Mana Potion", 0]]
+        self.inventory = [["Wood Armor", 1], ["Steel Armor", 0],
+                          ["Gold Armor", 0], ["Fireball Spell", 0],
+                          ["Explosion Spell", 0], ["Boss Key", 0],
+                          ["Health Potion", 0], ["Lesser Health Potion", 0],
+                          ["Mana Potion", 0], ["Lesser Mana Potion", 0]]
 
         # Set the players position in the world
         self.worldx = WORLD_WIDTH // 2
         self.worldy = (WORLD_HEIGHT * 5) // 6
 
         # Scale the image by the window magnification
-        self.image = pygame.transform.scale(self.image, (16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION))
+        self.image = pygame.transform.scale(
+            self.image, (16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION))
 
         # Create a timer to keep track of sprite longevity
         self.timer = 0
@@ -694,7 +929,8 @@ class Player(pygame.sprite.Sprite):
         """ Draw the Player sprite onto the back buffer. """
 
         # Scale the player's sprite and copy it to back buffer
-        Angel = pygame.transform.scale(self.image, (16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION))
+        Angel = pygame.transform.scale(
+            self.image, (16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION))
         screen.blit(Angel, [self.x, self.y])
 
         # Allow the spell sprite to exist for a few seconds
@@ -704,14 +940,18 @@ class Player(pygame.sprite.Sprite):
         self.interactTimer += ((self.elapsed - previousElapsed)/100)
 
         if(self.timer < 3):
-            self.currentSpellSprite = pygame.transform.scale(self.currentSpellSprite, (16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION))
+            self.currentSpellSprite = pygame.transform.scale(
+                self.currentSpellSprite,
+                (16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION))
             screen.blit(self.currentSpellSprite, (self.spellx, self.spelly))
         else:
-            # Once time is up, move the sprite far away where it can't collide anymore
+            # Once time is up, move the sprite far
+            # away where it can't collide anymore
             self.spellx = 5000
             self.spelly = 5000
 
-        # Change the dimensions of the swordtip sprite depending on the attack directions.
+        # Change the dimensions of the swordtip
+        # sprite depending on the attack directions.
         if self.direction == "RIGHT" or self.direction == "LEFT":
             magx = 9 * WINDOW_MAGNIFICATION
             magy = 16 * WINDOW_MAGNIFICATION
@@ -721,7 +961,8 @@ class Player(pygame.sprite.Sprite):
 
         # Limit the time the player attacks.
         if(self.timer < 3):
-            self.currentSwordSprite = pygame.transform.scale(self.currentSwordSprite, (magx, magy))
+            self.currentSwordSprite = pygame.transform.scale(
+                self.currentSwordSprite, (magx, magy))
             screen.blit(self.currentSwordSprite, (self.swordx, self.swordy))
         else:
 
@@ -737,7 +978,8 @@ class Player(pygame.sprite.Sprite):
             self.dialog = ""
 
     def changePlayerDirection(self, direction):
-        """ Change the player's sprite based on what direction the player moved and what armor they have. """
+        """ Change the player's sprite based on what direction
+        the player moved and what armor they have. """
 
         # Set the player's direction to the direction passed in.
         self.direction = direction
@@ -773,13 +1015,15 @@ class Player(pygame.sprite.Sprite):
                 self.image = Angel_Gold_Right_Idle
 
         # Rescale the image and set the background to be translucent
-        self.image = pygame.transform.scale(self.image, (16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION))
+        self.image = pygame.transform.scale(
+            self.image, (16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION))
         self.image.set_colorkey(COLORKEY)
 
     def attackEnemy(self):
         """ Allow the player to attack. """
 
-        # Depending on what direction and armor the player is in, change the sprites needed to attack.
+        # Depending on what direction and armor the player is in,
+        # change the sprites needed to attack.
         if self.direction == "UP":
             if self.armor == "Wood":
                 self.image = Angel_wood_Back_Attacking3
@@ -821,7 +1065,8 @@ class Player(pygame.sprite.Sprite):
                 self.image = Angel_Gold_Right_Attacking3
                 self.currentSwordSprite = Angel_Gold_Right_Attacking3_Swordtip
 
-        # Depending on the user's direction change the location of the swordtip used in collision detection
+        # Depending on the user's direction change the location of
+        # the swordtip used in collision detection
         if self.direction == "RIGHT":
                 self.swordx = self.x + (16 * WINDOW_MAGNIFICATION)
                 self.swordy = self.y + 8
@@ -836,7 +1081,8 @@ class Player(pygame.sprite.Sprite):
             self.swordy = self.y + (21 * WINDOW_MAGNIFICATION)
 
         # Rescale the image and set the background to be translucent
-        self.image = pygame.transform.scale(self.image, (9 * WINDOW_MAGNIFICATION, 16 * WINDOW_MAGNIFICATION))
+        self.image = pygame.transform.scale(
+            self.image, (9 * WINDOW_MAGNIFICATION, 16 * WINDOW_MAGNIFICATION))
         self.image.set_colorkey(COLORKEY)
         self.currentSwordSprite.set_colorkey(COLORKEY)
 
@@ -888,21 +1134,24 @@ class Player(pygame.sprite.Sprite):
                 self.mana -= 25
 
         # Rescale and set the image's background to clear
-        self.currentSpellSprite = pygame.transform.scale(self.currentSpellSprite, (11 * WINDOW_MAGNIFICATION + 1, 15 * WINDOW_MAGNIFICATION + 1))
+        self.currentSpellSprite = pygame.transform.scale(
+            self.currentSpellSprite,
+            (11 * WINDOW_MAGNIFICATION + 1, 15 * WINDOW_MAGNIFICATION + 1))
         self.currentSpellSprite.set_colorkey(COLORKEY)
 
         # Reset the timer
         self.timer = 0
 
     def usePotion(self):
-        """ This function allows the player to consume a potion and have it heal them or restore mana. """
+        """ This function allows the player to consume a potion and
+        have it heal them or restore mana. """
 
         # Assume the player has no potions
         hasPotions = False
 
         # Grab the inventory slots of each potion
-        potionInventory = [self.inventory[6][1], self.inventory[7][1], self.inventory[8][1],
-                           self.inventory[9][1]]
+        potionInventory = [self.inventory[6][1], self.inventory[7][1],
+                           self.inventory[8][1], self.inventory[9][1]]
 
         # Check if the player has any potions at all.
         for i in range(len(potionInventory)):
@@ -916,7 +1165,8 @@ class Player(pygame.sprite.Sprite):
                 # Decrement the number of potions the player has.
                 self.inventory[self.currentPotion + 6][1] -= 1
 
-                # Find the name of the potion we used and restore mana or health.
+                # Find the name of the potion we used
+                # and restore mana or health.
                 potionType = self.inventory[self.currentPotion + 6][0]
                 if potionType == "Health Potion":
                     self.health += 50
@@ -936,10 +1186,12 @@ class Player(pygame.sprite.Sprite):
                         self.mana = self.max_Mana
 
     def interact(self):
-        """ This function will allow the player to interact with certain tiles. """
+        """ This function will allow the player
+        to interact with certain tiles."""
 
         # This sets the image to be a Blank surface defined above.
-        self.image = pygame.Surface([16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION])
+        self.image = pygame.Surface(
+            [16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION])
         self.rect = self.image.get_rect()
         self.image = Blank
         self.image.set_colorkey(COLORKEY)
@@ -963,7 +1215,8 @@ class Player(pygame.sprite.Sprite):
 
 
 class Enemy(pygame.sprite.Sprite):
-    """ This class represents the enemy. The enemy can attack and move around the world. """
+    """ This class represents the enemy.
+    The enemy can attack and move around the world. """
 
     def __init__(self, x, y):
         """ Constructs the enemy object and Initializes variables. """
@@ -972,7 +1225,8 @@ class Enemy(pygame.sprite.Sprite):
         super().__init__()
 
         # This sets the image to be the Snake surface defined above.
-        self.image = pygame.Surface([25 * WINDOW_MAGNIFICATION, 25 * WINDOW_MAGNIFICATION])
+        self.image = pygame.Surface(
+            [25 * WINDOW_MAGNIFICATION, 25 * WINDOW_MAGNIFICATION])
         self.rect = self.image.get_rect()
         self.image = Snake_Forward_1
         self.image.set_colorkey(COLORKEY)
@@ -988,7 +1242,8 @@ class Enemy(pygame.sprite.Sprite):
         # Initialize how many pixels an enemy walks at a time.
         self.walkRate = 10
 
-        # Initialize how close the player must be before the enemy starts to chase.
+        # Initialize how close the player must
+        # be before the enemy starts to chase.
         self.aggroRange = 100
 
         # Initialize variables used to calculate distance from player.
@@ -1008,7 +1263,8 @@ class Enemy(pygame.sprite.Sprite):
         self.playerx1 = 0
         self.playery1 = 0
 
-        # Initialize what direction the enemy is from the player's point of view.
+        # Initialize what direction the enemy
+        # is from the player's point of view.
         self.sector = "TOP LEFT"
 
         # Initialize health, defense and attack
@@ -1031,9 +1287,11 @@ class Enemy(pygame.sprite.Sprite):
         if(self.elapsed > 200):
             self.distancePlayerx = self.rect.x - player.rect.x
             self.distancePlayery = self.rect.y - player.rect.y
-            self.distancePlayer = hypot(self.distancePlayerx, self.distancePlayery)
+            self.distancePlayer = hypot(
+                self.distancePlayerx, self.distancePlayery)
 
-            # If the enemy is within aggroRange we chase after them, otherwise, the enemy wanders randomly.
+            # If the enemy is within aggroRange we chase after them,
+            # otherwise, the enemy wanders randomly.
             if(self.distancePlayer > self.aggroRange):
                 self.wander()
             else:
@@ -1049,7 +1307,8 @@ class Enemy(pygame.sprite.Sprite):
 
     def draw(self, screen):
         """ Draw the sprites in their new positions """
-        Enemy = pygame.transform.scale(self.image, (25 * WINDOW_MAGNIFICATION, 25 * WINDOW_MAGNIFICATION))
+        Enemy = pygame.transform.scale(
+            self.image, (25 * WINDOW_MAGNIFICATION, 25 * WINDOW_MAGNIFICATION))
         screen.blit(Enemy, [self.x, self.y])
 
     def wander(self):
@@ -1081,8 +1340,8 @@ class Enemy(pygame.sprite.Sprite):
             self.x -= self.walkRate
 
         # Rescale and set the background to be translucent
-        self.image = pygame.transform.scale(self.image,
-                                            (25 * WINDOW_MAGNIFICATION, 25 * WINDOW_MAGNIFICATION))
+        self.image = pygame.transform.scale(
+            self.image, (25 * WINDOW_MAGNIFICATION, 25 * WINDOW_MAGNIFICATION))
         self.image.set_colorkey(COLORKEY)
 
         # Reset the clock
@@ -1091,21 +1350,26 @@ class Enemy(pygame.sprite.Sprite):
     def attack(self):
         """ Allows the enemy to attack. """
 
-        # Change the sector, image, and update the coordinates to reach the player.
-        if(self.x < self.playerx2 and self.x > self.playerx1 and self.y > self.playery2):
+        # Change the sector, image,
+        # and update the coordinates to reach the player.
+        if(self.x < self.playerx2 and self.x > self.playerx1 and
+           self.y > self.playery2):
             self.sector = "BOTTOM"
             self.y -= self.walkRate
             self.image = Snake_Back_1
-        elif(self.y < self.playery2 and self.y > self.playery1 and self.x < self.playerx1):
+        elif(self.y < self.playery2 and self.y > self.playery1 and
+             self.x < self.playerx1):
             self.sector = "LEFT"
             self.x += self.walkRate
             self.image = Snake_Right_1
-        elif(self.y < self.playery2 and self.y > self.playery1 and self.x > self.playerx2):
+        elif(self.y < self.playery2 and self.y > self.playery1 and
+             self.x > self.playerx2):
             self.sector = "RIGHT"
             self.x += self.walkRate
             self.y += self.walkRate
             self.image = Snake_Left_1
-        elif(self.x > self.playerx1 and self.x < self.playerx2 and self.y < self.playery1):
+        elif((self.x > self.playerx1 and self.x < self.playerx2 and
+              self.y < self.playery1)):
             self.sector = "UP"
             self.x += self.walkRate
             self.y += self.walkRate
@@ -1132,7 +1396,8 @@ class Enemy(pygame.sprite.Sprite):
             self.image = Snake_Forward_1
 
         # Rescale the image and set the background to translucent
-        self.image = pygame.transform.scale(self.image, (25 * WINDOW_MAGNIFICATION, 25 * WINDOW_MAGNIFICATION))
+        self.image = pygame.transform.scale(
+            self.image, (25 * WINDOW_MAGNIFICATION, 25 * WINDOW_MAGNIFICATION))
         self.image.set_colorkey(COLORKEY)
 
         # Reset the clock
@@ -1140,8 +1405,8 @@ class Enemy(pygame.sprite.Sprite):
 
 
 class FeedbackSystem():
-    """ This class represents the Feedback system that displays health, mana, potions, spells,
-    current quest, and currency"""
+    """ This class represents the Feedback system that
+    displays health, mana, potions, spells, current quest, and currency"""
 
     def __init__(self, player):
         """ Initialize all the variables used in the feedback system. """
@@ -1172,59 +1437,80 @@ class FeedbackSystem():
 
         # Initialize the coin Image
         self.coin_Image = pygame.sprite.Sprite()
-        self.coin_Image.image = pygame.Surface([15 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION])
+        self.coin_Image.image = pygame.Surface(
+            [15 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION])
         self.coin_Image.image = Coin
         self.coin_Image.image.set_colorkey(COLORKEY)
         self.coin_Imagex = 10
         self.coin_Imagey = WINDOW_HEIGHT - 40
-        self.coin_Image = pygame.transform.scale(self.coin_Image.image, (15 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
+        self.coin_Image = pygame.transform.scale(
+            self.coin_Image.image,
+            (15 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
         screen.blit(self.coin_Image, (self.coin_Imagex, self.coin_Imagey))
 
         # Initialize the amount of money the player has
         money = str(self.money)
         money = "X " + money
         self.moneyText = self.font.render(money, True, WHITE)
-        screen.blit(self.moneyText, (WINDOW_WIDTH//2 - 100, WINDOW_HEIGHT//2 - 150))
+        screen.blit(self.moneyText,
+                    (WINDOW_WIDTH//2 - 100, WINDOW_HEIGHT//2 - 150))
 
         # Initialize and draw the frame used for displaying the current potion
         self.potion_Frame = pygame.sprite.Sprite()
-        self.potion_Frame.image = pygame.Surface([15 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION])
+        self.potion_Frame.image = pygame.Surface(
+            [15 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION])
         self.potion_Frame.image = Potion_Frame
         self.potion_Frame.image.set_colorkey(COLORKEY)
         self.potion_Framex = WINDOW_WIDTH - 100
         self.potion_Framey = 10
-        self.potion_Frame = pygame.transform.scale(self.potion_Frame.image, (15 * (WINDOW_MAGNIFICATION + 1), 15 * (WINDOW_MAGNIFICATION + 1)))
-        screen.blit(self.potion_Frame, (self.potion_Framex, self.potion_Framey))
+        self.potion_Frame = pygame.transform.scale(
+            self.potion_Frame.image,
+            (15 * (WINDOW_MAGNIFICATION + 1), 15 * (WINDOW_MAGNIFICATION + 1)))
+        screen.blit(self.potion_Frame,
+                    (self.potion_Framex, self.potion_Framey))
 
         # Initialize and draw the frame used for displaying the current spell
         self.spell_Frame = pygame.sprite.Sprite()
-        self.spell_Frame.image = pygame.Surface([11 * WINDOW_MAGNIFICATION, 19 * WINDOW_MAGNIFICATION])
+        self.spell_Frame.image = pygame.Surface(
+            [11 * WINDOW_MAGNIFICATION, 19 * WINDOW_MAGNIFICATION])
         self.spell_Frame.image = Spell_Frame
         self.spell_Frame.image.set_colorkey(COLORKEY)
         self.spell_Framex = WINDOW_WIDTH - 25 * WINDOW_MAGNIFICATION
         self.spell_Framey = 2 * WINDOW_MAGNIFICATION
-        self.spell_Frame = pygame.transform.scale(self.spell_Frame.image, (11 * (WINDOW_MAGNIFICATION + 1), 19 * (WINDOW_MAGNIFICATION + 1)))
+        self.spell_Frame = pygame.transform.scale(
+            self.spell_Frame.image,
+            (11 * (WINDOW_MAGNIFICATION + 1), 19 * (WINDOW_MAGNIFICATION + 1)))
         screen.blit(self.spell_Frame, (self.spell_Framex, self.spell_Framey))
 
-        # Initialize and draw the spell Sprite used for displaying the current spell
+        # Initialize and draw the spell Sprite
+        # used for displaying the current spell
         self.currentSpellSprite = pygame.sprite.Sprite()
-        self.currentSpellSprite.image = pygame.Surface([11 * WINDOW_MAGNIFICATION, 19 * WINDOW_MAGNIFICATION])
+        self.currentSpellSprite.image = pygame.Surface(
+            [11 * WINDOW_MAGNIFICATION, 19 * WINDOW_MAGNIFICATION])
         self.currentSpellSprite.image = Blank
         self.currentSpellSprite.image.set_colorkey(COLORKEY)
         self.currentSpellSpritex = WINDOW_WIDTH - 23 * WINDOW_MAGNIFICATION
         self.currentSpellSpritey = 10 * WINDOW_MAGNIFICATION
-        self.currentSpellSprite = pygame.transform.scale(self.currentSpellSprite.image, (11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
-        screen.blit(self.currentSpellSprite, (self.currentSpellSpritex, self.currentSpellSpritey))
+        self.currentSpellSprite = pygame.transform.scale(
+            self.currentSpellSprite.image,
+            (11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
+        screen.blit(self.currentSpellSprite,
+                    (self.currentSpellSpritex, self.currentSpellSpritey))
 
-        # Initialize and draw the potion Sprite used for displaying the current potion
+        # Initialize and draw the potion Sprite
+        # used for displaying the current potion
         self.currentPotionSprite = pygame.sprite.Sprite()
-        self.currentPotionSprite.image = pygame.Surface([11 * WINDOW_MAGNIFICATION, 19 * WINDOW_MAGNIFICATION])
+        self.currentPotionSprite.image = pygame.Surface(
+            [11 * WINDOW_MAGNIFICATION, 19 * WINDOW_MAGNIFICATION])
         self.currentPotionSprite.image = Blank
         self.currentPotionSprite.image.set_colorkey(COLORKEY)
         self.currentPotionSpritex = WINDOW_WIDTH - 90
         self.currentPotionSpritey = 20
-        self.currentPotionSprite = pygame.transform.scale(self.currentPotionSprite.image, (11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
-        screen.blit(self.currentPotionSprite, (self.currentPotionSpritex, self.currentPotionSpritey))
+        self.currentPotionSprite = pygame.transform.scale(
+            self.currentPotionSprite.image,
+            (11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
+        screen.blit(self.currentPotionSprite,
+                    (self.currentPotionSpritex, self.currentPotionSpritey))
 
         # These 2 lines update the display frames for spells and potions.
         self.switchPotionRight(player)
@@ -1232,7 +1518,8 @@ class FeedbackSystem():
 
         # Initialize the quest feedback for displaying quest progress
         self.currentQuestSprite = pygame.sprite.Sprite()
-        self.currentQuestSprite.image = pygame.Surface([25 * WINDOW_MAGNIFICATION, 25 * WINDOW_MAGNIFICATION])
+        self.currentQuestSprite.image = pygame.Surface(
+            [25 * WINDOW_MAGNIFICATION, 25 * WINDOW_MAGNIFICATION])
         self.currentQuestSprite.image = Blank
         self.currentQuestSprite.image.set_colorkey(COLORKEY)
         self.questText = ""
@@ -1243,12 +1530,15 @@ class FeedbackSystem():
 
         # Initialize the coin Image
         self.coin_Image = pygame.sprite.Sprite()
-        self.coin_Image.image = pygame.Surface([15 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION])
+        self.coin_Image.image = pygame.Surface(
+            [15 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION])
         self.coin_Image.image = Coin
         self.coin_Image.image.set_colorkey(COLORKEY)
         self.coin_Imagex = 10
         self.coin_Imagey = WINDOW_HEIGHT - 40
-        self.coin_Image = pygame.transform.scale(self.coin_Image.image, (15 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
+        self.coin_Image = pygame.transform.scale(
+            self.coin_Image.image,
+            (15 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
         screen.blit(self.coin_Image, (self.coin_Imagex, self.coin_Imagey))
 
     def update(self, player):
@@ -1286,7 +1576,8 @@ class FeedbackSystem():
         manaText = str(self.mana) + "/" + str(self.max_Mana)
         self.manaText = self.font2.render(manaText, True, BLACK)
 
-        # Initialize the sprites and texts used to display the current quest feedback.
+        # Initialize the sprites and texts
+        # used to display the current quest feedback.
         if(self.currentQuest == ""):
             questText = ""
             self.currentQuestSprite = Blank
@@ -1308,24 +1599,43 @@ class FeedbackSystem():
         self.questText = self.font.render(questText, True, WHITE)
 
         # Rescale and set the image's background to clear
-        self.currentQuestSprite = pygame.transform.scale(self.currentQuestSprite, (25 * WINDOW_MAGNIFICATION, 25 * WINDOW_MAGNIFICATION))
+        self.currentQuestSprite = pygame.transform.scale(
+            self.currentQuestSprite,
+            (25 * WINDOW_MAGNIFICATION, 25 * WINDOW_MAGNIFICATION))
         self.currentQuestSprite.set_colorkey(COLORKEY)
 
         # Draw all the sprites needed to the screen
-        screen.blit(self.currentQuestSprite, (self.currentQuestSpritex, self.currentQuestSpritey))
-        screen.blit(self.questText, (self.currentQuestSpritex + 50, self.coin_Imagey + 5))
-        screen.blit(self.coin_Image, (self.coin_Imagex, self.coin_Imagey))
-        screen.blit(self.moneyText, (self.coin_Imagex + 40, self.coin_Imagey + 5))
-        screen.blit(self.potion_Frame, (self.potion_Framex, self.potion_Framey))
-        screen.blit(self.spell_Frame, (self.spell_Framex, self.spell_Framey))
-        screen.blit(self.currentSpellSprite, (self.currentSpellSpritex, self.currentSpellSpritey))
-        screen.blit(self.currentPotionSprite, (self.currentPotionSpritex, self.currentPotionSpritey))
-        screen.blit(potionText, (self.potion_Framex + 30, self.potion_Framey + 30))
-        pygame.draw.rect(screen, GRAY, [10, 10, self.max_Health * WINDOW_MAGNIFICATION, 5 * WINDOW_MAGNIFICATION])
-        pygame.draw.rect(screen, RED, [10, 10, self.health * WINDOW_MAGNIFICATION, 5 * WINDOW_MAGNIFICATION])
+        screen.blit(self.currentQuestSprite,
+                    (self.currentQuestSpritex, self.currentQuestSpritey))
+        screen.blit(self.questText,
+                    (self.currentQuestSpritex + 50, self.coin_Imagey + 5))
+        screen.blit(self.coin_Image,
+                    (self.coin_Imagex, self.coin_Imagey))
+        screen.blit(self.moneyText,
+                    (self.coin_Imagex + 40, self.coin_Imagey + 5))
+        screen.blit(self.potion_Frame,
+                    (self.potion_Framex, self.potion_Framey))
+        screen.blit(self.spell_Frame,
+                    (self.spell_Framex, self.spell_Framey))
+        screen.blit(self.currentSpellSprite,
+                    (self.currentSpellSpritex, self.currentSpellSpritey))
+        screen.blit(self.currentPotionSprite,
+                    (self.currentPotionSpritex, self.currentPotionSpritey))
+        screen.blit(potionText,
+                    (self.potion_Framex + 30, self.potion_Framey + 30))
+        pygame.draw.rect(screen, GRAY,
+                         [10, 10, self.max_Health * WINDOW_MAGNIFICATION,
+                          5 * WINDOW_MAGNIFICATION])
+        pygame.draw.rect(screen, RED,
+                         [10, 10, self.health * WINDOW_MAGNIFICATION,
+                          5 * WINDOW_MAGNIFICATION])
         screen.blit(self.healthText, (self.max_Health - 10, 8))
-        pygame.draw.rect(screen, GRAY, [10, 20, self.max_Mana * WINDOW_MAGNIFICATION, 5 * WINDOW_MAGNIFICATION])
-        pygame.draw.rect(screen, LIGHTBLUE, [10, 20, self.mana * WINDOW_MAGNIFICATION, 5 * WINDOW_MAGNIFICATION])
+        pygame.draw.rect(screen, GRAY,
+                         [10, 20, self.max_Mana * WINDOW_MAGNIFICATION,
+                          5 * WINDOW_MAGNIFICATION])
+        pygame.draw.rect(screen, LIGHTBLUE,
+                         [10, 20, self.mana * WINDOW_MAGNIFICATION,
+                          5 * WINDOW_MAGNIFICATION])
         screen.blit(self.manaText, (self.max_Mana - 10, 18))
 
     def switchPotionRight(self, player):
@@ -1338,14 +1648,16 @@ class FeedbackSystem():
         inventory = player.inventory
 
         # Retrieve all the information about the potions
-        potionInventory = [inventory[6][1], inventory[7][1], inventory[8][1], inventory[9][1]]
+        potionInventory = [inventory[6][1], inventory[7][1],
+                           inventory[8][1], inventory[9][1]]
 
         # Check if the player has any potions
         for i in range(len(potionInventory)):
             if(potionInventory[i] >= 1):
                 hasPotions = True
 
-        # If the player has potions we will check to see if we have any other ones.
+        # If the player has potions we will
+        # check to see if we have any other ones.
         if hasPotions:
 
             # Start the while loop
@@ -1355,19 +1667,22 @@ class FeedbackSystem():
                 if(not started):
                     startPoint = self.currentPotion
                 started = True
-                # Cycle through each potion until we find one the player has or we wind up where we started.
+                # Cycle through each potion until we find one the player
+                # has or we wind up where we started.
                 self.currentPotion += 1
                 if self.currentPotion > 3:
                     self.currentPotion = 0
                 if potionInventory[self.currentPotion] > 0:
                     player.currentPotion = self.currentPotion
-                    self.potion_Number = player.inventory[self.currentPotion + 6][1]
+                    self.potion_Number = player.inventory[
+                        self.currentPotion + 6][1]
                     break
 
             # Check what potion is selected
             if inventory[self.currentPotion + 6][0] == "Health Potion":
                 self.currentPotionSprite = Health_Potion
-            elif inventory[self.currentPotion + 6][0] == "Lesser Health Potion":
+            elif inventory[self.currentPotion + 6][0] == ("Lesser" +
+                                                          " Health Potion"):
                 self.currentPotionSprite = Lesser_Health_Potion
             elif inventory[self.currentPotion + 6][0] == "Mana Potion":
                 self.currentPotionSprite = Mana_Potion
@@ -1382,7 +1697,9 @@ class FeedbackSystem():
             self.currentPotionSprite = Blank
 
         # Rescale and set the image's background to clear
-        self.currentPotionSprite = pygame.transform.scale(self.currentPotionSprite, (11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
+        self.currentPotionSprite = pygame.transform.scale(
+            self.currentPotionSprite,
+            (11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
         self.currentPotionSprite.set_colorkey(COLORKEY)
 
     def switchPotionLeft(self, player):
@@ -1395,14 +1712,16 @@ class FeedbackSystem():
         inventory = player.inventory
 
         # Retrieve all the information about the potions
-        potionInventory = [inventory[6][1], inventory[7][1], inventory[8][1], inventory[9][1]]
+        potionInventory = [inventory[6][1], inventory[7][1],
+                           inventory[8][1], inventory[9][1]]
 
         # Check if the player has any potions
         for i in range(len(potionInventory)):
             if(potionInventory[i] >= 1):
                 hasPotions = True
 
-        # If the player has potions we will check to see if we have any other ones.
+        # If the player has potions we will
+        # check to see if we have any other ones.
         if hasPotions:
 
             # Start the while loop
@@ -1413,19 +1732,22 @@ class FeedbackSystem():
                     startPoint = self.currentPotion
                 started = True
 
-                # Cycle through each potion until we find one the player has or we wind up where we started.
+                # Cycle through each potion until we find one the player
+                # has or we wind up where we started.
                 self.currentPotion -= 1
                 if self.currentPotion < 0:
                     self.currentPotion = 3
                 if potionInventory[self.currentPotion] > 0:
                     player.currentPotion = self.currentPotion
-                    self.potion_Number = player.inventory[self.currentPotion + 6][1]
+                    self.potion_Number = player.inventory[
+                        self.currentPotion + 6][1]
                     break
 
             # Check what potion is selected
             if inventory[self.currentPotion + 6][0] == "Health Potion":
                 self.currentPotionSprite = Health_Potion
-            elif inventory[self.currentPotion + 6][0] == "Lesser Health Potion":
+            elif inventory[self.currentPotion + 6][0] == ("Lesser " +
+                                                          "Health Potion"):
                 self.currentPotionSprite = Lesser_Health_Potion
             elif inventory[self.currentPotion + 6][0] == "Mana Potion":
                 self.currentPotionSprite = Mana_Potion
@@ -1441,7 +1763,9 @@ class FeedbackSystem():
             self.currentPotionSprite = Blank
 
         # Rescale and set the image's background to clear
-        self.currentPotionSprite = pygame.transform.scale(self.currentPotionSprite, (11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
+        self.currentPotionSprite = pygame.transform.scale(
+            self.currentPotionSprite,
+            (11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
         self.currentPotionSprite.set_colorkey(COLORKEY)
 
     def switchSpellLeft(self, player):
@@ -1465,7 +1789,8 @@ class FeedbackSystem():
             if(spellInventory[i] >= 1):
                 hasSpells = True
 
-        # If the player has spells we will check to see if we have any other ones.
+        # If the player has spells we will check
+        # to see if we have any other ones.
         if hasSpells:
 
             # Start the while loop
@@ -1476,13 +1801,15 @@ class FeedbackSystem():
                     startPoint = self.currentSpell
                 started = True
 
-                # Cycle through each spell until we find one the player has or we wind up where we started.
+                # Cycle through each spell until we find one the player
+                # has or we wind up where we started.
                 self.currentSpell -= 1
                 if self.currentSpell < 0:
                     self.currentSpell = 1
                 if spellInventory[self.currentSpell] > 0:
                     player.currentSpell = self.currentSpell
-                    self.spell_Number = player.inventory[self.currentSpell + 3][1]
+                    self.spell_Number = player.inventory[
+                        self.currentSpell + 3][1]
                     break
 
             # Check what spell iis selected
@@ -1500,7 +1827,9 @@ class FeedbackSystem():
             self.currentSpellSprite = Blank
 
         # Rescale and set the image's background to clear
-        self.currentSpellSprite = pygame.transform.scale(self.currentSpellSprite, (11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
+        self.currentSpellSprite = pygame.transform.scale(
+            self.currentSpellSprite,
+            (11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
         self.currentSpellSprite.set_colorkey(COLORKEY)
 
     def switchSpellRight(self, player):
@@ -1523,7 +1852,8 @@ class FeedbackSystem():
             if(spellInventory[i] >= 1):
                 hasSpells = True
 
-        # If the player has spells we will check to see if we have any other ones.
+        # If the player has spells we will
+        # check to see if we have any other ones.
         if hasSpells:
 
             # Start the while loop
@@ -1534,13 +1864,15 @@ class FeedbackSystem():
                     startPoint = self.currentSpell
                 started = True
 
-                # Cycle through each spell until we find one the player has or we wind up where we started.
+                # Cycle through each spell until we find one
+                # the player has or we wind up where we started.
                 self.currentSpell += 1
                 if self.currentSpell > 1:
                     self.currentSpell = 0
                 if spellInventory[self.currentSpell] > 0:
                     player.currentSpell = self.currentSpell
-                    self.spell_Number = player.inventory[self.currentSpell + 3][1]
+                    self.spell_Number = player.inventory[
+                        self.currentSpell + 3][1]
                     break
 
             # Check what spell is selected
@@ -1558,7 +1890,9 @@ class FeedbackSystem():
             self.currentSpellSprite = Blank
 
         # Rescale and set the image's background to clear
-        self.currentSpellSprite = pygame.transform.scale(self.currentSpellSprite, (11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
+        self.currentSpellSprite = pygame.transform.scale(
+            self.currentSpellSprite,
+            (11 * WINDOW_MAGNIFICATION, 15 * WINDOW_MAGNIFICATION))
         self.currentSpellSprite.set_colorkey(COLORKEY)
 
 
@@ -1603,21 +1937,28 @@ class Game(object):
         # Create the player
         self.player = Player()
 
-        # Add a super Enemy with 2 times the attack damage and defensive damage.
+        # Add a super Enemy with 2 times the
+        # attack damage and defensive damage.
         superEnemy = Enemy(450, 450)
         superEnemy.defense = 2
         superEnemy.attackDamage = superEnemy.attackDamage * 2
 
         # Add all the enemys for each room.
         room1 = [Enemy(150, 50), Enemy(150, 250), Enemy(300, 250)]
-        room2 = [Enemy(100, 200), Enemy(500, 100), Enemy(150, 300), Enemy(200, 400), Enemy(500, 350)]
+        room2 = [Enemy(100, 200), Enemy(500, 100), Enemy(150, 300),
+                 Enemy(200, 400), Enemy(500, 350)]
         room4 = [Enemy(150, 100), Enemy(300, 100)]
         room5 = [superEnemy]
         room6 = [Enemy(150, 100), Enemy(400, 450), Enemy(600, 350)]
         room7 = [Enemy(150, 100), Enemy(400, 450), Enemy(600, 350)]
-        room9 = [Enemy(100, 200), Enemy(500, 100), Enemy(150, 300), Enemy(200, 400), Enemy(500, 350)]
-        room12 = [Enemy(600, 200), Enemy(600, 100), Enemy(600, 400), Enemy(400, 200), Enemy(400, 100), Enemy(400, 400), Enemy(200, 200), Enemy(200, 100), Enemy(200, 400), Enemy(200, 200)]
-        room14 = [Enemy(100, 200), Enemy(500, 100), Enemy(150, 300), Enemy(200, 400), Enemy(500, 350)]
+        room9 = [Enemy(100, 200), Enemy(500, 100), Enemy(150, 300),
+                 Enemy(200, 400), Enemy(500, 350)]
+        room12 = [Enemy(600, 200), Enemy(600, 100), Enemy(600, 400),
+                  Enemy(400, 200), Enemy(400, 100), Enemy(400, 400),
+                  Enemy(200, 200), Enemy(200, 100), Enemy(200, 400),
+                  Enemy(200, 200)]
+        room14 = [Enemy(100, 200), Enemy(500, 100), Enemy(150, 300),
+                  Enemy(200, 400), Enemy(500, 350)]
         for enemy in room1:
             self.room1_enemies_Group.add(enemy)
         for enemy in room2:
@@ -1691,8 +2032,10 @@ class Game(object):
                 CAMERA_LEFT = ROOM_WIDTH * 2
                 CAMERA_TOP = ROOM_HEIGHT * 2
 
-            # If the game hasn't started yet and the player clicks, advance to the next splash screen
-            elif (not self.game_start and event.type == pygame.MOUSEBUTTONDOWN):
+            # If the game hasn't started yet and the player clicks,
+            # advance to the next splash screen
+            elif (not self.game_start and
+                  event.type == pygame.MOUSEBUTTONDOWN):
                 self.splashNumber += 1
 
             # Detect when a key is pressed or held
@@ -1734,10 +2077,14 @@ class Game(object):
                     # Pause the game for a couple seconds.
                     font = pygame.font.Font("SILKWONDER.ttf", 25)
                     text1 = font.render("Controls:", True, WHITE)
-                    text2 = font.render("W - Cycle Spell Forward", True, (WHITE))
-                    text3 = font.render("A - Cycle Potion Backward", True, (WHITE))
-                    text4 = font.render("S - Cycle Spell Backward", True, (WHITE))
-                    text5 = font.render("D - Cycle Potion Forward", True, (WHITE))
+                    text2 = font.render(
+                        "W - Cycle Spell Forward", True, (WHITE))
+                    text3 = font.render(
+                        "A - Cycle Potion Backward", True, (WHITE))
+                    text4 = font.render(
+                        "S - Cycle Spell Backward", True, (WHITE))
+                    text5 = font.render(
+                        "D - Cycle Potion Forward", True, (WHITE))
                     text6 = font.render("Q - Use Spell", True, (WHITE))
                     text7 = font.render("E - Use Potion", True, (WHITE))
                     text8 = font.render("SPACE BAR - Interact", True, (WHITE))
@@ -1748,15 +2095,19 @@ class Game(object):
                     screen.fill(BLACK)
                     screen.blit(text1, (WINDOW_WIDTH//2 - 75, 25))
                     screen.blit(text2, (75, WINDOW_HEIGHT//2 - 150))
-                    screen.blit(text3, (WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 - 150))
+                    screen.blit(
+                        text3, (WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 - 150))
                     screen.blit(text4, (75, WINDOW_HEIGHT//2 - 100))
-                    screen.blit(text5, (WINDOW_WIDTH//2, WINDOW_HEIGHT//2 - 100))
+                    screen.blit(
+                        text5, (WINDOW_WIDTH//2, WINDOW_HEIGHT//2 - 100))
                     screen.blit(text6, (75, WINDOW_HEIGHT//2 - 50))
-                    screen.blit(text7, (WINDOW_WIDTH//2, WINDOW_HEIGHT//2 - 50))
+                    screen.blit(
+                        text7, (WINDOW_WIDTH//2, WINDOW_HEIGHT//2 - 50))
                     screen.blit(text8, (75, WINDOW_HEIGHT//2))
                     screen.blit(text9, (WINDOW_WIDTH//2, WINDOW_HEIGHT//2))
                     screen.blit(text10, (75, WINDOW_HEIGHT//2 + 50))
-                    screen.blit(text11, (WINDOW_WIDTH//2, WINDOW_HEIGHT//2 + 50))
+                    screen.blit(
+                        text11, (WINDOW_WIDTH//2, WINDOW_HEIGHT//2 + 50))
                     pygame.display.flip()
                     pygame.time.wait(5000)
                 elif event.key == pygame.K_w:
@@ -1800,8 +2151,10 @@ class Game(object):
                     elif self.downKeyPressed:
                         self.DIRECTION = "DOWN"
 
-        # If any directional key was pressed we now calculate the player's new coordinates
-        if self.upKeyPressed or self.downKeyPressed or self.leftKeyPressed or self.rightKeyPressed:
+        # If any directional key was pressed we now
+        # calculate the player's new coordinates
+        if ((self.upKeyPressed or self.downKeyPressed or
+             self.leftKeyPressed or self.rightKeyPressed)):
 
             # Change the player sprite to match player direction
             self.player.changePlayerDirection(self.DIRECTION)
@@ -1823,7 +2176,8 @@ class Game(object):
                 self.player.y += WALKRATE
                 self.player.worldy += WALKRATE
                 if self.player.worldy > WORLD_HEIGHT:
-                    self.player.worldy = WORLD_HEIGHT - 25 * WINDOW_MAGNIFICATION
+                    self.player.worldy = (WORLD_HEIGHT -
+                                          25 * WINDOW_MAGNIFICATION)
                 elif self.player.y > WINDOW_HEIGHT:
                     self.player.y = 0
                     CAMERA_TOP += ROOM_HEIGHT
@@ -1855,8 +2209,8 @@ class Game(object):
 
     def getRoomSurface(self, leftPixel, topPixel):
         """
-        This method is used to fetch all tiles in a single room and expand them for easier viewing.
-        It is a great space optimization.
+        This method is used to fetch all tiles in a single room and
+        expand them for easier viewing. It is a great space optimization.
         """
 
         # Get the leftmost and topmost tile numbers
@@ -1882,9 +2236,12 @@ class Game(object):
                 # Just in case, ensure tile_number is an integer.
                 tile_number = int(tile_number)
 
-                roomSurf.blit(tile.getTile(tile_number), ((tilex - leftmostTile) * 25, (tiley - topmostTile) * 25))
+                roomSurf.blit(tile.getTile(tile_number),
+                              ((tilex - leftmostTile) * 25,
+                               (tiley - topmostTile) * 25))
 
-                # Check if the tile at tilex and tiley is a boundary, burnable, or explodable
+                # Check if the tile at tilex and tiley is
+                # a boundary, burnable, or explodable
                 if tile_number in boundary_tiles:
                     self.all_boundaries_Group.add(tile)
                 if tile_number in explodable_tiles:
@@ -1897,7 +2254,9 @@ class Game(object):
                     self.all_interactive_Group.add(tile)
 
         # Zoom in on the room to make it more viewable and return the room
-        roomSurf = pygame.transform.scale(roomSurf, (ROOM_WIDTH * WINDOW_MAGNIFICATION, ROOM_HEIGHT * WINDOW_MAGNIFICATION))
+        roomSurf = pygame.transform.scale(roomSurf,
+                                          (ROOM_WIDTH * WINDOW_MAGNIFICATION,
+                                           ROOM_HEIGHT * WINDOW_MAGNIFICATION))
         return roomSurf
 
     def run_logic(self):
@@ -1956,13 +2315,17 @@ class Game(object):
             # Update the player sprite
             self.player.update()
 
-            # Check if there are any collisions between th eplayer and a boundary tile.
-            bump_list = spritecollide(self.player, self.all_boundaries_Group, False)
+            # Check if there are any collisions
+            # between the player and a boundary tile.
+            bump_list = spritecollide(self.player,
+                                      self.all_boundaries_Group, False)
 
-            # If there is than we have to move the player back to where they were
+            # If there is than we have to move
+            # the player back to where they were
             if(len(bump_list) >= 1):
 
-                # Based on the direction we last moved the sprite in, move the sprite back.
+                # Based on the direction we last moved
+                # the sprite in, move the sprite back.
                 if(self.DIRECTION == "UP"):
                     self.player.y += WALKRATE
                     self.player.worldy += WALKRATE
@@ -1981,12 +2344,15 @@ class Game(object):
                 self.player = player
 
             # Get a list of all the enemies that collide with boundaries
-            enemy_collision_list = groupcollide(group, self.all_boundaries_Group, False, False)
+            enemy_collision_list = groupcollide(
+                group, self.all_boundaries_Group, False, False)
 
-            # If there is than we have to move the enemy back to where they were
+            # If there is than we have to move
+            # the enemy back to where they were
             if(len(enemy_collision_list) >= 1):
                 for enemy in enemy_collision_list:
-                    # Based on the direction we last moved the sprite in, move the sprite back.
+                    # Based on the direction we last moved
+                    # the sprite in, move the sprite back.
                     if(enemy.direction == "UP"):
                         enemy.y += enemy.walkRate
                     elif (enemy.direction == "DOWN"):
@@ -2008,7 +2374,8 @@ class Game(object):
                         enemy.x -= enemy.walkRate
                         enemy.y -= enemy.walkRate
 
-            # Check to see collisions between the player and enemies in the current room
+            # Check to see collisions between the
+            # player and enemies in the current room
             player_collision_list = spritecollide(self.player, group, False)
 
             # If there are any collisions we knock the player backwards.
@@ -2039,10 +2406,13 @@ class Game(object):
 
             # Create a Rect to be used in attack collision detection
             swordTipRect = pygame.sprite.Sprite()
-            if self.player.direction == "RIGHT" or self.player.direction == "LEFT":
-                swordTipRect.image = pygame.Surface([9 * WINDOW_MAGNIFICATION, 16 * WINDOW_MAGNIFICATION])
+            if ((self.player.direction == "RIGHT" or
+                 self.player.direction == "LEFT")):
+                swordTipRect.image = pygame.Surface(
+                    [9 * WINDOW_MAGNIFICATION, 16 * WINDOW_MAGNIFICATION])
             else:
-                swordTipRect.image = pygame.Surface([16 * WINDOW_MAGNIFICATION, 9 * WINDOW_MAGNIFICATION])
+                swordTipRect.image = pygame.Surface(
+                    [16 * WINDOW_MAGNIFICATION, 9 * WINDOW_MAGNIFICATION])
             swordTipRect.rect = swordTipRect.image.get_rect()
 
             # Move the swordtip's frame
@@ -2059,7 +2429,8 @@ class Game(object):
                     self.player.snakes += 1
 
             # Check collisions between cuttable tiles and the player's sword.
-            cuttable_list = spritecollide(swordTipRect, self.all_cuttables_Group, False)
+            cuttable_list = spritecollide(
+                swordTipRect, self.all_cuttables_Group, False)
 
             # Change the tiles to a changed form.
             for i in range(len(cuttable_list)):
@@ -2072,15 +2443,19 @@ class Game(object):
                     if(tileNumber == "44"):
                         tile_Data[tiley][tilex] = "1"
 
-            # Create a rect to be used for checking collisions with interactive tiles
+            # Create a rect to be used for
+            # checking collisions with interactive tiles
             interactRect = pygame.sprite.Sprite()
-            interactRect.image = pygame.Surface([16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION])
+            interactRect.image = pygame.Surface(
+                [16 * WINDOW_MAGNIFICATION, 21 * WINDOW_MAGNIFICATION])
             interactRect.rect = interactRect.image.get_rect()
             interactRect.rect.x = self.player.interactx
             interactRect.rect.y = self.player.interacty
 
-            # Check to see if the interaction sprite collides with interactive tiles.
-            interacted_list = spritecollide(interactRect, self.all_interactive_Group, False)
+            # Check to see if the interaction
+            # sprite collides with interactive tiles.
+            interacted_list = spritecollide(
+                interactRect, self.all_interactive_Group, False)
 
             # Change the tiles to a changed form after interacting with it
             # This will also set dialog depending on the coordinates and room.
@@ -2092,7 +2467,8 @@ class Game(object):
                 coords = (tile.x, tile.y)
                 room = self.player.room
 
-                # Depending on the room and tile that is interacted with, change the dialog.
+                # Depending on the room and tile that
+                # is interacted with, change the dialog.
                 if(room == 3):
                     if(coords == (38, 23)):
                         self.player.dialog = "Press Right Shift to attack"
@@ -2101,7 +2477,8 @@ class Game(object):
                         self.player.fontSize = 25
                 elif(room == 4):
                     if(coords == (30, 31)):
-                        self.player.dialog = "You found 5 Health Potions and the Clocktower Key!"
+                        self.player.dialog = ("You found 5 Health Potions" +
+                                              "and the Clocktower Key!")
                         self.player.dialogCoords[0] = 175
                         self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
                         self.player.fontSize = 25
@@ -2110,22 +2487,29 @@ class Game(object):
                         tile_Data[31][30] = 60
                 elif(room == 7):
                     if(coords == (61, 14)):
-                        self.player.dialog = "A rockslide has blocked this path! Sorry for the inconvenience!"
+                        self.player.dialog = ("A rockslide has blocked this" +
+                                              " path! Sorry for the" +
+                                              " inconvenience!")
                         self.player.dialogCoords[0] = 150
                         self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
                         self.player.fontSize = 20
                 elif(room == 8):
                     if(coords == (38, 18)):
-                        self.player.dialog = "North - Clocktower, South - Glade"
+                        self.player.dialog = (
+                            "North - Clocktower, South - Glade")
                         self.player.dialogCoords[0] = 250
                         self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
                         self.player.fontSize = 25
                     if(coords == (34, 18)):
                         if(self.talk):
                             if self.merchant_dialog == 0:
-                                self.player.dialog = "Hey there! I'll sell you a health potion for 10 coins. Just talk to me again."
+                                self.player.dialog = ("Hey there! I'll sell" +
+                                                      " you a health potion" +
+                                                      " for 10 coins. Just" +
+                                                      " talk to me again.")
                                 self.player.dialogCoords[0] = 100
-                                self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                self.player.dialogCoords[1] = (WINDOW_HEIGHT -
+                                                               50)
                                 self.player.fontSize = 20
                                 self.talk = False
                                 self.merchant_dialog += 1
@@ -2133,20 +2517,25 @@ class Game(object):
                                 if(self.player.money >= 10):
                                     self.player.money -= 10
                                     self.player.inventory[6][1] += 1
-                                    self.player.dialog = "Thanks for the business!"
+                                    self.player.dialog = ("Thanks for " +
+                                                          "the business!")
                                     self.player.dialogCoords[0] = 300
-                                    self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                    self.player.dialogCoords[1] = (
+                                        WINDOW_HEIGHT - 50)
                                     self.player.fontSize = 25
                                     self.talk = False
                                 else:
-                                    self.player.dialog = "Sorry you dont have enough coins!"
+                                    self.player.dialog = ("Sorry you dont " +
+                                                          "have enough coins!")
                                     self.player.dialogCoords[0] = 250
-                                    self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                    self.player.dialogCoords[1] = (
+                                        WINDOW_HEIGHT - 50)
                                     self.player.fontSize = 25
                                     self.talk = False
                 elif(room == 9):
                     if(coords == (17, 14)):
-                        self.player.dialog = "Please do not go any further, danger ahead"
+                        self.player.dialog = ("Please do not go any" +
+                                              " further, danger ahead")
                         self.player.dialogCoords[0] = 200
                         self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
                         self.player.fontSize = 25
@@ -2171,77 +2560,112 @@ class Game(object):
                     if(coords == (70, 2)):
                         if(self.talk):
                             if self.old_man_dialog == 0:
-                                self.player.dialog = "Hey! I bet youre here for the clocktower key right?"
+                                self.player.dialog = (
+                                    "Hey! I bet youre here for" +
+                                    " the clocktower key right?")
                                 self.player.dialogCoords[0] = 150
-                                self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                self.player.dialogCoords[1] = (WINDOW_HEIGHT -
+                                                               50)
                                 self.player.fontSize = 25
                             elif self.old_man_dialog == 1:
-                                self.player.dialog = "Well, first youll have to do a couple of favors for me."
+                                self.player.dialog = (
+                                    "Well, first youll have to" +
+                                    " do a couple of favors for me.")
                                 self.player.dialogCoords[0] = 175
-                                self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                self.player.dialogCoords[1] = (WINDOW_HEIGHT -
+                                                               50)
                                 self.player.fontSize = 20
                             elif self.old_man_dialog == 2:
-                                self.player.dialog = "You may have noticed there are a lot of snakes around here."
+                                self.player.dialog = (
+                                    "You may have noticed there" +
+                                    " are a lot of snakes around here.")
                                 self.player.dialogCoords[0] = 150
-                                self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                self.player.dialogCoords[1] = (WINDOW_HEIGHT -
+                                                               50)
                                 self.player.fontSize = 20
                             elif self.old_man_dialog == 3:
-                                self.player.dialog = "I need you to get rid of 20 of them for me."
+                                self.player.dialog = (
+                                    "I need you to get rid" +
+                                    " of 20 of them for me.")
                                 self.player.dialogCoords[0] = 200
-                                self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                self.player.dialogCoords[1] = (WINDOW_HEIGHT -
+                                                               50)
                                 self.player.fontSize = 25
                                 self.player.quest = "snake"
                             elif self.old_man_dialog == 4:
                                 if(self.player.snakes < 20):
-                                    self.player.dialog = "Go out there and kill those snakes!"
+                                    self.player.dialog = (
+                                        "Go out there and kill those snakes!")
                                     self.player.dialogCoords[0] = 200
-                                    self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                    self.player.dialogCoords[1] = (
+                                        WINDOW_HEIGHT - 50)
                                     self.player.fontSize = 25
                                     self.old_man_dialog -= 1
                                 elif(self.player.snakes >= 20):
                                     self.player.dialog = "Nice Job!"
                                     self.player.quest = ""
                                     self.player.dialogCoords[0] = 350
-                                    self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                    self.player.dialogCoords[1] = (
+                                        WINDOW_HEIGHT - 50)
                                     self.player.fontSize = 25
                             elif self.old_man_dialog == 5:
-                                self.player.dialog = "Here's the explosion spell, the key is to the west of the merchant."
+                                self.player.dialog = (
+                                    "Here's the explosion spell, the key" +
+                                    " is to the west of the merchant.")
                                 self.player.dialogCoords[0] = 150
-                                self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                self.player.dialogCoords[1] = (
+                                    WINDOW_HEIGHT - 50)
                                 self.player.fontSize = 20
                                 self.player.inventory[4][1] = 1
                             elif self.old_man_dialog == 6:
-                                self.player.dialog = "But I have another offer for you!"
+                                self.player.dialog = (
+                                    "But I have another offer for you!")
                                 self.player.dialogCoords[0] = 250
-                                self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                self.player.dialogCoords[1] = (
+                                    WINDOW_HEIGHT - 50)
                                 self.player.fontSize = 25
                             elif self.old_man_dialog == 7:
-                                self.player.dialog = "You may have noticed some strange rocks here or there."
+                                self.player.dialog = (
+                                    "You may have noticed some strange" +
+                                    " rocks here or there.")
                                 self.player.dialogCoords[0] = 175
-                                self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                self.player.dialogCoords[1] = (
+                                    WINDOW_HEIGHT - 50)
                                 self.player.fontSize = 20
                             elif self.old_man_dialog == 8:
-                                self.player.dialog = "I need you to get rid of all 13 of them for me using the spell I gave you."
+                                self.player.dialog = (
+                                    "I need you to get rid of all 13 of" +
+                                    " them for me using the spell I gave you.")
                                 self.player.dialogCoords[0] = 150
-                                self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                self.player.dialogCoords[1] = (
+                                    WINDOW_HEIGHT - 50)
                                 self.player.fontSize = 16
                                 self.player.quest = "rock"
                             elif self.old_man_dialog == 9:
-                                self.player.dialog = "There's some shiny new armor in it for you!"
+                                self.player.dialog = (
+                                    "There's some shiny new armor" +
+                                    " in it for you!")
                                 self.player.dialogCoords[0] = 175
-                                self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                self.player.dialogCoords[1] = (
+                                    WINDOW_HEIGHT - 50)
                                 self.player.fontSize = 25
                             elif self.old_man_dialog == 10:
                                 if(self.player.rockMimics < 13):
-                                    self.player.dialog = "Go out there and kill those mimics!"
+                                    self.player.dialog = (
+                                        "Go out there and kill those mimics!")
                                     self.player.dialogCoords[0] = 200
-                                    self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                    self.player.dialogCoords[1] = (
+                                        WINDOW_HEIGHT - 50)
                                     self.player.fontSize = 25
                                     self.old_man_dialog -= 1
                                 elif(self.player.rockMimics >= 13):
-                                    self.player.dialog = "Nice Job, take this steel Armor and sword. (Your defense and offense rose!)"
+                                    self.player.dialog = (
+                                        "Nice Job, take this steel Armor and" +
+                                        " sword." +
+                                        " (Your defense and offense rose!)")
                                     self.player.dialogCoords[0] = 150
-                                    self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                    self.player.dialogCoords[1] = (
+                                        WINDOW_HEIGHT - 50)
                                     self.player.quest = ""
                                     self.player.fontSize = 16
                                     self.player.defense += 1
@@ -2249,21 +2673,27 @@ class Game(object):
                                     self.player.inventory[1][1] = 1
                                     self.player.armor = "Steel"
                             elif self.old_man_dialog == 11:
-                                self.player.dialog = "Now i can sleep soundly with my eyes open!"
+                                self.player.dialog = (
+                                    "Now i can sleep " +
+                                    "soundly with my eyes open!")
                                 self.player.dialogCoords[0] = 200
-                                self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                self.player.dialogCoords[1] = (
+                                    WINDOW_HEIGHT - 50)
                                 self.player.fontSize = 25
                             else:
                                 self.player.dialog = "Zzz"
                                 self.player.dialogCoords[0] = 400
-                                self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
+                                self.player.dialogCoords[1] = (
+                                    WINDOW_HEIGHT - 50)
                                 self.player.fontSize = 25
                             self.talk = False
                             self.old_man_dialog += 1
 
                 elif(room == 13):
                     if(coords == (39, 3)):
-                        self.player.dialog = "Clocktower is closed for maintenance. See Old Man for the key"
+                        self.player.dialog = (
+                            "Clocktower is closed for maintenance." +
+                            " See Old Man for the key")
                         self.player.dialogCoords[0] = 100
                         self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
                         self.player.fontSize = 20
@@ -2282,12 +2712,15 @@ class Game(object):
                             self.player.fontSize = 25
                 elif(room == 15):
                     if(coords == (6, 1)):
-                        self.player.dialog = "REMINDER: Use A and D to switch between potions and E to use them"
+                        self.player.dialog = (
+                            "REMINDER: Use A and D to switch between" +
+                            " potions and E to use them")
                         self.player.dialogCoords[0] = 150
                         self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
                         self.player.fontSize = 20
                     elif(coords == (7, 1)):
-                        self.player.dialog = "You found Health and Mana Potions!"
+                        self.player.dialog = (
+                            "You found Health and Mana Potions!")
                         self.player.dialogCoords[0] = 225
                         self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
                         self.player.fontSize = 25
@@ -2303,21 +2736,25 @@ class Game(object):
                         self.player.inventory[3][1] += 1
                         tile_Data[1][8] = 60
                     elif(coords == (9, 1)):
-                        self.player.dialog = "REMINDER: Use W and S to switch between spells and Q to use them"
+                        self.player.dialog = (
+                            "REMINDER: Use W and S to switch between" +
+                            " spells and Q to use them")
                         self.player.dialogCoords[0] = 150
                         self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
                         self.player.fontSize = 20
 
             # Create a rect to be used in spell collision detection
             spellRect = pygame.sprite.Sprite()
-            spellRect.image = pygame.Surface([11 * WINDOW_MAGNIFICATION, 16 * WINDOW_MAGNIFICATION])
+            spellRect.image = pygame.Surface(
+                [11 * WINDOW_MAGNIFICATION, 16 * WINDOW_MAGNIFICATION])
             spellRect.rect = spellRect.image.get_rect()
             spellRect.rect.x = self.player.spellx
             spellRect.rect.y = self.player.spelly
 
             # Check to see if the fire spell collides with burnable objects
             if(self.player.currentSpell == 0):
-                spell_burn_collision_list = spritecollide(spellRect, self.all_burnables_Group, False)
+                spell_burn_collision_list = spritecollide(
+                    spellRect, self.all_burnables_Group, False)
                 for i in range(len(spell_burn_collision_list)):
                     tile = spell_burn_collision_list[i]
                     tilex = tile.x
@@ -2328,9 +2765,11 @@ class Game(object):
                     if(tileNumber == "44"):
                         tile_Data[tiley][tilex] = "1"
 
-            # Check to see if the explosion spell collides with explodable objects
+            # Check to see if the explosion spell
+            # collides with explodable objects
             if(self.player.currentSpell == 1):
-                spell_explode_collision_list = spritecollide(spellRect, self.all_explodables_Group, False)
+                spell_explode_collision_list = spritecollide(
+                    spellRect, self.all_explodables_Group, False)
                 for i in range(len(spell_explode_collision_list)):
                     tile = spell_explode_collision_list[i]
                     tilex = tile.x
@@ -2362,7 +2801,8 @@ class Game(object):
                 # Decrement enemy's health
                 enemy.health -= spellDamage // enemy.spellDefense
 
-                # Depending on the direction the player faces, the spell knocks back the enemy.
+                # Depending on the direction the player faces,
+                # the spell knocks back the enemy.
                 if (self.player.direction == "LEFT"):
                     enemy.x -= 25 * WINDOW_MAGNIFICATION
                 elif (self.player.direction == "RIGHT"):
@@ -2372,7 +2812,8 @@ class Game(object):
                 elif (self.player.direction == "DOWN"):
                     enemy.y += 25 * WINDOW_MAGNIFICATION
 
-                # If an enemy's health dies we increment the counter to be used in quests.
+                # If an enemy's health dies we increment
+                # the counter to be used in quests.
                 if enemy.health <= 0:
                     group.remove(enemy)
                     self.player.snakes -= 1
@@ -2410,7 +2851,7 @@ class Game(object):
             font = pygame.font.Font("SILKWONDER.ttf", self.player.fontSize)
 
             # Create a new surface for the current room
-            roomSurface = self.getRoomSurface(CAMERA_LEFT, CAMERA_TOP, tile_Data)
+            roomSurface = self.getRoomSurface(CAMERA_LEFT, CAMERA_TOP)
 
             # Copy the background image to the viewport.
             screen.blit(roomSurface, (0, 0))
@@ -2446,7 +2887,9 @@ class Game(object):
 
             # Draw the dialog onto the screen.
             dialog_text = font.render(self.player.dialog, True, WHITE)
-            screen.blit(dialog_text, (self.player.dialogCoords[0], self.player.dialogCoords[1]))
+            screen.blit(
+                dialog_text,
+                (self.player.dialogCoords[0], self.player.dialogCoords[1]))
 
             # Copy back buffer onto the front buffer
             pygame.display.flip()
@@ -2458,7 +2901,8 @@ class Game(object):
             playAgain = font.render("Click to play again", True, WHITE)
             screen.fill(BLACK)
             screen.blit(text1, (WINDOW_WIDTH//2 - 120, WINDOW_HEIGHT//2 - 150))
-            screen.blit(playAgain, (WINDOW_WIDTH//2 - 200, WINDOW_HEIGHT - 150))
+            screen.blit(
+                playAgain, (WINDOW_WIDTH//2 - 200, WINDOW_HEIGHT - 150))
             pygame.display.flip()
 
         # If the game is over display game over screen
@@ -2468,7 +2912,8 @@ class Game(object):
             playAgain = font.render("Click to play again", True, WHITE)
             screen.fill(BLACK)
             screen.blit(text1, (WINDOW_WIDTH//2 - 120, WINDOW_HEIGHT//2 - 150))
-            screen.blit(playAgain, (WINDOW_WIDTH//2 - 200, WINDOW_HEIGHT - 150))
+            screen.blit(playAgain,
+                        (WINDOW_WIDTH//2 - 200, WINDOW_HEIGHT - 150))
             pygame.display.flip()
 
         # If the game hasn't started yet, display the splash screen
@@ -2484,31 +2929,47 @@ class Game(object):
                 continueText = font2.render("Click to continue", True, WHITE)
 
                 screen.fill(BLACK)
-                screen.blit(text1, (WINDOW_WIDTH//2 - 100, WINDOW_HEIGHT//2 - 150))
-                screen.blit(text2, (WINDOW_WIDTH//2 - 180, WINDOW_HEIGHT//2 - 50))
-                screen.blit(text3, (WINDOW_WIDTH//2 - 280, WINDOW_HEIGHT//2 + 50))
-                screen.blit(continueText, (WINDOW_WIDTH//2 - 100, WINDOW_HEIGHT - 75))
+                screen.blit(text1,
+                            (WINDOW_WIDTH//2 - 100, WINDOW_HEIGHT//2 - 150))
+                screen.blit(text2,
+                            (WINDOW_WIDTH//2 - 180, WINDOW_HEIGHT//2 - 50))
+                screen.blit(text3,
+                            (WINDOW_WIDTH//2 - 280, WINDOW_HEIGHT//2 + 50))
+                screen.blit(continueText,
+                            (WINDOW_WIDTH//2 - 100, WINDOW_HEIGHT - 75))
                 pygame.display.flip()
 
             # Display the Story screen
             elif(self.splashNumber == 2):
                 font = pygame.font.Font("SILKWONDER.ttf", 25)
                 font2 = pygame.font.Font("SILKWONDER.ttf", 20)
-                text1 = font.render("You play as an angel cast onto Earth", True, WHITE)
-                text2 = font.render("after having your wings stripped from you.", True, (WHITE))
-                text3 = font.render("Your goal is to defeat all 7 virtues on Earth to redeem yourself", True, (WHITE))
-                text4 = font.render("and earn your place in heaven.", True, (WHITE))
+                text1 = font.render(
+                    "You play as an angel cast onto Earth", True, WHITE)
+                text2 = font.render(
+                    "after having your wings stripped from you.",
+                    True, (WHITE))
+                text3 = font.render(
+                    "Your goal is to defeat all 7 virtues on Earth to ",
+                    True, (WHITE))
+                text4 = font.render(
+                    "redeem yourself and earn your place in heaven.",
+                    True, (WHITE))
                 text5 = font.render("Story:", True, WHITE)
                 continueText = font2.render("Click to continue", True, WHITE)
 
                 screen.fill(BLACK)
-                screen.blit(text1, (WINDOW_WIDTH//2 - 220, WINDOW_HEIGHT//2 - 170))
-                screen.blit(text2, (WINDOW_WIDTH//2 - 250, WINDOW_HEIGHT//2 - 70))
-                screen.blit(text3, (WINDOW_WIDTH//2 - 320, WINDOW_HEIGHT//2 + 30))
-                screen.blit(text4, (WINDOW_WIDTH//2 - 175, WINDOW_HEIGHT//2 + 120))
+                screen.blit(text1,
+                            (WINDOW_WIDTH//2 - 220, WINDOW_HEIGHT//2 - 170))
+                screen.blit(text2,
+                            (WINDOW_WIDTH//2 - 250, WINDOW_HEIGHT//2 - 70))
+                screen.blit(text3,
+                            (WINDOW_WIDTH//2 - 260, WINDOW_HEIGHT//2 + 30))
+                screen.blit(text4,
+                            (WINDOW_WIDTH//2 - 275, WINDOW_HEIGHT//2 + 120))
                 screen.blit(text5, (WINDOW_WIDTH//2 - 75, 25))
 
-                screen.blit(continueText, (WINDOW_WIDTH//2 - 100, WINDOW_HEIGHT - 75))
+                screen.blit(continueText,
+                            (WINDOW_WIDTH//2 - 100, WINDOW_HEIGHT - 75))
 
                 pygame.display.flip()
 
@@ -2541,7 +3002,8 @@ class Game(object):
                 screen.blit(text9, (WINDOW_WIDTH//2, WINDOW_HEIGHT//2))
                 screen.blit(text10, (75, WINDOW_HEIGHT//2 + 50))
                 screen.blit(text11, (WINDOW_WIDTH//2, WINDOW_HEIGHT//2 + 50))
-                screen.blit(continueText, (WINDOW_WIDTH//2 - 100, WINDOW_HEIGHT - 75))
+                screen.blit(continueText,
+                            (WINDOW_WIDTH//2 - 100, WINDOW_HEIGHT - 75))
                 pygame.display.flip()
             else:
 
