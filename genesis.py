@@ -83,8 +83,8 @@ ROOM_WIDTH = 400
 ROOM_HEIGHT = 275
 
 # The width and height of the world
-WORLD_WIDTH = 2000
-WORLD_HEIGHT = 825
+WORLD_WIDTH = 4000
+WORLD_HEIGHT = 1650
 
 # The rate at which we magnify the pixels
 WINDOW_MAGNIFICATION = 2
@@ -101,7 +101,7 @@ WINDOW_HEIGHT = ROOM_HEIGHT * WINDOW_MAGNIFICATION
 
 # The Camera starts at the second room from the right, second room down.
 CAMERA_LEFT = ROOM_WIDTH * 2
-CAMERA_TOP = ROOM_HEIGHT * 2
+CAMERA_TOP = ROOM_HEIGHT * 5
 
 # Set the need for a new game to false
 NEWGAME = False
@@ -196,6 +196,152 @@ Chest_Closed = pygame.image.load(
     "Genesis_Sprites/Chest_closed.png").convert()
 Chest_Open = pygame.image.load(
     "Genesis_Sprites/Chest_open.png").convert()
+ClockTowerFace1 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face1.png").convert()
+ClockTowerFace2 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face2.png").convert()
+ClockTowerFace3 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face3.png").convert()
+ClockTowerFace4 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face4.png").convert()
+ClockTowerFace5 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face5.png").convert()
+ClockTowerFace6 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face6.png").convert()
+ClockTowerFace7 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face7.png").convert()
+ClockTowerFace8 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face8.png").convert()
+ClockTowerFace9 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face9.png").convert()
+ClockTowerFace10 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face10.png").convert()
+ClockTowerFace11 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face11.png").convert()
+ClockTowerFace12 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face12.png").convert()
+ClockTowerFace13 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face13.png").convert()
+ClockTowerFace14 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face14.png").convert()
+ClockTowerFace15 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face15.png").convert()
+ClockTowerFace16 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face16.png").convert()
+ClockTowerFace17 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face17.png").convert()
+ClockTowerFace18 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face18.png").convert()
+ClockTowerFace19 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face19.png").convert()
+ClockTowerFace20 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face20.png").convert()
+ClockTowerFace21 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face21.png").convert()
+ClockTowerFace22 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face22.png").convert()
+ClockTowerFace23 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face23.png").convert()
+ClockTowerFace24 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face24.png").convert()
+ClockTowerFace25 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face25.png").convert()
+ClockTowerFace26 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face26.png").convert()
+ClockTowerFace27 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face27.png").convert()
+ClockTowerFace28 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face28.png").convert()
+ClockTowerFace29 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face29.png").convert()
+ClockTowerFace30 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face30.png").convert()
+ClockTowerFace31 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face31.png").convert()
+ClockTowerFace32 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face32.png").convert()
+ClockTowerFace33 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face33.png").convert()
+ClockTowerFace34 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face34.png").convert()
+ClockTowerFace35 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face35.png").convert()
+ClockTowerFace36 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face36.png").convert()
+ClockTowerFace37 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face37.png").convert()
+ClockTowerFace38 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face38.png").convert()
+ClockTowerFace39 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face39.png").convert()
+ClockTowerFace40 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face40.png").convert()
+ClockTowerFace41 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face41.png").convert()
+ClockTowerFace42 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face42.png").convert()
+ClockTowerFace43 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face43.png").convert()
+ClockTowerFace44 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face44.png").convert()
+ClockTowerFace45 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face45.png").convert()
+ClockTowerFace46 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face46.png").convert()
+ClockTowerFace47 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face47.png").convert()
+ClockTowerFace48 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face48.png").convert()
+ClockTowerFace49 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face49.png").convert()
+ClockTowerFace50 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face50.png").convert()
+ClockTowerFace51 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face51.png").convert()
+ClockTowerFace52 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face52.png").convert()
+ClockTowerFace53 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face53.png").convert()
+ClockTowerFace54 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face54.png").convert()
+ClockTowerFace55 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face55.png").convert()
+ClockTowerFace56 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face56.png").convert()
+ClockTowerFace57 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face57.png").convert()
+ClockTowerFace58 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face58.png").convert()
+ClockTowerFace59 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face59.png").convert()
+ClockTowerFace60 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face60.png").convert()
+ClockTowerFace61 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face61.png").convert()
+ClockTowerFace62 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face62.png").convert()
+ClockTowerFace63 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face63.png").convert()
+ClockTowerFace64 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face64.png").convert()
+ClockTowerFace65 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face65.png").convert()
+ClockTowerFace66 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face66.png").convert()
+ClockTowerFace67 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face67.png").convert()
+ClockTowerFace68 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face68.png").convert()
+ClockTowerFace69 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face69.png").convert()
+ClockTowerFace70 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face70.png").convert()
+ClockTowerFace71 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face71.png").convert()
+ClockTowerFace72 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face72.png").convert()
+ClockTowerFace73 = pygame.image.load(
+    "Genesis_Sprites/Clocktower_face73.png").convert()
 Map_Image = pygame.image.load(
     "Genesis_Sprites/Genesis_Map.png").convert()
 
@@ -594,40 +740,8 @@ UP = "UP"
 
 # WORLD_DATA is a large string that includes
 # all the tile data copied from Tiled file.
-# TODO: import this data from the .tmx file directly.
-WORLD_DATA = """50,16,16,16,16,16,16,16,16,16,16,16,16,16,16,49,50,16,16,16,16,16,16,16,16,16,16,16,16,16,16,49,22,41,41,41,41,41,41,41,41,41,41,41,41,41,41,21,50,16,16,16,16,16,16,16,16,16,16,16,16,16,16,49,50,16,16,16,16,16,16,16,16,16,16,16,16,16,16,49
-22,44,44,44,44,44,53,57,57,53,44,44,44,44,44,21,22,44,44,44,44,44,44,44,44,44,44,44,44,48,48,21,22,41,41,41,41,41,41,41,41,41,41,41,41,41,41,21,22,48,48,48,44,44,44,44,44,44,44,44,48,48,48,21,22,44,48,48,44,44,44,44,44,48,48,48,48,48,48,21
-22,44,44,45,45,45,45,54,54,45,45,45,45,44,44,21,22,44,44,44,44,44,44,44,44,44,44,44,44,44,48,21,22,41,41,41,41,41,41,41,42,41,41,41,41,41,41,21,22,48,44,44,44,44,44,44,44,44,44,44,44,44,48,21,22,48,48,44,55,55,59,55,55,44,48,48,48,48,48,21
-22,44,44,45,45,45,45,54,54,45,45,45,45,45,44,17,18,45,45,45,45,45,45,45,45,45,44,44,44,44,44,21,22,48,48,48,48,48,48,56,41,48,48,48,48,47,48,21,22,48,44,44,44,44,45,45,45,45,44,44,44,44,48,21,22,48,44,54,54,54,54,54,54,54,44,48,48,47,48,21
-22,48,45,45,45,45,45,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,45,44,44,44,44,44,21,22,45,45,45,45,45,48,54,54,48,45,45,45,45,45,21,22,44,44,44,44,45,45,45,45,45,45,44,44,44,44,17,18,44,54,54,54,54,54,54,54,54,54,44,48,48,48,21
-22,48,48,45,45,45,45,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,45,44,44,44,44,44,21,22,45,45,45,45,45,48,54,54,48,45,45,45,45,45,21,22,44,44,44,44,45,45,45,45,45,45,44,44,44,44,45,45,54,54,54,54,54,54,54,54,54,54,54,54,54,48,21
-22,48,45,45,45,45,45,45,45,45,45,45,45,45,44,19,20,45,45,45,45,45,45,54,54,45,44,44,44,44,44,21,22,44,45,45,45,45,48,54,54,48,45,45,45,45,44,21,22,44,44,44,44,45,45,45,45,45,45,44,44,44,44,45,45,54,54,54,54,54,54,54,54,54,54,54,54,54,48,21
-22,44,44,45,45,45,45,45,45,45,45,45,45,44,44,21,22,44,45,45,45,45,45,54,54,45,44,44,44,44,44,21,22,44,45,45,45,45,48,54,54,48,45,45,45,45,44,21,22,48,44,44,44,44,45,45,45,45,44,44,44,44,48,19,20,44,54,54,54,54,54,54,54,54,54,45,54,54,44,21
-22,44,44,44,44,44,44,44,44,44,44,44,44,44,44,21,22,44,44,45,45,45,45,54,54,45,44,44,44,44,44,21,22,44,44,45,45,45,48,54,54,48,45,45,45,44,44,21,22,48,44,44,44,44,44,44,44,44,44,44,44,44,48,21,22,48,44,54,54,54,54,54,54,54,45,45,54,54,44,21
-22,44,44,48,48,48,48,47,48,48,48,48,48,44,44,21,22,47,44,44,45,45,45,54,54,45,44,44,44,44,44,21,22,44,44,44,44,45,48,54,54,48,45,44,44,44,44,21,22,48,48,48,44,44,44,44,44,44,44,44,48,48,47,21,22,48,48,44,54,54,54,54,54,45,45,45,54,54,44,21
-52,23,23,23,23,23,23,23,23,23,23,23,23,23,23,51,52,23,23,23,23,23,20,54,54,19,23,23,23,23,23,51,52,23,23,23,23,23,20,54,54,19,23,23,23,23,23,51,52,23,23,23,23,23,23,23,23,23,23,23,23,23,23,51,52,23,23,23,23,23,23,23,23,23,23,20,54,54,19,51
-50,16,16,16,16,16,16,16,16,16,16,16,16,16,16,49,50,16,16,16,16,16,18,54,54,17,16,16,16,16,16,49,50,16,16,16,16,16,18,54,54,17,16,16,16,16,16,49,50,16,16,16,16,16,16,16,16,16,16,16,16,16,16,49,50,16,16,16,16,16,16,16,16,16,16,18,54,54,17,49
-22,48,48,48,48,48,44,44,44,44,44,44,44,44,44,21,22,44,44,44,44,45,45,54,54,45,45,45,48,48,48,21,22,44,45,45,45,45,45,54,54,44,45,44,45,45,45,21,22,44,44,44,44,45,45,44,44,44,44,44,44,44,44,21,22,45,45,45,45,45,45,45,45,45,45,45,54,54,45,21
-22,48,47,48,48,44,44,44,44,44,44,44,44,44,44,21,22,44,44,44,44,45,45,54,54,45,45,45,45,48,48,21,22,45,45,44,45,45,45,54,54,45,45,45,45,45,45,21,22,44,44,44,44,45,45,45,45,45,45,45,44,45,48,21,22,48,45,45,45,45,45,45,45,45,45,45,54,54,45,21
-22,48,48,48,44,44,44,53,44,44,44,44,44,44,44,17,18,53,44,44,44,45,45,54,54,45,45,45,45,45,48,17,18,45,45,45,45,45,45,54,54,45,44,45,45,45,44,17,18,45,45,45,45,45,45,45,45,45,45,45,45,53,48,17,18,48,45,45,45,45,45,45,45,45,45,45,54,54,45,21
-22,48,48,44,44,44,44,45,45,45,45,45,45,45,45,45,45,48,44,44,44,45,45,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,55,54,54,55,54,54,54,54,54,54,54,54,54,54,54,54,44,21
-22,48,44,44,44,44,44,45,45,45,45,45,45,45,45,45,45,48,44,44,44,45,45,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,54,55,54,54,55,54,54,54,54,54,54,54,54,54,54,54,54,44,21
-22,44,44,44,44,44,53,45,45,44,44,44,44,44,44,19,20,44,44,44,44,45,45,45,45,45,45,45,45,45,45,19,20,45,45,45,45,45,45,54,54,45,45,45,45,45,45,19,20,45,45,45,45,45,45,45,45,45,45,45,45,45,48,19,20,48,45,45,45,45,45,45,45,45,45,45,44,44,44,21
-22,44,44,44,44,44,44,45,45,44,44,44,44,44,48,21,22,48,44,44,44,45,45,45,45,45,45,45,45,45,45,21,22,45,58,45,45,45,53,54,54,45,45,45,45,45,44,21,22,45,44,44,45,45,45,45,45,45,44,44,45,45,48,21,22,48,45,45,45,45,45,45,45,45,45,44,44,44,48,21
-22,44,44,44,44,44,44,45,45,44,44,44,44,48,48,21,22,48,47,44,44,44,44,44,44,44,44,44,44,44,44,21,22,45,45,45,44,45,45,54,54,45,45,44,45,45,45,21,22,45,44,44,45,45,45,45,45,45,44,44,44,45,45,21,22,45,45,45,45,45,45,45,45,45,44,44,44,48,48,21
-22,44,44,44,44,44,53,45,45,44,44,44,48,48,47,21,22,48,48,48,44,44,44,44,44,44,44,44,44,44,44,21,22,45,45,45,45,45,45,54,54,45,45,45,45,44,45,21,22,45,45,45,45,45,45,45,45,45,45,45,45,45,45,21,22,45,45,45,45,45,45,45,45,44,44,44,48,48,47,21
-52,23,23,23,23,23,20,45,45,19,23,23,23,23,23,51,52,23,23,23,23,23,23,23,23,23,23,23,23,23,23,51,52,23,23,23,23,23,20,54,54,19,23,23,23,23,23,51,52,23,23,23,23,23,20,45,45,19,23,23,23,23,23,51,52,20,45,45,19,23,23,23,23,23,23,23,23,23,23,51
-50,16,16,16,16,16,18,45,45,17,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,49,50,16,16,16,16,16,18,54,54,17,16,16,16,16,16,49,50,16,16,16,16,16,18,45,45,17,16,16,16,16,16,49,50,18,45,45,17,16,16,16,16,16,16,16,16,16,16,49
-22,44,44,44,44,44,44,44,44,44,44,44,44,44,44,45,45,45,45,45,45,45,45,45,45,44,44,44,44,47,48,21,22,48,48,45,45,45,53,54,54,45,45,45,45,48,47,21,22,48,48,44,44,44,44,45,45,44,44,44,44,48,48,21,22,48,45,45,45,45,45,45,45,45,45,45,48,44,48,21
-22,44,45,45,45,45,45,45,45,45,45,45,45,45,44,45,45,45,45,45,45,45,45,45,45,44,44,44,44,48,47,21,22,48,45,45,45,45,45,44,44,45,45,45,45,45,48,21,22,48,44,44,44,44,44,45,45,44,44,44,44,44,48,21,52,23,23,23,23,23,23,23,23,23,20,45,48,44,47,21
-22,44,45,44,44,44,44,44,44,44,44,44,44,45,44,19,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,51,22,45,45,45,45,45,44,44,44,44,45,45,45,45,45,21,22,44,44,45,45,45,45,45,45,45,45,45,45,45,44,17,16,16,16,16,16,16,16,16,16,16,18,45,48,44,48,21
-22,44,45,44,54,54,54,54,54,54,54,54,44,45,44,21,37,31,36,36,36,36,36,36,36,36,36,36,36,36,32,37,22,45,45,45,45,44,44,45,45,44,44,45,45,45,45,21,22,44,44,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,48,44,48,21
-22,44,45,44,54,54,54,54,54,54,54,54,44,45,44,21,37,34,28,28,28,28,28,28,28,28,28,28,28,28,35,37,22,45,45,45,44,44,45,45,45,45,44,44,45,45,45,21,22,44,44,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,48,44,48,21
-22,44,45,44,54,54,54,54,54,54,54,54,44,45,44,21,37,29,33,33,33,33,33,33,33,33,33,33,33,33,30,37,22,45,45,45,44,44,45,45,45,45,44,44,45,45,45,21,22,44,44,45,45,45,45,45,45,45,45,45,45,45,44,19,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,51
-22,44,45,44,44,44,44,44,44,44,44,44,44,45,44,21,27,37,37,37,37,37,37,37,37,37,37,37,37,37,37,26,22,45,45,45,45,44,44,45,45,44,44,45,45,45,45,21,22,44,44,45,45,45,45,45,45,45,45,45,45,45,44,21,26,37,37,37,37,37,37,37,37,37,37,37,37,37,37,37
-22,44,45,45,45,45,45,45,45,45,45,45,45,45,44,17,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,49,22,48,45,45,45,45,44,44,44,44,45,45,45,45,48,21,22,48,44,44,44,44,44,44,44,44,44,44,44,44,48,21,37,31,36,36,36,36,36,36,36,36,36,36,36,36,36,36
-22,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,57,21,22,48,48,45,45,45,45,44,44,45,45,45,45,48,48,21,22,48,48,44,44,44,44,44,44,44,44,44,44,48,48,21,37,34,28,28,28,28,28,28,28,28,28,28,28,28,28,28
-52,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,51,52,23,23,23,23,23,23,23,23,23,23,23,23,23,23,51,52,23,23,23,23,23,23,23,23,23,23,23,23,23,23,51,37,34,28,28,28,28,28,28,28,28,28,28,28,28,28,28"""
+with open("tileData.txt", "r") as myfile:
+    WORLD_DATA = myfile.read()
 
 # Split the WORLD_DATA string and sort it into a 2D array
 global tile_Data
@@ -635,11 +749,17 @@ tile_Data = WORLD_DATA
 tile_Data = tile_Data.split('\n')
 tile_Data = [line.split(',') for line in tile_Data]
 
+print(len(tile_Data))
+print(len(tile_Data[32]))
 # This list represents the tile numbers of tiles the player and
 # enemies shouldn't be able to walk through.
-boundary_tiles = [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28, 29, 30,
-                  31, 32, 33, 34, 35, 36, 37, 40, 41, 42, 46, 47, 48, 49, 50,
-                  51, 52, 53, 55, 56, 57, 58, 59, 60]
+boundary_tiles = [4, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28, 29, 30,
+                  31, 32, 33, 34, 35, 36, 37, 40, 41, 46, 47, 48, 49, 50,
+                  51, 52, 53, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65,
+                  68, 69,70,71,72,73,74,75,76,77,78,79,82,83,84,85,
+                  86,87,88,89,90,91,92,93,96,97,98,99,100,101,102,103,104,105,106,107,108,
+                  110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,
+                  126,127,128,129,130]
 
 # These lists represent tiles that are able to be interacted with
 explodable_tiles = [44, 47, 48, 55]
@@ -688,6 +808,8 @@ class Tile(pygame.sprite.Sprite):
             return Rock_exploded
         elif(tileNumber == 3):
             return Rock_exploded_path
+        elif(tileNumber == 4):
+            return Chest_Open
         elif(tileNumber == 16):
             return Cliff_bottom_bottom
         elif(tileNumber == 17):
@@ -771,9 +893,159 @@ class Tile(pygame.sprite.Sprite):
         elif(tileNumber == 59):
             return OldMan
         elif(tileNumber == 60):
-            return Chest_Open
+            return ClockTowerFace1
+        elif(tileNumber == 61):
+            return ClockTowerFace2
+        elif(tileNumber == 62):
+            return ClockTowerFace3
+        elif(tileNumber == 63):
+            return ClockTowerFace4
+        elif(tileNumber == 64):
+            return ClockTowerFace5
+        elif(tileNumber == 65):
+            return ClockTowerFace6
+        elif(tileNumber == 66):
+            return ClockTowerFace7
+            print(tileNumber, self.tilex, self.tiley)
+        elif(tileNumber == 67):
+            return ClockTowerFace8
+            print(tileNumber, self.tilex, self.tiley)
+        elif(tileNumber == 68):
+            return ClockTowerFace9
+        elif(tileNumber == 69):
+            return ClockTowerFace10
+        elif(tileNumber == 70):
+            return ClockTowerFace11
+        elif(tileNumber == 71):
+            return ClockTowerFace12
+        elif(tileNumber == 72):
+            return ClockTowerFace13
+        elif(tileNumber == 73):
+            return ClockTowerFace14
+        elif(tileNumber == 74):
+            return ClockTowerFace15
+        elif(tileNumber == 75):
+            return ClockTowerFace16
+        elif(tileNumber == 76):
+            return ClockTowerFace17
+        elif(tileNumber == 77):
+            return ClockTowerFace18
+        elif(tileNumber == 78):
+            return ClockTowerFace19
+        elif(tileNumber == 79):
+            return ClockTowerFace20
+        elif(tileNumber == 80):
+            return ClockTowerFace21
+            print(tileNumber, self.tilex, self.tiley)
+        elif(tileNumber == 81):
+            return ClockTowerFace22
+            print(tileNumber, self.tilex, self.tiley)
+        elif(tileNumber == 82):
+            return ClockTowerFace23
+        elif(tileNumber == 83):
+            return ClockTowerFace24
+        elif(tileNumber == 84):
+            return ClockTowerFace25
+        elif(tileNumber == 85):
+            return ClockTowerFace26
+        elif(tileNumber == 86):
+            return ClockTowerFace27
+        elif(tileNumber == 87):
+            return ClockTowerFace28
+        elif(tileNumber == 88):
+            return ClockTowerFace29
+        elif(tileNumber == 89):
+            return ClockTowerFace30
+        elif(tileNumber == 90):
+            return ClockTowerFace31
+        elif(tileNumber == 91):
+            return ClockTowerFace32
+        elif(tileNumber == 92):
+            return ClockTowerFace33
+        elif(tileNumber == 93):
+            return ClockTowerFace34
+        elif(tileNumber == 94):
+            return ClockTowerFace35
+            print(tileNumber, self.tilex, self.tiley)
+        elif(tileNumber == 95):
+            return ClockTowerFace36
+            print(tileNumber, self.tilex, self.tiley)
+        elif(tileNumber == 96):
+            return ClockTowerFace37
+        elif(tileNumber == 97):
+            return ClockTowerFace38
+        elif(tileNumber == 98):
+            return ClockTowerFace39
+        elif(tileNumber == 99):
+            return ClockTowerFace40
+        elif(tileNumber == 100):
+            return ClockTowerFace41
+        elif(tileNumber == 101):
+            return ClockTowerFace42
+        elif(tileNumber == 102):
+            return ClockTowerFace43
+        elif(tileNumber == 103):
+            return ClockTowerFace44
+        elif(tileNumber == 104):
+            return ClockTowerFace45
+        elif(tileNumber == 105):
+            return ClockTowerFace46
+        elif(tileNumber == 106):
+            return ClockTowerFace47
+        elif(tileNumber == 107):
+            return ClockTowerFace48
+        elif(tileNumber == 108):
+            return ClockTowerFace49
+        elif(tileNumber == 109):
+            return ClockTowerFace50
+            print(tileNumber, self.tilex, self.tiley)
+        elif(tileNumber == 110):
+            return ClockTowerFace51
+        elif(tileNumber == 111):
+            return ClockTowerFace52
+        elif(tileNumber == 112):
+            return ClockTowerFace53
+        elif(tileNumber == 113):
+            return ClockTowerFace54
+        elif(tileNumber == 114):
+            return ClockTowerFace55
+        elif(tileNumber == 115):
+            return ClockTowerFace56
+        elif(tileNumber == 116):
+            return ClockTowerFace57
+        elif(tileNumber == 117):
+            return ClockTowerFace58
+        elif(tileNumber == 118):
+            return ClockTowerFace59
+        elif(tileNumber == 119):
+            return ClockTowerFace60
+        elif(tileNumber == 120):
+            return ClockTowerFace61
+        elif(tileNumber == 121):
+            return ClockTowerFace62
+        elif(tileNumber == 122):
+            return ClockTowerFace63
+        elif(tileNumber == 123):
+            return ClockTowerFace65
+        elif(tileNumber == 124):
+            return ClockTowerFace66
+        elif(tileNumber == 125):
+            return ClockTowerFace67
+        elif(tileNumber == 126):
+            return ClockTowerFace68
+        elif(tileNumber == 127):
+            return ClockTowerFace69
+        elif(tileNumber == 128):
+            return ClockTowerFace70
+        elif(tileNumber == 129):
+            return ClockTowerFace71
+        elif(tileNumber == 130):
+            return ClockTowerFace72
+        elif(tileNumber == 131):
+            return ClockTowerFace73
+            print(tileNumber, self.tilex, self.tiley)
         else:
-            return Signpost_path
+            return Blank
 
 
 class Player(pygame.sprite.Sprite):
@@ -880,7 +1152,7 @@ class Player(pygame.sprite.Sprite):
         # Set the player's inventory
         self.inventory = [["Wood Armor", 1], ["Steel Armor", 0],
                           ["Gold Armor", 0], ["Fireball Spell", 0],
-                          ["Explosion Spell", 0], ["Boss Key", 0],
+                          ["Explosion Spell", 0], ["Clocktower Key", 0],
                           ["Health Potion", 0], ["Lesser Health Potion", 0],
                           ["Mana Potion", 0], ["Lesser Mana Potion", 0]]
 
@@ -1226,7 +1498,7 @@ class Enemy(pygame.sprite.Sprite):
 
         # This sets the image to be the Snake surface defined above.
         self.image = pygame.Surface(
-            [25 * WINDOW_MAGNIFICATION, 25 * WINDOW_MAGNIFICATION])
+            [13 * WINDOW_MAGNIFICATION, 20 * WINDOW_MAGNIFICATION])
         self.rect = self.image.get_rect()
         self.image = Snake_Forward_1
         self.image.set_colorkey(COLORKEY)
@@ -1265,7 +1537,7 @@ class Enemy(pygame.sprite.Sprite):
 
         # Initialize what direction the enemy
         # is from the player's point of view.
-        self.sector = "TOP LEFT"
+        self.sector = "UP LEFT"
 
         # Initialize health, defense and attack
         self.health = 100
@@ -1340,8 +1612,12 @@ class Enemy(pygame.sprite.Sprite):
             self.x -= self.walkRate
 
         # Rescale and set the background to be translucent
-        self.image = pygame.transform.scale(
-            self.image, (25 * WINDOW_MAGNIFICATION, 25 * WINDOW_MAGNIFICATION))
+        if(self.direction == "LEFT" or self.direction == "RIGHT"):
+            self.image = pygame.transform.scale(self.image, (23 * WINDOW_MAGNIFICATION, 19 * WINDOW_MAGNIFICATION))
+        elif(self.direction == "UP"):
+            self.image = pygame.transform.scale(self.image, (9 * WINDOW_MAGNIFICATION, 24 * WINDOW_MAGNIFICATION))
+        else: 
+            self.image = pygame.transform.scale(self.image, (13 * WINDOW_MAGNIFICATION, 20 * WINDOW_MAGNIFICATION))
         self.image.set_colorkey(COLORKEY)
 
         # Reset the clock
@@ -1354,51 +1630,55 @@ class Enemy(pygame.sprite.Sprite):
         # and update the coordinates to reach the player.
         if(self.x < self.playerx2 and self.x > self.playerx1 and
            self.y > self.playery2):
-            self.sector = "BOTTOM"
+            self.sector = "UP"
             self.y -= self.walkRate
             self.image = Snake_Back_1
         elif(self.y < self.playery2 and self.y > self.playery1 and
              self.x < self.playerx1):
-            self.sector = "LEFT"
+            self.sector = "RIGHT"
             self.x += self.walkRate
             self.image = Snake_Right_1
         elif(self.y < self.playery2 and self.y > self.playery1 and
              self.x > self.playerx2):
-            self.sector = "RIGHT"
-            self.x += self.walkRate
-            self.y += self.walkRate
+            self.sector = "LEFT"
+            self.x -= self.walkRate
             self.image = Snake_Left_1
         elif((self.x > self.playerx1 and self.x < self.playerx2 and
               self.y < self.playery1)):
-            self.sector = "UP"
-            self.x += self.walkRate
+            self.sector = "DOWN"
             self.y += self.walkRate
             self.image = Snake_Forward_1
-        elif(self.x < self.playerx1 and self.y < self.playery2):
+        elif(self.x > self.playerx1 and self.y > self.playery2):
             self.sector = "UP LEFT"
+            self.x -= self. walkRate
+            self.y -= self.walkRate
+            self.image = Snake_Back_1
+        elif(self.x > self.playerx1 and self.y < self.playery2):
+            self.sector = "DOWN LEFT"
+            self.x -= self.walkRate
+            self.y += self.walkRate
+            self.image = Snake_Forward_1
+        elif(self.x < self.playerx2 and self.y < self.playery2):
+            self.sector = "DOWN RIGHT"
             self.x += self.walkRate
             self.y += self.walkRate
             self.image = Snake_Forward_1
-        elif(self.x < self.playerx1 and self.y > self.playery2):
-            self.sector = "BOTTOM LEFT"
-            self.x += self.walkRate
-            self.y -= self.walkRate
-            self.image = Snake_Back_1
-        elif(self.x > self.playerx2 and self.y > self.playery2):
-            self.sector = "BOTTOM RIGHT"
-            self.x -= self.walkRate
-            self.y -= self.walkRate
-            self.image = Snake_Back_1
-        elif(self.x < self.playerx2 and self.y < self.playery1):
+        elif(self.x < self.playerx2 and self.y > self.playery1):
             self.sector = "UP RIGHT"
-            self.x -= self.walkRate
-            self.y += self.walkRate
-            self.image = Snake_Forward_1
+            self.x += self.walkRate
+            self.y -= self.walkRate
+            self.image = Snake_Back_1
 
-        # Rescale the image and set the background to translucent
-        self.image = pygame.transform.scale(
-            self.image, (25 * WINDOW_MAGNIFICATION, 25 * WINDOW_MAGNIFICATION))
+        
+        # Rescale and set the background to be translucent
+        if(self.sector == "LEFT" or self.sector == "RIGHT"):
+            self.image = pygame.transform.scale(self.image, (23 * WINDOW_MAGNIFICATION, 19 * WINDOW_MAGNIFICATION))
+        elif(self.sector == "UP" or self.sector == "UP RIGHT" or self.sector == "UP LEFT"):
+            self.image = pygame.transform.scale(self.image, (9 * WINDOW_MAGNIFICATION, 24 * WINDOW_MAGNIFICATION))
+        else: 
+            self.image = pygame.transform.scale(self.image, (13 * WINDOW_MAGNIFICATION, 20 * WINDOW_MAGNIFICATION))
         self.image.set_colorkey(COLORKEY)
+
 
         # Reset the clock
         self.elapsed = 0
@@ -2024,13 +2304,13 @@ class Game(object):
             elif (self.game_over and event.type == pygame.MOUSEBUTTONDOWN):
                 NEWGAME = True
                 CAMERA_LEFT = ROOM_WIDTH * 2
-                CAMERA_TOP = ROOM_HEIGHT * 2
+                CAMERA_TOP = ROOM_HEIGHT * 5
 
             # If the game is over and the mouse is clicked start a new game
             elif (self.game_won and event.type == pygame.MOUSEBUTTONDOWN):
                 NEWGAME = True
                 CAMERA_LEFT = ROOM_WIDTH * 2
-                CAMERA_TOP = ROOM_HEIGHT * 2
+                CAMERA_TOP = ROOM_HEIGHT * 5
 
             # If the game hasn't started yet and the player clicks,
             # advance to the next splash screen
@@ -2040,11 +2320,9 @@ class Game(object):
 
             # Detect when a key is pressed or held
             elif event.type == pygame.KEYDOWN:
-
                 if event.key == pygame.K_UP:
                     self.upKeyPressed = True
                     self.downKeyPressed = False
-
                     # DIRECTION is used later to determine movement direction
                     self.DIRECTION = "UP"
                     self.player.dialog = ""
@@ -2164,6 +2442,8 @@ class Game(object):
             if self.DIRECTION == "UP":
                 self.player.y -= WALKRATE
                 self.player.worldy -= WALKRATE
+                self.player.swordx = 5000
+                self.player.swordy = 5000
                 if self.player.worldy < 0:
                     self.player.worldy = 0
                     self.player.worldy += WALKRATE
@@ -2171,10 +2451,12 @@ class Game(object):
                     self.player.y = WINDOW_WIDTH - 300
                     CAMERA_TOP -= ROOM_HEIGHT
                     self.player.room += 5
-
+                
             if self.DIRECTION == "DOWN":
                 self.player.y += WALKRATE
                 self.player.worldy += WALKRATE
+                self.player.swordx = 5000
+                self.player.swordy = 5000
                 if self.player.worldy > WORLD_HEIGHT:
                     self.player.worldy = (WORLD_HEIGHT -
                                           25 * WINDOW_MAGNIFICATION)
@@ -2186,6 +2468,8 @@ class Game(object):
             if self.DIRECTION == "LEFT":
                 self.player.x -= WALKRATE
                 self.player.worldx -= WALKRATE
+                self.player.swordx = 5000
+                self.player.swordy = 5000
                 if self.player.x < 0:
                     self.player.x = WINDOW_WIDTH - 25 * WINDOW_MAGNIFICATION
                     CAMERA_LEFT -= ROOM_WIDTH
@@ -2197,6 +2481,8 @@ class Game(object):
             if self.DIRECTION == "RIGHT":
                 self.player.x += WALKRATE
                 self.player.worldx += WALKRATE
+                self.player.swordx = 5000
+                self.player.swordy = 5000
                 if self.player.x > WINDOW_WIDTH:
                     self.player.x = 0
                     CAMERA_LEFT += ROOM_WIDTH
@@ -2211,7 +2497,7 @@ class Game(object):
         """
         This method is used to fetch all tiles in a single room and
         expand them for easier viewing. It is a great space optimization.
-        """
+        """ 
 
         # Get the leftmost and topmost tile numbers
         leftmostTile = leftPixel // 25
@@ -2466,17 +2752,16 @@ class Game(object):
                 tileNumber = tile_Data[tiley][tilex]
                 coords = (tile.x, tile.y)
                 room = self.player.room
-
                 # Depending on the room and tile that
                 # is interacted with, change the dialog.
                 if(room == 3):
-                    if(coords == (38, 23)):
+                    if(coords == (38, 56)):
                         self.player.dialog = "Press Right Shift to attack"
                         self.player.dialogCoords[0] = 250
                         self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
                         self.player.fontSize = 25
                 elif(room == 4):
-                    if(coords == (30, 31)):
+                    if(coords == (30, 64)):
                         self.player.dialog = ("You found 5 Health Potions" +
                                               "and the Clocktower Key!")
                         self.player.dialogCoords[0] = 175
@@ -2484,9 +2769,9 @@ class Game(object):
                         self.player.fontSize = 25
                         self.player.inventory[6][1] += 5
                         self.player.inventory[5][1] = 1
-                        tile_Data[31][30] = 60
+                        tile_Data[64][30] = 4
                 elif(room == 7):
-                    if(coords == (61, 14)):
+                    if(coords == (61, 47)):
                         self.player.dialog = ("A rockslide has blocked this" +
                                               " path! Sorry for the" +
                                               " inconvenience!")
@@ -2494,13 +2779,13 @@ class Game(object):
                         self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
                         self.player.fontSize = 20
                 elif(room == 8):
-                    if(coords == (38, 18)):
+                    if(coords == (38, 51)):
                         self.player.dialog = (
                             "North - Clocktower, South - Glade")
                         self.player.dialogCoords[0] = 250
                         self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
                         self.player.fontSize = 25
-                    if(coords == (34, 18)):
+                    if(coords == (34, 51)):
                         if(self.talk):
                             if self.merchant_dialog == 0:
                                 self.player.dialog = ("Hey there! I'll sell" +
@@ -2533,31 +2818,31 @@ class Game(object):
                                     self.player.fontSize = 25
                                     self.talk = False
                 elif(room == 9):
-                    if(coords == (17, 14)):
+                    if(coords == (17, 47)):
                         self.player.dialog = ("Please do not go any" +
                                               " further, danger ahead")
                         self.player.dialogCoords[0] = 200
                         self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
                         self.player.fontSize = 25
                 elif(room == 10):
-                    if(coords == (7, 14)):
+                    if(coords == (7, 47)):
                         self.player.dialog = "PLEASE DONT GO ANY FURTHER"
                         self.player.dialogCoords[0] = 250
                         self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
                         self.player.fontSize = 25
-                    elif(coords == (6, 17)):
+                    elif(coords == (6, 50)):
                         self.player.dialog = "I MEAN IT"
                         self.player.dialogCoords[0] = 350
                         self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
                         self.player.fontSize = 25
-                    elif(coords == (6, 20)):
+                    elif(coords == (6, 53)):
                         self.player.dialog = "DONT SAY I DIDNT WARN YOU"
                         self.player.dialogCoords[0] = 250
                         self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
                         self.player.fontSize = 25
 
                 elif(room == 11):
-                    if(coords == (70, 2)):
+                    if(coords == (70, 35)):
                         if(self.talk):
                             if self.old_man_dialog == 0:
                                 self.player.dialog = (
@@ -2690,35 +2975,37 @@ class Game(object):
                             self.old_man_dialog += 1
 
                 elif(room == 13):
-                    if(coords == (39, 3)):
+                    print(coords)
+                    if(coords == (38, 39)):
                         self.player.dialog = (
                             "Clocktower is closed for maintenance." +
                             " See Old Man for the key")
                         self.player.dialogCoords[0] = 100
                         self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
                         self.player.fontSize = 20
-                    elif(coords == (40, 3)):
+                    elif(coords == (40, 37) or coords == (39, 37)):
                         if(self.player.inventory[5][1] == 1):
-                            tile_Data[3][40] = "42"
+                            tile_Data[37][40] = "42"
+                            tile_Data[37][39] = "42"
                             self.player.dialog = "Door Opened"
                             self.player.dialogCoords[0] = 250
                             self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
                             self.player.fontSize = 25
-                            self.game_won = True
+#                             self.game_won = True
                         else:
                             self.player.dialog = "Door is locked"
                             self.player.dialogCoords[0] = 250
                             self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
                             self.player.fontSize = 25
                 elif(room == 15):
-                    if(coords == (6, 1)):
+                    if(coords == (6, 34)):
                         self.player.dialog = (
                             "REMINDER: Use A and D to switch between" +
                             " potions and E to use them")
                         self.player.dialogCoords[0] = 150
                         self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
                         self.player.fontSize = 20
-                    elif(coords == (7, 1)):
+                    elif(coords == (7, 34)):
                         self.player.dialog = (
                             "You found Health and Mana Potions!")
                         self.player.dialogCoords[0] = 225
@@ -2727,15 +3014,15 @@ class Game(object):
                         self.player.inventory[9][1] += 5
                         self.player.inventory[8][1] += 3
                         self.player.inventory[7][1] += 5
-                        tile_Data[1][7] = 60
-                    elif(coords == (8, 1)):
+                        tile_Data[34][7] = 4
+                    elif(coords == (8, 34)):
                         self.player.dialog = "You found the Fireball Spell!"
                         self.player.dialogCoords[0] = 250
                         self.player.dialogCoords[1] = WINDOW_HEIGHT - 50
                         self.player.fontSize = 25
                         self.player.inventory[3][1] += 1
-                        tile_Data[1][8] = 60
-                    elif(coords == (9, 1)):
+                        tile_Data[34][8] = 4
+                    elif(coords == (9, 34)):
                         self.player.dialog = (
                             "REMINDER: Use W and S to switch between" +
                             " spells and Q to use them")
@@ -2862,6 +3149,28 @@ class Game(object):
             # Draw the player
             self.player.draw()
 
+            # If the player is at the clockTower entrance we render the tunnel leading to the next area.
+            # TODO: Build a tunnel
+            if(self.player.room == 13):
+                scale = 25 * WINDOW_MAGNIFICATION
+                tunnelTiles = [[ClockTowerFace7, 39, 33],[ClockTowerFace8, 40, 33], [ClockTowerFace21, 39, 34],[ClockTowerFace22, 40, 34],[ClockTowerFace35, 39, 35],[ClockTowerFace36, 40, 35],[ClockTowerFace50, 40, 36],[ClockTowerFace73, 39, 36]]
+                for Tunnelset in tunnelTiles:
+                    tunnelSprite = pygame.sprite.Sprite()
+                    tunnelSprite.image = pygame.Surface([25 * WINDOW_MAGNIFICATION, 25 * WINDOW_MAGNIFICATION])
+                    tunnelSprite.image = Tunnelset[0]
+                    tunnelSpritex = Tunnelset[1]
+                    tunnelSpritey = Tunnelset[2]
+                    tunnelSprite = pygame.transform.scale(tunnelSprite.image, (scale, scale))
+                    screen.blit(tunnelSprite, ((tunnelSpritex - 32) * scale, (tunnelSpritey - 33) * scale))
+#                     
+#                 screen.blit(ClockTowerFace8, ((39 - 32) * scale, (33 - 33) * scale))
+#                 screen.blit(ClockTowerFace21, ((38 - 32) * scale, (34 - 33) * scale))
+#                 screen.blit(ClockTowerFace22, ((39 - 32) * scale, (34 - 33) * scale))
+#                 screen.blit(ClockTowerFace35, ((38 - 32) * scale, (35 - 33) * scale))
+#                 screen.blit(ClockTowerFace36, ((39 - 32) * scale, (35 - 33) * scale))
+#                 screen.blit(ClockTowerFace50, ((38 - 32) * scale, (36 - 33) * scale))
+#                 screen.blit(ClockTowerFace73, ((39 - 32) * scale, (36 - 33) * scale))
+#                 
             # Draw each of the feedback sprites and information
             self.feedback.draw()
 

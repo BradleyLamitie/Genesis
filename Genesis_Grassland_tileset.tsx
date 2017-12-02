@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="Genesis_grassland_tiles" tilewidth="25" tileheight="25" tilecount="41" columns="0">
+<tileset name="Genesis_grassland_tiles" tilewidth="25" tileheight="25" tilecount="113" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="15">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_bottom_bottom.png"/>
@@ -124,5 +124,221 @@
  </tile>
  <tile id="58">
   <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/OldMan.png"/>
+ </tile>
+ <tile id="59">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face1.png"/>
+ </tile>
+ <tile id="60">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face2.png"/>
+ </tile>
+ <tile id="61">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face3.png"/>
+ </tile>
+ <tile id="62">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face4.png"/>
+ </tile>
+ <tile id="63">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face5.png"/>
+ </tile>
+ <tile id="64">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face6.png"/>
+ </tile>
+ <tile id="65">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face7.png"/>
+ </tile>
+ <tile id="66">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face8.png"/>
+ </tile>
+ <tile id="67">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face9.png"/>
+ </tile>
+ <tile id="68">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face10.png"/>
+ </tile>
+ <tile id="69">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face11.png"/>
+ </tile>
+ <tile id="70">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face12.png"/>
+ </tile>
+ <tile id="71">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face13.png"/>
+ </tile>
+ <tile id="72">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face14.png"/>
+ </tile>
+ <tile id="73">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face15.png"/>
+ </tile>
+ <tile id="74">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face16.png"/>
+ </tile>
+ <tile id="75">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face17.png"/>
+ </tile>
+ <tile id="76">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face18.png"/>
+ </tile>
+ <tile id="77">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face19.png"/>
+ </tile>
+ <tile id="78">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face20.png"/>
+ </tile>
+ <tile id="79">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face21.png"/>
+ </tile>
+ <tile id="80">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face22.png"/>
+ </tile>
+ <tile id="81">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face23.png"/>
+ </tile>
+ <tile id="82">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face24.png"/>
+ </tile>
+ <tile id="83">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face25.png"/>
+ </tile>
+ <tile id="84">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face26.png"/>
+ </tile>
+ <tile id="85">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face27.png"/>
+ </tile>
+ <tile id="86">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face28.png"/>
+ </tile>
+ <tile id="87">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face29.png"/>
+ </tile>
+ <tile id="88">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face30.png"/>
+ </tile>
+ <tile id="89">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face31.png"/>
+ </tile>
+ <tile id="90">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face32.png"/>
+ </tile>
+ <tile id="91">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face33.png"/>
+ </tile>
+ <tile id="92">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face34.png"/>
+ </tile>
+ <tile id="93">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face35.png"/>
+ </tile>
+ <tile id="94">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face36.png"/>
+ </tile>
+ <tile id="95">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face37.png"/>
+ </tile>
+ <tile id="96">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face38.png"/>
+ </tile>
+ <tile id="97">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face39.png"/>
+ </tile>
+ <tile id="98">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face40.png"/>
+ </tile>
+ <tile id="99">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face41.png"/>
+ </tile>
+ <tile id="100">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face42.png"/>
+ </tile>
+ <tile id="101">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face43.png"/>
+ </tile>
+ <tile id="102">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face44.png"/>
+ </tile>
+ <tile id="103">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face45.png"/>
+ </tile>
+ <tile id="104">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face46.png"/>
+ </tile>
+ <tile id="105">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face47.png"/>
+ </tile>
+ <tile id="106">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face48.png"/>
+ </tile>
+ <tile id="107">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face49.png"/>
+ </tile>
+ <tile id="108">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face50.png"/>
+ </tile>
+ <tile id="109">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face51.png"/>
+ </tile>
+ <tile id="110">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face52.png"/>
+ </tile>
+ <tile id="111">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face53.png"/>
+ </tile>
+ <tile id="112">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face54.png"/>
+ </tile>
+ <tile id="113">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face55.png"/>
+ </tile>
+ <tile id="114">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face56.png"/>
+ </tile>
+ <tile id="115">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face57.png"/>
+ </tile>
+ <tile id="116">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face58.png"/>
+ </tile>
+ <tile id="117">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face59.png"/>
+ </tile>
+ <tile id="118">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face60.png"/>
+ </tile>
+ <tile id="119">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face61.png"/>
+ </tile>
+ <tile id="120">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face62.png"/>
+ </tile>
+ <tile id="121">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face63.png"/>
+ </tile>
+ <tile id="122">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face65.png"/>
+ </tile>
+ <tile id="123">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face66.png"/>
+ </tile>
+ <tile id="124">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face67.png"/>
+ </tile>
+ <tile id="125">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face68.png"/>
+ </tile>
+ <tile id="126">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face69.png"/>
+ </tile>
+ <tile id="127">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face70.png"/>
+ </tile>
+ <tile id="128">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face71.png"/>
+ </tile>
+ <tile id="129">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face72.png"/>
+ </tile>
+ <tile id="130">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_face73.png"/>
  </tile>
 </tileset>
