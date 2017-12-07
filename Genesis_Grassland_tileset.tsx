@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="Genesis_grassland_tiles" tilewidth="25" tileheight="25" tilecount="132" columns="0">
+<tileset name="Genesis_grassland_tiles" tilewidth="25" tileheight="25" tilecount="140" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="15">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_bottom_bottom.png"/>
@@ -397,5 +397,29 @@
  </tile>
  <tile id="150">
   <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/ManaMerchant.png"/>
+ </tile>
+ <tile id="151">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/BreakableBrickWall.png"/>
+ </tile>
+ <tile id="152">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/BrokenBrickWall.png"/>
+ </tile>
+ <tile id="153">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Chest_closed_tile.png"/>
+ </tile>
+ <tile id="154">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Chest_open_tile.png"/>
+ </tile>
+ <tile id="155">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Signpost_tile.png"/>
+ </tile>
+ <tile id="156">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/BossDoor.png"/>
+ </tile>
+ <tile id="157">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/BossDoor2.png"/>
+ </tile>
+ <tile id="158">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/RobotNPC.png"/>
  </tile>
 </tileset>
