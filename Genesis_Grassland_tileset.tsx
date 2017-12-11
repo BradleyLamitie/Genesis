@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="Genesis_grassland_tiles" tilewidth="25" tileheight="25" tilecount="140" columns="0">
+<tileset name="Genesis_grassland_tiles" tilewidth="25" tileheight="25" tilecount="143" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="15">
   <image width="25" height="25" source="Genesis_Sprites/Cliff_bottom_bottom.png"/>
@@ -421,5 +421,14 @@
  </tile>
  <tile id="158">
   <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/RobotNPC.png"/>
+ </tile>
+ <tile id="159">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/BreakableBrickWallDown.png"/>
+ </tile>
+ <tile id="160">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/GrayFloorTile.png"/>
+ </tile>
+ <tile id="161">
+  <image width="25" height="25" source="../../../My Documents/LiClipse Workspace/Genesisv1.5/src/Genesis/Genesis_Sprites/Clocktower_door_open_right.png"/>
  </tile>
 </tileset>
