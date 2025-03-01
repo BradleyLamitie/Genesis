@@ -31,7 +31,7 @@ and defeating the boss.
 How to Play:
 The player can use the directional keys to move around the world.
 Use spells to fight and destroy obstacles.
-Use attacking to fight enemys.
+Use attacking to fight enemies.
 Use potions to heal and restore mana.
 
 GitHub Repository: https://github.com/BradleyLamitie/Genesis
